@@ -1,0 +1,6 @@
+@AvionesBackNet_HostAddress = http://localhost:5222
+
+GET {{AvionesBackNet_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
