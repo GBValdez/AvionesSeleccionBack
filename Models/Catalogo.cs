@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Catalogo
+public partial class Catalogo : CommonsModel<ulong>
 {
-    public ulong Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 

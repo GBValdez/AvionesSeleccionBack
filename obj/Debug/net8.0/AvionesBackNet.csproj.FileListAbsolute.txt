@@ -104,3 +104,4 @@ D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBack
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\obj\Debug\net8.0\AvionesBackNet.sourcelink.json

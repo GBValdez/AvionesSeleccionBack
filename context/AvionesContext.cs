@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lombok.NET;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
@@ -7,13 +8,11 @@ namespace AvionesBackNet.Models;
 
 public partial class AvionesContext : DbContext
 {
-    public AvionesContext()
+    private IConfiguration configuration;
+    public AvionesContext(DbContextOptions<AvionesContext> options, IConfiguration configuration)
+    : base(options)
     {
-    }
-
-    public AvionesContext(DbContextOptions<AvionesContext> options)
-        : base(options)
-    {
+        this.configuration = configuration;
     }
 
     public virtual DbSet<Aerolinea> Aerolineas { get; set; }
@@ -63,8 +62,7 @@ public partial class AvionesContext : DbContext
     public virtual DbSet<VueloClase> VueloClases { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;database=Aviones;user=root;password=admin", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.36-mysql"));
+        => optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"), ServerVersion.Parse(configuration.GetConnectionString("mySqlVersion")));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
