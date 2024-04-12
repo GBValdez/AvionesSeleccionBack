@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\context",
-    "\\Models"
+    "\\modules",
+    "\\modules\\catalogies",
+    "\\utils"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\utils\\resPag.cs",
   "PreviewInSolutionExplorer": false
 }
