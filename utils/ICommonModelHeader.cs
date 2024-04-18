@@ -7,9 +7,11 @@ namespace AvionesBackNet.utils
 {
     public interface ICommonModelHeader
     {
-        public string userUpdateId { get; set; }
 
-        public DateTime? deleteAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+
+        public DateTime? CreatedAt { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 using AvionesBackNet.Models;
+using AvionesBackNet.utils;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,18 @@ builder.Services.AddDbContext<AvionesContext>(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddAutoMapper(typeof(autoMapperProfiles));
+builder.Services.AddCors(
+    options =>
+    {
+        options.AddDefaultPolicy(
+                       builder =>
+                       {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }
+                              );
+    }
+    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

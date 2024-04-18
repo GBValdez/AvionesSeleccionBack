@@ -11,12 +11,6 @@ public partial class Catalogo : CommonsModel<ulong>
 
     public string Descripcion { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
     public ulong CatalogoTipoId { get; set; }
 
     public virtual ICollection<Aerolinea> Aerolineas { get; set; } = new List<Aerolinea>();

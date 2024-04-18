@@ -33,7 +33,7 @@ namespace AvionesBackNet.utils
         {
             IQueryable<TEntity> query = context.Set<TEntity>();
             if (!showDeleted)
-                query = query.Where(db => ((ICommonModel<idClass>)db).deleteAt == null);
+                query = query.Where(db => ((ICommonModel<idClass>)db).DeletedAt == null);
 
             Type queryableType = typeof(TEntity);
             IEnumerable<PropertyInfo> properties = typeof(TQuery).GetProperties()
@@ -174,7 +174,7 @@ namespace AvionesBackNet.utils
         public virtual async Task<ActionResult> delete(idClass id)
         {
             TEntity exits = await context.Set<TEntity>()
-                .FirstOrDefaultAsync(Db => ((ICommonModel<idClass>)Db).Id.Equals(id) && ((ICommonModel<idClass>)Db).deleteAt == null);
+                .FirstOrDefaultAsync(Db => ((ICommonModel<idClass>)Db).Id.Equals(id) && ((ICommonModel<idClass>)Db).DeletedAt == null);
             if (exits == null)
             {
                 return NotFound();
@@ -182,7 +182,7 @@ namespace AvionesBackNet.utils
             errorMessageDto error = await this.validDelete(exits);
             if (error != null)
                 return BadRequest(error);
-            ((ICommonModel<idClass>)exits).deleteAt = DateTime.Now.ToUniversalTime();
+            ((ICommonModel<idClass>)exits).DeletedAt = DateTime.Now.ToUniversalTime();
             await context.SaveChangesAsync();
             return Ok();
         }
@@ -196,7 +196,7 @@ namespace AvionesBackNet.utils
         public virtual async Task<ActionResult> put(TDtoCreation entityCurrent, [FromRoute] idClass id, [FromQuery] TQueryCreation queryCreation)
         {
 
-            TEntity exits = await context.Set<TEntity>().FirstOrDefaultAsync(db => ((ICommonModel<idClass>)db).Id.Equals(id) && ((ICommonModel<idClass>)db).deleteAt == null);
+            TEntity exits = await context.Set<TEntity>().FirstOrDefaultAsync(db => ((ICommonModel<idClass>)db).Id.Equals(id) && ((ICommonModel<idClass>)db).DeletedAt == null);
             if (exits == null)
                 return NotFound();
             errorMessageDto error = await this.validPut(entityCurrent, exits, queryCreation);

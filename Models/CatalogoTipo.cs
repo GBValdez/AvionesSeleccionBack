@@ -12,11 +12,6 @@ public partial class CatalogoTipo : CommonsModel<ulong>
 
     public string Descripcion { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
 
     public virtual ICollection<Catalogo> Catalogos { get; set; } = new List<Catalogo>();
 }
