@@ -6,9 +6,9 @@ namespace AvionesBackNet.Modules.Categories
     {
         [Required]
         [StringLength(50)]
-        public string name { get; set; }
+        public string Nombre { get; set; }
         [Required]
         [StringLength(255)]
-        public string description { get; set; }
+        public string Descripcion { get; set; }
     }
 }

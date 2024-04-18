@@ -8,10 +8,8 @@ namespace AvionesBackNet.utils
     public class CommonsModel<idClass> : ICommonModel<idClass>
     {
         public idClass Id { get; set; }
-
-        public string userUpdateId { get; set; }
-
-        [ForeignKey("userUpdateId")]
-        public DateTime? deleteAt { get; set; }
+        public DateTime? DeletedAt { get  ; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? CreatedAt { get ; set; }
     }
 }
