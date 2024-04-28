@@ -20,12 +20,11 @@ builder.Services.AddAutoMapper(typeof(autoMapperProfiles));
 builder.Services.AddCors(
     options =>
     {
-        options.AddDefaultPolicy(
-                       builder =>
-                       {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            }
-                              );
+        options.AddPolicy(name: "myCors", builder =>
+        {
+            builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
+            .AllowAnyHeader().AllowAnyMethod();
+        });
     }
     );
 var app = builder.Build();
@@ -36,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("myCors");
 
 app.UseAuthorization();
 

@@ -1,14 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AvionesBackNet.Modules.Categories;
 
-namespace AvionesBackNet.Modules.Categories
+namespace AvionesBackNet.Modules.Catalogues
 {
-    public class catalogueDto
+    public class catalogueDto : catalogueCreationDto
     {
-        [Required]
-        [StringLength(50)]
-        public string Nombre { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string Descripcion { get; set; }
+        public long Id { get; set; }
     }
 }
