@@ -161,11 +161,33 @@ namespace AvionesBackNet.utils
             await context.SaveChangesAsync();
             return this.mapper.Map<TDto>(newRegisterEntity);
         }
+
+        [HttpPost("group")]
+        public virtual async Task<ActionResult<List<TDto>>> postGroup(List<TDtoCreation> newRegister, [FromQuery] TQueryCreation queryParams)
+        {
+            errorMessageDto error = await this.validPostGroup(newRegister, queryParams);
+            if (error != null)
+                return BadRequest(error);
+            List<TEntity> newRegisterEntity = this.mapper.Map<List<TEntity>>(newRegister);
+            await this.modifyPostGroup(newRegisterEntity, queryParams);
+            context.Add(newRegisterEntity);
+            await context.SaveChangesAsync();
+            return this.mapper.Map<List<TDto>>(newRegisterEntity);
+        }
+
         protected async virtual Task<errorMessageDto> validPost(TDtoCreation dtoNew, TQueryCreation queryParams)
         {
             return null;
         }
+        protected async virtual Task<errorMessageDto> validPostGroup(List<TDtoCreation> dtoNew, TQueryCreation queryParams)
+        {
+            return null;
+        }
         protected async virtual Task modifyPost(TEntity entity, TQueryCreation queryParams)
+        {
+            return;
+        }
+        protected async virtual Task modifyPostGroup(List<TEntity> entity, TQueryCreation queryParams)
         {
             return;
         }
