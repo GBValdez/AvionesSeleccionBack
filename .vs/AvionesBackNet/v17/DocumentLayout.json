@@ -3,72 +3,72 @@
   "WorkspaceRootPath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\modules\\catalogues\\controllers\\clasesseatscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:modules\\catalogues\\controllers\\clasesseatscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\Controllers\\seatingController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Modules\\Catalogues\\Controllers\\seatingController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\catalogueDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Modules\\Catalogues\\catalogueDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\modules\\catalogues\\cataloguedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:modules\\catalogues\\cataloguedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\ICommonModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\ICommonModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\icommonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\icommonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\cataloguesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Modules\\Catalogues\\cataloguesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\modules\\catalogues\\cataloguescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:modules\\catalogues\\cataloguescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\controllerCommons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\controllerCommons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\controllercommons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\controllercommons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Models\\CatalogoTipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\CatalogoTipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\models\\catalogotipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:models\\catalogotipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\ICommonModelHeader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\ICommonModelHeader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\icommonmodelheader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\icommonmodelheader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\CommonsModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\CommonsModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\commonsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\commonsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Models\\Catalogo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\Catalogo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\models\\catalogo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:models\\catalogo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Models\\VueloClase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\VueloClase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\models\\vueloclase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:models\\vueloclase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Models\\Aerolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Models\\Aerolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\models\\aerolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:models\\aerolinea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\autoMapperProfiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\autoMapperProfiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\resPag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\resPag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\respag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\respag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\utils\\errorMessageDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:utils\\errorMessageDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\utils\\errormessagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:utils\\errormessagedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AvionesBackNet.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\avionesbacknet.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:avionesbacknet.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|d:\\backup\\escritorio\\proyectos\\avion proyecto\\aviones seleccion back\\avionesbacknet\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{41A04DF6-D240-463F-B000-50DA310D58F4}|AvionesBackNet.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,19 +78,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "seatingController.cs",
-              "DocumentMoniker": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\Controllers\\seatingController.cs",
-              "RelativeDocumentMoniker": "Modules\\Catalogues\\Controllers\\seatingController.cs",
-              "ToolTip": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\Controllers\\seatingController.cs",
-              "RelativeToolTip": "Modules\\Catalogues\\Controllers\\seatingController.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAkAAAA5AAAA",
+              "DocumentIndex": 0,
+              "Title": "clasesSeatsController.cs",
+              "DocumentMoniker": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\Controllers\\clasesSeatsController.cs",
+              "RelativeDocumentMoniker": "Modules\\Catalogues\\Controllers\\clasesSeatsController.cs",
+              "ToolTip": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Modules\\Catalogues\\Controllers\\clasesSeatsController.cs",
+              "RelativeToolTip": "Modules\\Catalogues\\Controllers\\clasesSeatsController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-12T04:13:19.924Z"
+              "WhenOpened": "2024-04-12T04:13:19.924Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -142,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",

@@ -7,9 +7,9 @@ namespace AvionesBackNet.Modules.Catalogues.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class seatingController : cataloguesController
+    public class clasesSeatsController : cataloguesController
     {
-        public seatingController(AvionesContext context, IMapper mapper) : base(context, mapper)
+        public clasesSeatsController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
             codCatalogue = "CAA";
         }
