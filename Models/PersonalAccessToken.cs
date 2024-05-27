@@ -5,11 +5,11 @@ namespace AvionesBackNet.Models;
 
 public partial class PersonalAccessToken
 {
-    public ulong Id { get; set; }
+    public long Id { get; set; }
 
     public string TokenableType { get; set; } = null!;
 
-    public ulong TokenableId { get; set; }
+    public long TokenableId { get; set; }
 
     public string Name { get; set; } = null!;
 

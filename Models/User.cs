@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class User
+public partial class User : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -16,10 +16,6 @@ public partial class User
     public string Password { get; set; } = null!;
 
     public string? RememberToken { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
 
     public virtual ICollection<BitacoraEncabezado> BitacoraEncabezados { get; set; } = new List<BitacoraEncabezado>();
 

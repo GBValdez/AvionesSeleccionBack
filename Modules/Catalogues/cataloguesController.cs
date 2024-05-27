@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AvionesBackNet.Modules.Categories
 {
-    public class cataloguesController : controllerCommons<Catalogo, catalogueCreationDto, catalogueDto, object, object, ulong>
+    public class cataloguesController : controllerCommons<Catalogo, catalogueCreationDto, catalogueDto, object, object, long>
     {
         protected string codCatalogue { get; set; }
         public cataloguesController(AvionesContext context, IMapper mapper) : base(context, mapper)

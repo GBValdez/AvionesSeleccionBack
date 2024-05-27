@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Empleado
+public partial class Empleado : CommonsModel<long>
 {
-    public ulong Id { get; set; }
-
     public string Nombre { get; set; } = null!;
 
     public DateOnly FechaNacimiento { get; set; }
@@ -17,25 +16,18 @@ public partial class Empleado
 
     public string Telefono { get; set; } = null!;
 
-    public ulong PaisId { get; set; }
+    public long PaisId { get; set; }
 
-    public ulong PuestoId { get; set; }
+    public long PuestoId { get; set; }
 
-    public ulong TripulacionId { get; set; }
+    public long TripulacionId { get; set; }
 
-    public ulong AerolineaId { get; set; }
+    public long AerolineaId { get; set; }
 
-    public ulong UserId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
+    public long UserId { get; set; }
     public virtual Aerolinea Aerolinea { get; set; } = null!;
 
-    public virtual Catalogo Pais { get; set; } = null!;
+    public virtual Paise Pais { get; set; } = null!;
 
     public virtual Catalogo Puesto { get; set; } = null!;
 

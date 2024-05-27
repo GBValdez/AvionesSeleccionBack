@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace AvionesBackNet.Modules.seats
 {
-    public class asientoDtoCreation : asientoDtoBase
+    public class seatPlaneDto
     {
-        public long ClaseId { get; set; }
+        public List<asientoDtoCreation> asientos { get; set; }
+        public decimal sizeSeat { get; set; }
     }
 }

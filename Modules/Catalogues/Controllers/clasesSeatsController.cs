@@ -14,9 +14,5 @@ namespace AvionesBackNet.Modules.Catalogues.Controllers
             codCatalogue = "CAA";
         }
 
-        protected override Task<IQueryable<Catalogo>> modifyGet(IQueryable<Catalogo> query, object queryParams)
-        {
-            return base.modifyGet(query, queryParams);
-        }
     }
 }

@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class ModeloAvionAerolinea
+public partial class ModeloAvionAerolinea : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
-    public ulong ModeloAvionId { get; set; }
+    public long ModeloAvionId { get; set; }
 
-    public ulong AerolineaId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
+    public long AerolineaId { get; set; }
     public virtual Aerolinea Aerolinea { get; set; } = null!;
 
     public virtual Catalogo ModeloAvion { get; set; } = null!;
