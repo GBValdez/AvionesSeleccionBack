@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Cliente
+public partial class Cliente : CommonsModel<long>
 {
-    public ulong Id { get; set; }
-
     public string NoPasaporte { get; set; } = null!;
 
     public string Nombre { get; set; } = null!;
@@ -21,23 +20,16 @@ public partial class Cliente
 
     public string Direccion { get; set; } = null!;
 
-    public ulong PaisId { get; set; }
+    public long PaisId { get; set; }
 
-    public ulong CodigoTelefono { get; set; }
+    public long CodigoTelefono { get; set; }
 
-    public ulong CodigoTelefonoEmergencia { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
+    public long CodigoTelefonoEmergencia { get; set; }
     public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 
     public virtual Catalogo CodigoTelefonoEmergenciaNavigation { get; set; } = null!;
 
     public virtual Catalogo CodigoTelefonoNavigation { get; set; } = null!;
 
-    public virtual Catalogo Pais { get; set; } = null!;
+    public virtual Paise Pais { get; set; } = null!;
 }

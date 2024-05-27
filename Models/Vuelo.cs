@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Vuelo
+public partial class Vuelo : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
     public string Codigo { get; set; } = null!;
 
@@ -13,19 +13,11 @@ public partial class Vuelo
 
     public DateTime FechaLlegada { get; set; }
 
-    public ulong AvionId { get; set; }
+    public long AvionId { get; set; }
 
-    public ulong TripulacionId { get; set; }
+    public long AeropuertoOrigenId { get; set; }
 
-    public ulong AeropuertoOrigenId { get; set; }
-
-    public ulong AeropuertoDestinoId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
+    public long AeropuertoDestinoId { get; set; }
 
     public virtual Aeropuerto AeropuertoDestino { get; set; } = null!;
 
@@ -34,8 +26,6 @@ public partial class Vuelo
     public virtual Avione Avion { get; set; } = null!;
 
     public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
-
-    public virtual Tripulacione Tripulacion { get; set; } = null!;
 
     public virtual ICollection<VueloClase> VueloClases { get; set; } = new List<VueloClase>();
 }
