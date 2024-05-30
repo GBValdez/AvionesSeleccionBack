@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.Aeropuertos;
 using AvionesBackNet.Modules.Aviones;
 using AvionesBackNet.Modules.Catalogues;
 using AvionesBackNet.Modules.Categories;
+using AvionesBackNet.Modules.Paises;
 using AvionesBackNet.Modules.seats;
+using AvionesBackNet.Modules.Vuelos;
 
 namespace AvionesBackNet.utils
 {
@@ -18,6 +21,15 @@ namespace AvionesBackNet.utils
             CreateMap<Asiento, asientoDto>();
             CreateMap<Avione, AvionDto>();
             CreateMap<AvionCreationDto, Avione>();
+            CreateMap<Boleto, boletoDto>();
+            CreateMap<Cliente, clienteDto>();
+            CreateMap<Paise, paisDto>();
+            CreateMap<Vuelo, vueloDto>();
+            CreateMap<VueloClase, vueloClaseDto>();
+            CreateMap<vueloClaseDtoCreation, VueloClase>();
+            CreateMap<vueloDtoCreation, Vuelo>();
+            CreateMap<Aeropuerto, AeropuertoDto>();
+            CreateMap<AeropuertoDtoCreation, Aeropuerto>();
         }
     }
 }
