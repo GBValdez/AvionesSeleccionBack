@@ -6,7 +6,6 @@ namespace AvionesBackNet.Models;
 
 public partial class Vuelo : CommonsModel<long>
 {
-
     public string Codigo { get; set; } = null!;
 
     public DateTime FechaSalida { get; set; }
