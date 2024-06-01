@@ -7,6 +7,7 @@ using AvionesBackNet.Modules.Categories;
 using AvionesBackNet.Modules.Paises;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos;
+using AvionesBackNet.Modules.Vuelos.dto;
 
 namespace AvionesBackNet.utils
 {
@@ -30,6 +31,7 @@ namespace AvionesBackNet.utils
             CreateMap<vueloDtoCreation, Vuelo>();
             CreateMap<Aeropuerto, AeropuertoDto>();
             CreateMap<AeropuertoDtoCreation, Aeropuerto>();
+            CreateMap<Aerolinea, aerolineaDto>();
         }
     }
 }
