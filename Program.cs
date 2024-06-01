@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.seats;
+using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+}).AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
+builder.Services.AddTransient<seatSvc>();
+
+builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<AvionesContext>(options =>
 {
@@ -23,7 +36,7 @@ builder.Services.AddCors(
         options.AddPolicy(name: "myCors", builder =>
         {
             builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-            .AllowAnyHeader().AllowAnyMethod();
+            .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
         });
     }
     );
@@ -41,5 +54,7 @@ app.UseCors("myCors");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<seatSelectionHub>("/selectSeatHub");
 
 app.Run();

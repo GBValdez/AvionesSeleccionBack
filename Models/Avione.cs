@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
@@ -38,6 +39,10 @@ public partial class Avione : CommonsModel<long>
 
     public virtual Catalogo TipoAvion { get; set; } = null!;
 
+    [JsonIgnore]
+
     public virtual ICollection<Vuelo> Vuelos { get; set; } = new List<Vuelo>();
+    [JsonIgnore]
+
     public virtual ICollection<Asiento> Asientos { get; set; } = new List<Asiento>();
 }

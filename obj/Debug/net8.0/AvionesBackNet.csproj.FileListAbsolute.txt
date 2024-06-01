@@ -105,3 +105,8 @@ D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBack
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\obj\Debug\net8.0\AvionesBackNet.sourcelink.json
+d:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Newtonsoft.Json.dll
+d:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

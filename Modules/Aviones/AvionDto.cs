@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.Catalogues;
+using AvionesBackNet.Modules.seats;
+using AvionesBackNet.Modules.Vuelos;
+using AvionesBackNet.Modules.Vuelos.dto;
 
 namespace AvionesBackNet.Modules.Aviones
 {
@@ -20,16 +24,16 @@ namespace AvionesBackNet.Modules.Aviones
         public decimal CapacidadCombustible { get; set; }
 
         public decimal TamAsientoPorc { get; set; }
-        public virtual Aerolinea Aerolinea { get; set; } = null!;
+        public virtual aerolineaDto Aerolinea { get; set; } = null!;
 
-        public virtual Catalogo Estado { get; set; } = null!;
+        public virtual catalogueDto Estado { get; set; } = null!;
 
-        public virtual Catalogo Marca { get; set; } = null!;
+        public virtual catalogueDto Marca { get; set; } = null!;
 
-        public virtual Catalogo Modelo { get; set; } = null!;
+        public virtual catalogueDto Modelo { get; set; } = null!;
 
-        public virtual Catalogo TipoAvion { get; set; } = null!;
-        public virtual ICollection<Vuelo> Vuelos { get; set; } = new List<Vuelo>();
-        public virtual ICollection<Asiento> Asientos { get; set; } = new List<Asiento>();
+        public virtual catalogueDto TipoAvion { get; set; } = null!;
+        public virtual ICollection<vueloDto> Vuelos { get; set; }
+        public virtual ICollection<asientoDto> Asientos { get; set; }
     }
 }
