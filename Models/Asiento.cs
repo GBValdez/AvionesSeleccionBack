@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Asiento
+public partial class Asiento : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
     public string Codigo { get; set; } = null!;
 
     public string Posicion { get; set; } = null!;
 
-    public ulong ClaseId { get; set; }
+    public long ClaseId { get; set; }
 
-    public ulong AvionId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
+    public long AvionId { get; set; }
     public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 
     public virtual Catalogo Clase { get; set; } = null!;
+    public virtual Avione Avion { get; set; } = null!;
 }

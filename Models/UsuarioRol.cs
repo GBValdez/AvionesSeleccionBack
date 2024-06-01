@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class UsuarioRol
+public partial class UsuarioRol : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
-    public ulong UserId { get; set; }
+    public long UserId { get; set; }
 
-    public ulong RolId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
+    public long RolId { get; set; }
 
     public virtual Role Rol { get; set; } = null!;
 

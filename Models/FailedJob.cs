@@ -5,7 +5,7 @@ namespace AvionesBackNet.Models;
 
 public partial class FailedJob
 {
-    public ulong Id { get; set; }
+    public long Id { get; set; }
 
     public string Uuid { get; set; } = null!;
 

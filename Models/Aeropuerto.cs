@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Aeropuerto
+public partial class Aeropuerto : CommonsModel<long>
 {
-    public ulong Id { get; set; }
-
     public string Iata { get; set; } = null!;
 
     public string Oaci { get; set; } = null!;
@@ -31,17 +30,11 @@ public partial class Aeropuerto
 
     public bool? Interno { get; set; }
 
-    public ulong PaisId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
+    public long PaisId { get; set; }
 
     public virtual ICollection<AerolineaAeropuerto> AerolineaAeropuertos { get; set; } = new List<AerolineaAeropuerto>();
 
-    public virtual Catalogo Pais { get; set; } = null!;
+    public virtual Paise Pais { get; set; } = null!;
 
     public virtual ICollection<Vuelo> VueloAeropuertoDestinos { get; set; } = new List<Vuelo>();
 

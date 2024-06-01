@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Aerolinea
+public partial class Aerolinea : CommonsModel<long>
 {
-    public ulong Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 
@@ -17,13 +17,7 @@ public partial class Aerolinea
 
     public string Email { get; set; } = null!;
 
-    public ulong PaisId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
+    public long PaisId { get; set; }
 
     public virtual ICollection<AerolineaAeropuerto> AerolineaAeropuertos { get; set; } = new List<AerolineaAeropuerto>();
 
@@ -33,7 +27,7 @@ public partial class Aerolinea
 
     public virtual ICollection<ModeloAvionAerolinea> ModeloAvionAerolineas { get; set; } = new List<ModeloAvionAerolinea>();
 
-    public virtual Catalogo Pais { get; set; } = null!;
+    public virtual Paise Pais { get; set; } = null!;
 
     public virtual ICollection<Tripulacione> Tripulaciones { get; set; } = new List<Tripulacione>();
 }

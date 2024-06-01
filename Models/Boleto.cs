@@ -1,30 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvionesBackNet.utils;
 
 namespace AvionesBackNet.Models;
 
-public partial class Boleto
+public partial class Boleto : CommonsModel<long>
 {
-    public ulong Id { get; set; }
-
     public int CantidadMaletasAdquiridas { get; set; }
 
     public int CantidadMaletasPresentadas { get; set; }
 
-    public ulong EstadoBoletoId { get; set; }
+    public long EstadoBoletoId { get; set; }
 
-    public ulong VueloId { get; set; }
+    public long VueloId { get; set; }
 
-    public ulong AsientoId { get; set; }
+    public long AsientoId { get; set; }
 
-    public ulong ClienteId { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
-
-    public DateTime? UpdatedAt { get; set; }
-
-    public DateTime? DeletedAt { get; set; }
-
+    public long ClienteId { get; set; }
     public virtual Asiento Asiento { get; set; } = null!;
 
     public virtual Cliente Cliente { get; set; } = null!;

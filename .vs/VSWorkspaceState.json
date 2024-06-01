@@ -1,8 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\context",
-    "\\Models"
+    "\\utils"
   ],
   "SelectedNode": "\\Program.cs",
   "PreviewInSolutionExplorer": false
