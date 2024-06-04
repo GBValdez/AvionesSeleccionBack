@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Catalogues;
+using project.utils.catalogues.dto;
 
 namespace AvionesBackNet.Modules.seats
 {

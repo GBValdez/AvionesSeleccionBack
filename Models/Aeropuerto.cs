@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AvionesBackNet.utils;
+using project.utils;
 
 namespace AvionesBackNet.Models;
 
@@ -31,12 +31,5 @@ public partial class Aeropuerto : CommonsModel<long>
     public bool? Interno { get; set; }
 
     public long PaisId { get; set; }
-
-    public virtual ICollection<AerolineaAeropuerto> AerolineaAeropuertos { get; set; } = new List<AerolineaAeropuerto>();
-
     public virtual Paise Pais { get; set; } = null!;
-
-    public virtual ICollection<Vuelo> VueloAeropuertoDestinos { get; set; } = new List<Vuelo>();
-
-    public virtual ICollection<Vuelo> VueloAeropuertoOrigens { get; set; } = new List<Vuelo>();
 }

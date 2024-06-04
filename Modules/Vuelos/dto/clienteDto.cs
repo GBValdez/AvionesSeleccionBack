@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AvionesBackNet.Modules.Catalogues;
 using AvionesBackNet.Modules.Paises;
+using project.utils.catalogues.dto;
 
 namespace AvionesBackNet.Modules.Vuelos
 {

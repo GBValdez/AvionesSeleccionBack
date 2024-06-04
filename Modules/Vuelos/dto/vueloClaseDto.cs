@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AvionesBackNet.Modules.Catalogues;
+using project.utils.catalogues.dto;
 
 namespace AvionesBackNet.Modules.Vuelos
 {

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Catalogues;
-using AvionesBackNet.utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using project.utils;
 
 namespace AvionesBackNet.Modules.seats
 {
@@ -16,10 +16,12 @@ namespace AvionesBackNet.Modules.seats
     public class SeatsController : controllerCommons<Asiento, asientoDtoCreation, asientoDto, asientoQueryDto, object, long>
     {
         private seatSvc seatSvc;
+
         public SeatsController(AvionesContext context, IMapper mapper, seatSvc svc) : base(context, mapper)
         {
             this.seatSvc = svc;
         }
+
         protected override Task<IQueryable<Asiento>> modifyGet(IQueryable<Asiento> query, asientoQueryDto queryParams)
         {
             query = query.Include(db => db.Clase);
