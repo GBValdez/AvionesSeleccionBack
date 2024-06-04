@@ -94,6 +94,7 @@ builder.Services.AddSwaggerGen(c =>
                         }
 
                     });
+                    c.EnableAnnotations();
                 }
             );
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));

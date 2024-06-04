@@ -127,3 +127,4 @@ D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBack
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\MimeKit.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
