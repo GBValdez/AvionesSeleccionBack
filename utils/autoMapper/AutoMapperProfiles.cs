@@ -1,21 +1,30 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Aeropuertos;
 using AvionesBackNet.Modules.Aviones;
-using AvionesBackNet.Modules.Catalogues;
-using AvionesBackNet.Modules.Categories;
 using AvionesBackNet.Modules.Paises;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.Modules.Vuelos.dto;
+using project.roles;
+using project.roles.dto;
+using project.users;
+using project.users.dto;
+using project.utils.catalogues.dto;
 
-namespace AvionesBackNet.utils
+namespace project.utils.autoMapper
 {
-    public class autoMapperProfiles : Profile
+    public class AutoMapperProfiles : Profile
     {
-        public autoMapperProfiles()
+        public AutoMapperProfiles()
         {
-            //Catalogos
+            CreateMap<userEntity, userDto>()
+            .ForMember(userDtoId => userDtoId.isActive, options => options.MapFrom(src => src.deleteAt == null));
+            ;
+
+            CreateMap<rolEntity, rolDto>();
+            CreateMap<rolCreationDto, rolEntity>();
+
             CreateMap<Catalogo, catalogueDto>();
             CreateMap<catalogueCreationDto, Catalogo>();
             CreateMap<asientoDtoCreation, Asiento>();
@@ -32,6 +41,8 @@ namespace AvionesBackNet.utils
             CreateMap<Aeropuerto, AeropuertoDto>();
             CreateMap<AeropuertoDtoCreation, Aeropuerto>();
             CreateMap<Aerolinea, aerolineaDto>();
+
         }
+
     }
 }

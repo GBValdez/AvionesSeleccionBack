@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AvionesBackNet.utils;
+using project.users;
+using project.utils;
 
 namespace AvionesBackNet.Models;
 
@@ -15,5 +16,5 @@ public partial class BitacoraEncabezado : CommonsModel<long>
     public long UserId { get; set; }
     public virtual ICollection<BitacoraCuerpo> BitacoraCuerpos { get; set; } = new List<BitacoraCuerpo>();
 
-    public virtual User User { get; set; } = null!;
+    public virtual userEntity User { get; set; } = null!;
 }

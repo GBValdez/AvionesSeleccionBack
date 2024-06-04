@@ -7,6 +7,7 @@ using AvionesBackNet.Modules.Catalogues;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.Modules.Vuelos.dto;
+using project.utils.catalogues.dto;
 
 namespace AvionesBackNet.Modules.Aviones
 {

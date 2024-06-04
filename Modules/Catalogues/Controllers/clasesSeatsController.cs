@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using AvionesBackNet.Models;
-using AvionesBackNet.Modules.Categories;
 using Microsoft.AspNetCore.Mvc;
+using project.utils;
+using project.utils.catalogues;
 
 namespace AvionesBackNet.Modules.Catalogues.Controllers
 {
@@ -12,7 +13,7 @@ namespace AvionesBackNet.Modules.Catalogues.Controllers
         public clasesSeatsController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
             codCatalogue = "CAA";
-        }
 
+        }
     }
 }

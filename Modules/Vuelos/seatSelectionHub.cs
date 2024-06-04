@@ -39,8 +39,8 @@ namespace AvionesBackNet.Modules.Vuelos
                 {
                     AsientoId = asientoIdL,
                     VueloId = vueloIdL,
-                    UpdatedAt = DateTime.UtcNow,
-                    CreatedAt = DateTime.UtcNow,
+                    updateAt = DateTime.UtcNow,
+                    createAt = DateTime.UtcNow,
                     ClienteId = 1,
                     EstadoBoletoId = 29,
                     CantidadMaletasAdquiridas = 0,
@@ -52,14 +52,14 @@ namespace AvionesBackNet.Modules.Vuelos
             else if (boleto.EstadoBoletoId == 30)
             {
                 boleto.EstadoBoletoId = 29;
-                boleto.UpdatedAt = DateTime.UtcNow;
+                boleto.updateAt = DateTime.UtcNow;
                 boleto.ClienteId = 1;
                 await _context.SaveChangesAsync();
             }
             else if (boleto.EstadoBoletoId == 29)
             {
                 boleto.EstadoBoletoId = 30;
-                boleto.UpdatedAt = DateTime.UtcNow;
+                boleto.updateAt = DateTime.UtcNow;
                 boleto.ClienteId = 1;
                 await _context.SaveChangesAsync();
             }

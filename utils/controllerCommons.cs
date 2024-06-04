@@ -6,10 +6,14 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using project.utils.dto;
+using project.utils.interfaces;
 
-namespace AvionesBackNet.utils
+namespace project.utils
 {
     public class controllerCommons<TEntity, TDtoCreation, TDto, TQuery, TQueryCreation, idClass> : ControllerBase
     where TEntity : class
@@ -33,7 +37,7 @@ namespace AvionesBackNet.utils
         {
             IQueryable<TEntity> query = context.Set<TEntity>();
             if (!showDeleted)
-                query = query.Where(db => ((ICommonModel<idClass>)db).DeletedAt == null);
+                query = query.Where(db => ((ICommonModel<idClass>)db).deleteAt == null);
 
             Type queryableType = typeof(TEntity);
             IEnumerable<PropertyInfo> properties = typeof(TQuery).GetProperties()
@@ -161,33 +165,11 @@ namespace AvionesBackNet.utils
             await context.SaveChangesAsync();
             return this.mapper.Map<TDto>(newRegisterEntity);
         }
-
-        [HttpPost("group")]
-        public virtual async Task<ActionResult<List<TDto>>> postGroup(List<TDtoCreation> newRegister, [FromQuery] TQueryCreation queryParams)
-        {
-            errorMessageDto error = await this.validPostGroup(newRegister, queryParams);
-            if (error != null)
-                return BadRequest(error);
-            List<TEntity> newRegisterEntity = this.mapper.Map<List<TEntity>>(newRegister);
-            await this.modifyPostGroup(newRegisterEntity, queryParams);
-            context.Add(newRegisterEntity);
-            await context.SaveChangesAsync();
-            return this.mapper.Map<List<TDto>>(newRegisterEntity);
-        }
-
         protected async virtual Task<errorMessageDto> validPost(TDtoCreation dtoNew, TQueryCreation queryParams)
         {
             return null;
         }
-        protected async virtual Task<errorMessageDto> validPostGroup(List<TDtoCreation> dtoNew, TQueryCreation queryParams)
-        {
-            return null;
-        }
         protected async virtual Task modifyPost(TEntity entity, TQueryCreation queryParams)
-        {
-            return;
-        }
-        protected async virtual Task modifyPostGroup(List<TEntity> entity, TQueryCreation queryParams)
         {
             return;
         }
@@ -196,7 +178,7 @@ namespace AvionesBackNet.utils
         public virtual async Task<ActionResult> delete(idClass id)
         {
             TEntity exits = await context.Set<TEntity>()
-                .FirstOrDefaultAsync(Db => ((ICommonModel<idClass>)Db).Id.Equals(id) && ((ICommonModel<idClass>)Db).DeletedAt == null);
+                .FirstOrDefaultAsync(Db => ((ICommonModel<idClass>)Db).Id.Equals(id) && ((ICommonModel<idClass>)Db).deleteAt == null);
             if (exits == null)
             {
                 return NotFound();
@@ -204,7 +186,7 @@ namespace AvionesBackNet.utils
             errorMessageDto error = await this.validDelete(exits);
             if (error != null)
                 return BadRequest(error);
-            ((ICommonModel<idClass>)exits).DeletedAt = DateTime.Now.ToUniversalTime();
+            ((ICommonModel<idClass>)exits).deleteAt = DateTime.Now.ToUniversalTime();
             await context.SaveChangesAsync();
             return Ok();
         }
@@ -218,7 +200,7 @@ namespace AvionesBackNet.utils
         public virtual async Task<ActionResult> put(TDtoCreation entityCurrent, [FromRoute] idClass id, [FromQuery] TQueryCreation queryCreation)
         {
 
-            TEntity exits = await context.Set<TEntity>().FirstOrDefaultAsync(db => ((ICommonModel<idClass>)db).Id.Equals(id) && ((ICommonModel<idClass>)db).DeletedAt == null);
+            TEntity exits = await context.Set<TEntity>().FirstOrDefaultAsync(db => ((ICommonModel<idClass>)db).Id.Equals(id) && ((ICommonModel<idClass>)db).deleteAt == null);
             if (exits == null)
                 return NotFound();
             errorMessageDto error = await this.validPut(entityCurrent, exits, queryCreation);

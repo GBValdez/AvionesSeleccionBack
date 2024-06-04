@@ -9,6 +9,7 @@ using AvionesBackNet.Modules.Catalogues;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using project.utils.catalogues.dto;
 
 namespace AvionesBackNet.Modules.seats
 {
@@ -46,7 +47,7 @@ namespace AvionesBackNet.Modules.seats
                 {
                     item.Estado = new catalogueDto();
                     item.Estado.Id = 30;
-                    item.Estado.Nombre = "LIBRE";
+                    item.Estado.name = "LIBRE";
                 }
             }
             avionWithSeatsDto avionWithSeatsDto = new avionWithSeatsDto();
