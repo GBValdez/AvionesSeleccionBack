@@ -6,11 +6,11 @@ namespace AvionesBackNet.Models;
 
 public partial class CatalogoTipo : CommonsModel<long>
 {
-    public string Codigo { get; set; } = null!;
+    public string code { get; set; } = null!;
 
-    public string Nombre { get; set; } = null!;
+    public string name { get; set; } = null!;
 
-    public string? Descripcion { get; set; }
+    public string? description { get; set; }
 
     public virtual ICollection<Catalogo> Catalogos { get; set; } = new List<Catalogo>();
 }

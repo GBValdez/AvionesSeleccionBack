@@ -20,7 +20,7 @@ namespace project.users
 {
     [ApiController]
     [Route("user")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
 
     public class userController : controllerCommons<userEntity, userUpdateDto, userDto, userQueryDto, object, string>
     {

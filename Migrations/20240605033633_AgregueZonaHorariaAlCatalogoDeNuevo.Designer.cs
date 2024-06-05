@@ -4,6 +4,7 @@ using AvionesBackNet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvionesBackNet.Migrations
 {
     [DbContext(typeof(AvionesContext))]
-    partial class AvionesContextModelSnapshot : ModelSnapshot
+    [Migration("20240605033633_AgregueZonaHorariaAlCatalogoDeNuevo")]
+    partial class AgregueZonaHorariaAlCatalogoDeNuevo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -582,10 +585,6 @@ namespace AvionesBackNet.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime?>("createAt")
                         .HasColumnType("datetime(6)");
 
@@ -605,8 +604,6 @@ namespace AvionesBackNet.Migrations
                     b.HasIndex("CodigoTelefonoNavigationId");
 
                     b.HasIndex("PaisId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("userUpdateId");
 
@@ -1350,12 +1347,6 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("project.users.userEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
@@ -1365,8 +1356,6 @@ namespace AvionesBackNet.Migrations
                     b.Navigation("CodigoTelefonoNavigation");
 
                     b.Navigation("Pais");
-
-                    b.Navigation("User");
 
                     b.Navigation("userUpdate");
                 });

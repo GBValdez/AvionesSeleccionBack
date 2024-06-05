@@ -19,7 +19,7 @@ namespace project.utils.catalogues
 
         protected Task<CatalogoTipo> getCatalogueType()
         {
-            return context.CatalogoTipos.Where(db => db.Codigo == codCatalogue).FirstOrDefaultAsync();
+            return context.CatalogoTipos.Where(db => db.code == codCatalogue).FirstOrDefaultAsync();
         }
 
         protected override async Task<IQueryable<Catalogo>> modifyGet(IQueryable<Catalogo> query, catalogueQueryDto queryParams)

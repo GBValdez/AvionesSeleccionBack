@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using project.users;
 using project.utils;
 
 namespace AvionesBackNet.Models;
@@ -21,6 +23,8 @@ public partial class Cliente : CommonsModel<long>
     public string Direccion { get; set; } = null!;
 
     public long PaisId { get; set; }
+    public string UserId { get; set; }
+
 
     public long CodigoTelefono { get; set; }
 
@@ -32,4 +36,7 @@ public partial class Cliente : CommonsModel<long>
     public virtual Catalogo CodigoTelefonoNavigation { get; set; } = null!;
 
     public virtual Paise Pais { get; set; } = null!;
+
+    [ForeignKey("UserId")]
+    public userEntity User { get; set; } = null!;
 }

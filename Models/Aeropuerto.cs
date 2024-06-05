@@ -16,8 +16,6 @@ public partial class Aeropuerto : CommonsModel<long>
 
     public string Localidad { get; set; } = null!;
 
-    public string ZonaHoraria { get; set; } = null!;
-
     public string? Latitud { get; set; }
 
     public string? Longitud { get; set; }
@@ -30,6 +28,9 @@ public partial class Aeropuerto : CommonsModel<long>
 
     public bool? Interno { get; set; }
 
+    public long ZonaHorariaId { get; set; }
+
     public long PaisId { get; set; }
     public virtual Paise Pais { get; set; } = null!;
+    public virtual Catalogo ZonaHoraria { get; set; } = null!;
 }
