@@ -43,7 +43,6 @@ public partial class AvionesContext : IdentityDbContext<userEntity, rolEntity, s
     public virtual DbSet<Empleado> Empleados { get; set; }
 
 
-    public virtual DbSet<ModeloAvionAerolinea> ModeloAvionAerolineas { get; set; }
 
     public virtual DbSet<Paise> Paises { get; set; }
 

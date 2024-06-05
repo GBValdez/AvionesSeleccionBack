@@ -47,7 +47,7 @@ namespace AvionesBackNet.Modules.seats
                 {
                     item.Estado = new catalogueDto();
                     item.Estado.Id = 30;
-                    item.Estado.Nombre = "LIBRE";
+                    item.Estado.name = "LIBRE";
                 }
             }
             avionWithSeatsDto avionWithSeatsDto = new avionWithSeatsDto();

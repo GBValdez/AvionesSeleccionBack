@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using project.users;
 using project.utils;
 
@@ -25,7 +26,7 @@ public partial class Empleado : CommonsModel<long>
 
     public long AerolineaId { get; set; }
 
-    public long UserId { get; set; }
+    public string UserId { get; set; }
     public virtual Aerolinea Aerolinea { get; set; } = null!;
 
     public virtual Paise Pais { get; set; } = null!;
@@ -34,5 +35,6 @@ public partial class Empleado : CommonsModel<long>
 
     public virtual Tripulacione Tripulacion { get; set; } = null!;
 
-    public virtual userEntity User { get; set; } = null!;
+    [ForeignKey("UserId")]
+    public userEntity User { get; set; } = null!;
 }

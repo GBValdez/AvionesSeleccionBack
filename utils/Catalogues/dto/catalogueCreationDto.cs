@@ -6,9 +6,9 @@ namespace project.utils.catalogues.dto
     {
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(50, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres")]
-        public string Nombre { get; set; }
+        public string name { get; set; }
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [StringLength(255, ErrorMessage = "El campo {0} no puede tener mas de {1} caracteres")]
-        public string Descripcion { get; set; }
+        public string description { get; set; }
     }
 }

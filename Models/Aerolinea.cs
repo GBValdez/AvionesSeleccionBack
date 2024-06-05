@@ -25,6 +25,5 @@ public partial class Aerolinea : CommonsModel<long>
 
     public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 
-    public virtual ICollection<ModeloAvionAerolinea> ModeloAvionAerolineas { get; set; } = new List<ModeloAvionAerolinea>();
     public virtual ICollection<Tripulacione> Tripulaciones { get; set; } = new List<Tripulacione>();
 }
