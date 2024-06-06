@@ -206,6 +206,7 @@ namespace project.utils
             errorMessageDto error = await this.validPut(entityCurrent, exits, queryCreation);
             if (error != null)
                 return BadRequest(error);
+            await modifyPut(exits, entityCurrent, queryCreation);
             exits = mapper.Map(entityCurrent, exits);
             await context.SaveChangesAsync();
             return NoContent();
@@ -214,6 +215,10 @@ namespace project.utils
         protected virtual async Task<errorMessageDto> validPut(TDtoCreation dtoNew, TEntity entity, TQueryCreation queryParams)
         {
             return null;
+        }
+        protected virtual async Task modifyPut(TEntity entity, TDtoCreation dtoNew, TQueryCreation queryParams)
+        {
+            return;
         }
     }
 }
