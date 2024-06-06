@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AvionesBackNet")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45d7f5a2ab48a766c1a5ef0b5a207df6673b3a50")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3956992f5fadb1c6563df573d298dcaf921c50f7")]
 [assembly: System.Reflection.AssemblyProductAttribute("AvionesBackNet")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AvionesBackNet")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

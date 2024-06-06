@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "es7zgHwmgfF8o5+FTNTsLkXjTShOytnzmlHkpBYV3TIEmflMVxcUwFGeBaAeKWXbYLpdzY0olKGP1lm3IVhgNQ==",
+  "dgSpecHash": "I+fXAl/r3e46zOjOhsEzHxctEYb9mo+duQWaPLna6QkHRdP9Q3pym7ZsNltDw2sFR3x8vVFMIuSB92E/8tzqmQ==",
   "success": true,
-  "projectFilePath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
+  "projectFilePath": "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gbval\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\gbval\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
