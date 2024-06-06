@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
@@ -32,8 +33,10 @@ namespace project.users
         private readonly emailService emailService;
         private readonly IDataProtector dataProtector;
         protected override bool showDeleted { get; set; } = true;
-        public userController(UserManager<userEntity> userManager, IConfiguration configuration, SignInManager<userEntity> signManager, emailService emailService, IDataProtectionProvider dataProvider, AvionesContext contex, IMapper mapper) : base(contex, mapper)
+        protected readonly userSvc userSvc;
+        public userController(UserManager<userEntity> userManager, IConfiguration configuration, SignInManager<userEntity> signManager, emailService emailService, IDataProtectionProvider dataProvider, AvionesContext contex, IMapper mapper, userSvc userSvc) : base(contex, mapper)
         {
+            this.userSvc = userSvc;
             this.userManager = userManager;
             this.configuration = configuration;
             this.signManager = signManager;
@@ -104,34 +107,13 @@ namespace project.users
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ActionResult> register(userCreationDto credentials)
+        public async Task<IActionResult> register(userCreationDto credentials)
         {
-            if (await userManager.FindByEmailAsync(credentials.email) != null)
-                return BadRequest(new errorMessageDto("El correo ya esta en uso"));
-            if (await userManager.FindByNameAsync(credentials.userName) != null)
-                return BadRequest(new errorMessageDto("El Nombre de usuario ya esta en uso"));
-            userEntity user = new userEntity() { UserName = credentials.userName, Email = credentials.email };
+            errorMessageDto error = await userSvc.register(credentials, new List<string> { "userNormal" });
+            if (error != null)
+                return BadRequest(error);
 
-            IdentityResult result = await userManager.CreateAsync(user, credentials.password);
-            if (result.Succeeded)
-            {
-                IList<string> roles = new List<string> { "userNormal" };
-                await userManager.AddToRolesAsync(user, roles);
-
-                string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                string encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-                emailService.SendEmail(new emailSendDto
-                {
-                    email = credentials.email,
-                    subject = "Confirmacion de correo",
-                    message = $"<h1>Correo de confirmación Aeropuerto</h1> <a href='{configuration["FrontUrl"]}/user/confirmEmail?email={credentials.email}&token={encodedToken}'>Confirmar correo</a>"
-                });
-                return Ok();
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
+            return NoContent();
         }
 
         protected override async Task<IQueryable<userEntity>> modifyGet(IQueryable<userEntity> query, userQueryDto queryParam)

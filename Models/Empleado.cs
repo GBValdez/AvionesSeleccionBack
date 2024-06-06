@@ -15,7 +15,7 @@ public partial class Empleado : CommonsModel<long>
     public string Telefono { get; set; } = null!;
     public long PaisId { get; set; }
     public long PuestoId { get; set; }
-    public long? TripulacionId { get; set; }
+    public long? TripulacionId { get; set; } = null;
     public long AerolineaId { get; set; }
     public string UserId { get; set; }
     public virtual Aerolinea Aerolinea { get; set; } = null!;

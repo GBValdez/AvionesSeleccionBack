@@ -7,6 +7,6 @@ namespace AvionesBackNet.Modules.crew
 {
     public class crewCreationDto : crewDtoBase
     {
-        public long AerolineaId { get; set; }
+
     }
 }

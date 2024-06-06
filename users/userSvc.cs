@@ -19,21 +19,26 @@ namespace AvionesBackNet.users
         private readonly emailService emailService;
         private readonly IConfiguration configuration;
 
-
-        public async Task<IActionResult> register(userCreationDto credentials, IList<string> roles)
+        public userSvc(UserManager<userEntity> userManager, emailService emailService, IConfiguration configuration)
+        {
+            this.userManager = userManager;
+            this.emailService = emailService;
+            this.configuration = configuration;
+        }
+        public async Task<errorMessageDto> register(userCreationDto credentials, IList<string> roles)
         {
             if (await userManager.FindByEmailAsync(credentials.email) != null)
-                return new BadRequestObjectResult(new errorMessageDto("El correo ya esta en uso"));
+                return new errorMessageDto("El correo ya esta en uso");
             if (await userManager.FindByNameAsync(credentials.userName) != null)
-                return new BadRequestObjectResult(new errorMessageDto("El nombre de usuario ya esta en uso"));
+                return new errorMessageDto("El nombre de usuario ya esta en uso");
             userEntity user = new userEntity() { UserName = credentials.userName, Email = credentials.email };
 
             IdentityResult result = await userManager.CreateAsync(user, credentials.password);
             if (!result.Succeeded)
-                return new BadRequestObjectResult(result.Errors.Select(e => new errorMessageDto(e.Description)));
+                return result.Errors.Select(e => new errorMessageDto(e.Description)).FirstOrDefault();
             IdentityResult roleResult = await userManager.AddToRolesAsync(user, roles);
             if (!roleResult.Succeeded)
-                return new BadRequestObjectResult(roleResult.Errors.Select(e => new errorMessageDto(e.Description)));
+                return roleResult.Errors.Select(e => new errorMessageDto(e.Description)).FirstOrDefault();
 
             string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             string encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
@@ -43,7 +48,7 @@ namespace AvionesBackNet.users
                 subject = "Confirmacion de correo",
                 message = $"<h1>Correo de confirmación Aeropuerto</h1> <a href='{configuration["FrontUrl"]}/user/confirmEmail?email={credentials.email}&token={encodedToken}'>Confirmar correo</a>"
             });
-            return new OkResult();
+            return null;
         }
     }
 }
