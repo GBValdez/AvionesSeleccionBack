@@ -20,7 +20,7 @@ namespace AvionesBackNet.Modules.Aeropuertos
 
         protected override async Task<IQueryable<Aeropuerto>> modifyGet(IQueryable<Aeropuerto> query, object queryParams)
         {
-            query = query.Include(a => a.Pais);
+            query = query.Include(a => a.Pais).Include(a => a.ZonaHoraria);
             return query;
         }
     }

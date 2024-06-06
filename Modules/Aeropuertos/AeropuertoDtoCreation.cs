@@ -28,8 +28,7 @@ namespace AvionesBackNet.Modules.Aeropuertos
         public string Localidad { get; set; } = null!;
 
         [Required(ErrorMessage = "La zona horaria es requerida")]
-        [StringLength(50, ErrorMessage = "La zona horaria no puede tener mas de {1} caracteres")]
-        public string ZonaHoraria { get; set; } = null!;
+        public long ZonaHorariaId { get; set; }
 
         [Required(ErrorMessage = "La latitud es requerida")]
         public string Latitud { get; set; }

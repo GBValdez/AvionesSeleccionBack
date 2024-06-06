@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Paises;
 
 namespace AvionesBackNet.Modules.Aeropuertos
@@ -19,8 +20,7 @@ namespace AvionesBackNet.Modules.Aeropuertos
 
         public string Localidad { get; set; } = null!;
 
-        public string ZonaHoraria { get; set; } = null!;
-
+        public Catalogo ZonaHoraria { get; set; } = null!;
         public string Latitud { get; set; }
 
         public string Longitud { get; set; }

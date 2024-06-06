@@ -115,7 +115,7 @@ namespace project.users
             IdentityResult result = await userManager.CreateAsync(user, credentials.password);
             if (result.Succeeded)
             {
-                IList<string> roles = new List<string> { "userNormal", "ADMINISTRATOR" };
+                IList<string> roles = new List<string> { "userNormal" };
                 await userManager.AddToRolesAsync(user, roles);
 
                 string token = await userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -124,7 +124,7 @@ namespace project.users
                 {
                     email = credentials.email,
                     subject = "Confirmacion de correo",
-                    message = $"<h1>Correo de confirmación BookMaster</h1> <a href='{configuration["FrontUrl"]}/user/confirmEmail?email={credentials.email}&token={encodedToken}'>Confirmar correo</a>"
+                    message = $"<h1>Correo de confirmación Aeropuerto</h1> <a href='{configuration["FrontUrl"]}/user/confirmEmail?email={credentials.email}&token={encodedToken}'>Confirmar correo</a>"
                 });
                 return Ok();
             }
