@@ -5,6 +5,7 @@ using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.Aviones;
 using AvionesBackNet.Modules.country;
 using AvionesBackNet.Modules.crew;
+using AvionesBackNet.Modules.destinos;
 using AvionesBackNet.Modules.Empleados;
 using AvionesBackNet.Modules.Paises;
 using AvionesBackNet.Modules.seats;
@@ -53,6 +54,8 @@ namespace project.utils.autoMapper
             CreateMap<Tripulacione, crewDto>();
             CreateMap<crewCreationDto, Tripulacione>();
 
+            CreateMap<AerolineaAeropuerto, destinoDto>();
+            CreateMap<destinoCreationDto, AerolineaAeropuerto>();
         }
 
     }

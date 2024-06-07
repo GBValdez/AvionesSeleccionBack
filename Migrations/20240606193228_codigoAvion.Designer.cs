@@ -4,6 +4,7 @@ using AvionesBackNet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvionesBackNet.Migrations
 {
     [DbContext(typeof(AvionesContext))]
-    partial class AvionesContextModelSnapshot : ModelSnapshot
+    [Migration("20240606193228_codigoAvion")]
+    partial class codigoAvion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -743,9 +746,6 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("AerolineaId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("AvionId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -765,8 +765,6 @@ namespace AvionesBackNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AerolineaId");
-
-                    b.HasIndex("AvionId");
 
                     b.HasIndex("userUpdateId");
 
@@ -1444,17 +1442,11 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AvionesBackNet.Models.Avione", "Avion")
-                        .WithMany()
-                        .HasForeignKey("AvionId");
-
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
 
                     b.Navigation("Aerolinea");
-
-                    b.Navigation("Avion");
 
                     b.Navigation("userUpdate");
                 });

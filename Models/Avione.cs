@@ -7,6 +7,7 @@ namespace AvionesBackNet.Models;
 
 public partial class Avione : CommonsModel<long>
 {
+    public string Codigo { get; set; } = null!;
 
     public string Year { get; set; } = null!;
 
@@ -18,7 +19,7 @@ public partial class Avione : CommonsModel<long>
 
     public decimal CapacidadCombustible { get; set; }
 
-    public decimal TamAsientoPorc { get; set; }
+    public decimal TamAsientoPorc { get; set; } = 10;
 
     public long MarcaId { get; set; }
 
@@ -45,4 +46,6 @@ public partial class Avione : CommonsModel<long>
     [JsonIgnore]
 
     public virtual ICollection<Asiento> Asientos { get; set; } = new List<Asiento>();
+    [JsonIgnore]
+    public virtual ICollection<Tripulacione> Tripulaciones { get; set; } = new List<Tripulacione>();
 }

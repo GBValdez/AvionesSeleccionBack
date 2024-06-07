@@ -24,8 +24,20 @@ namespace AvionesBackNet.Modules.Vuelos
                 .Include(v => v.AeropuertoDestino)
                 .ThenInclude(a => a.Pais)
                 .Include(v => v.AeropuertoOrigen)
-                .ThenInclude(a => a.Pais);
+                .ThenInclude(a => a.Pais)
+                .Include(v => v.Avion)
+                .ThenInclude(a => a.Modelo)
+                .Include(v => v.VueloClases)
+                .ThenInclude(vc => vc.Clase);
+
             return query;
+        }
+        protected override async Task modifyPut(Vuelo entity, vueloDtoCreation dtoNew, object queryParams)
+        {
+            List<VueloClase> vueloClases = await context.VueloClases.Where(vc => vc.VueloId == entity.Id).ToListAsync();
+            context.VueloClases.RemoveRange(vueloClases);
+            await context.SaveChangesAsync();
+
         }
     }
 }

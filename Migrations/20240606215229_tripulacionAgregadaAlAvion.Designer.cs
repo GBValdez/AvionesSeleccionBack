@@ -4,6 +4,7 @@ using AvionesBackNet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvionesBackNet.Migrations
 {
     [DbContext(typeof(AvionesContext))]
-    partial class AvionesContextModelSnapshot : ModelSnapshot
+    [Migration("20240606215229_tripulacionAgregadaAlAvion")]
+    partial class tripulacionAgregadaAlAvion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,6 +287,9 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("TipoAvionId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("TripulacionId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Year")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -311,6 +317,8 @@ namespace AvionesBackNet.Migrations
                     b.HasIndex("ModeloId");
 
                     b.HasIndex("TipoAvionId");
+
+                    b.HasIndex("TripulacionId");
 
                     b.HasIndex("userUpdateId");
 
@@ -743,9 +751,6 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("AerolineaId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("AvionId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -765,8 +770,6 @@ namespace AvionesBackNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AerolineaId");
-
-                    b.HasIndex("AvionId");
 
                     b.HasIndex("userUpdateId");
 
@@ -1221,6 +1224,12 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AvionesBackNet.Models.Tripulacione", "Tripulacion")
+                        .WithMany()
+                        .HasForeignKey("TripulacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
@@ -1234,6 +1243,8 @@ namespace AvionesBackNet.Migrations
                     b.Navigation("Modelo");
 
                     b.Navigation("TipoAvion");
+
+                    b.Navigation("Tripulacion");
 
                     b.Navigation("userUpdate");
                 });
@@ -1444,17 +1455,11 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AvionesBackNet.Models.Avione", "Avion")
-                        .WithMany()
-                        .HasForeignKey("AvionId");
-
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
 
                     b.Navigation("Aerolinea");
-
-                    b.Navigation("Avion");
 
                     b.Navigation("userUpdate");
                 });
