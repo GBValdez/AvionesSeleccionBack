@@ -1,33 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AvionesBackNet.Modules.Aviones
 {
-    public class AvionCreationDto
+    public class AvionCreationDto : AvionDtoBase
     {
-        public string Year { get; set; } = null!;
-
-        public string Serie { get; set; } = null!;
-
-        public decimal CapacidadCarga { get; set; }
-
-        public decimal CapacidadPasajeros { get; set; }
-
-        public decimal CapacidadCombustible { get; set; }
-
-        public decimal TamAsientoPorc { get; set; }
-
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         public long MarcaId { get; set; }
 
-        public long AerolineaId { get; set; }
-
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         public long ModeloId { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         public long TipoAvionId { get; set; }
-
-        public long EstadoId { get; set; }
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public long TripulacionId { get; set; }
 
     }
 }

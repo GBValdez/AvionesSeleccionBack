@@ -1,7 +1,9 @@
 using AutoMapper;
 using AvionesBackNet.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using project.utils;
+using project.utils.dto;
 
 namespace AvionesBackNet.Modules.Aviones
 {
@@ -12,5 +14,52 @@ namespace AvionesBackNet.Modules.Aviones
         public AvionController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
         }
+        protected override Task<IQueryable<Avione>> modifyGet(IQueryable<Avione> query, AvionQueryDto queryParams)
+        {
+            query = query.Include(e => e.Modelo).Include(e => e.Marca).Include(e => e.TipoAvion).Include(e => e.Estado).Include(e => e.Aerolinea).Include(e => e.Tripulaciones);
+            return base.modifyGet(query, queryParams);
+        }
+        protected override Task modifyPost(Avione entity, object queryParams)
+        {
+            entity.AerolineaId = 1;
+            entity.EstadoId = 87;
+            return base.modifyPost(entity, queryParams);
+        }
+        protected override async Task finallyPost(Avione entity, AvionCreationDto dtoCreation, object queryParams)
+        {
+            Tripulacione tripulacione = await context.Tripulaciones.FirstOrDefaultAsync(t => t.Id == dtoCreation.TripulacionId);
+            if (tripulacione != null)
+            {
+                tripulacione.AvionId = entity.Id;
+                await context.SaveChangesAsync();
+            }
+        }
+        protected override async Task finallyPut(Avione entity, AvionCreationDto dtoNew, object queryParams)
+        {
+            Tripulacione tripulacione = await context.Tripulaciones.FirstOrDefaultAsync(t => t.AvionId == entity.Id);
+            if (tripulacione != null)
+            {
+                tripulacione.AvionId = null;
+            }
+            Tripulacione newTripulacione = await context.Tripulaciones.FirstOrDefaultAsync(t => t.Id == dtoNew.TripulacionId);
+            if (newTripulacione != null)
+            {
+                newTripulacione.AvionId = entity.Id;
+            }
+            await context.SaveChangesAsync();
+
+        }
+
+        protected override async Task<errorMessageDto> validDelete(Avione entity)
+        {
+            Tripulacione tripulacione = await context.Tripulaciones.FirstOrDefaultAsync(t => t.AvionId == entity.Id);
+            if (tripulacione != null)
+            {
+                tripulacione.AvionId = null;
+            }
+            return null;
+
+        }
+
     }
 }

@@ -31,14 +31,20 @@ namespace AvionesBackNet.Modules.seats
         [HttpPost("saveSeats/{idPlane}")]
         public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
         {
-            Avione? plane = await context.Aviones.FindAsync(idPlane);
+            Avione? plane = await context.Aviones.Include(p => p.Asientos).FirstOrDefaultAsync(p => p.Id == idPlane);
             if (plane == null)
             {
                 return NotFound();
             }
+
+            // Eliminar los asientos antiguos
+            context.Asientos.RemoveRange(plane.Asientos);
+
+            // Mapear y agregar los nuevos asientos
             List<Asiento> asientos = mapper.Map<List<Asiento>>(seats.asientos);
             plane.Asientos = asientos;
             plane.TamAsientoPorc = seats.sizeSeat;
+
             await context.SaveChangesAsync();
             return Ok();
         }

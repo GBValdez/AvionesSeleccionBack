@@ -163,6 +163,7 @@ namespace project.utils
             await this.modifyPost(newRegisterEntity, queryParams);
             context.Add(newRegisterEntity);
             await context.SaveChangesAsync();
+            await this.finallyPost(newRegisterEntity, newRegister, queryParams);
             return this.mapper.Map<TDto>(newRegisterEntity);
         }
         protected async virtual Task<errorMessageDto> validPost(TDtoCreation dtoNew, TQueryCreation queryParams)
@@ -170,6 +171,10 @@ namespace project.utils
             return null;
         }
         protected async virtual Task modifyPost(TEntity entity, TQueryCreation queryParams)
+        {
+            return;
+        }
+        protected async virtual Task finallyPost(TEntity entity, TDtoCreation dtoCreation, TQueryCreation queryParams)
         {
             return;
         }
@@ -209,6 +214,7 @@ namespace project.utils
             await modifyPut(exits, entityCurrent, queryCreation);
             exits = mapper.Map(entityCurrent, exits);
             await context.SaveChangesAsync();
+            await finallyPut(exits, entityCurrent, queryCreation);
             return NoContent();
         }
 
@@ -217,6 +223,10 @@ namespace project.utils
             return null;
         }
         protected virtual async Task modifyPut(TEntity entity, TDtoCreation dtoNew, TQueryCreation queryParams)
+        {
+            return;
+        }
+        protected virtual async Task finallyPut(TEntity entity, TDtoCreation dtoNew, TQueryCreation queryParams)
         {
             return;
         }

@@ -112,6 +112,16 @@ namespace AvionesBackNet.Modules.crew
             await context.SaveChangesAsync();
             return null;
         }
+        [HttpGet("allAndPlane/{id}")]
+        public async Task<ActionResult<List<crewDto>>> getAllAndCrew(
+            [FromRoute] long id
+        )
+        {
+            List<Tripulacione> tripulaciones = await context.Tripulaciones.Where(e => (e.AvionId == null || e.AvionId == id) && e.deleteAt == null).ToListAsync();
+            List<crewDto> crewDtoList = mapper.Map<List<crewDto>>(tripulaciones);
+            return crewDtoList;
+        }
+
 
     }
 }

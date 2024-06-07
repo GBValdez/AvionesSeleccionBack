@@ -18,9 +18,6 @@ namespace AvionesBackNet.Modules.Vuelos
         public virtual AeropuertoDto AeropuertoOrigen { get; set; } = null!;
 
         public virtual AvionDto Avion { get; set; } = null!;
-
-        public virtual ICollection<boletoDto> Boletos { get; set; } = new List<boletoDto>();
-
         public virtual ICollection<vueloClaseDto> VueloClases { get; set; } = new List<vueloClaseDto>();
 
     }
