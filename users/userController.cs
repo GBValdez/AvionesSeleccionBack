@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.Vuelos.dto;
 using AvionesBackNet.users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -107,12 +108,22 @@ namespace project.users
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> register(userCreationDto credentials)
+        public async Task<IActionResult> register(clienteCreationDto newCliente)
         {
+            userCreationDto credentials = new userCreationDto
+            {
+                email = newCliente.Correo,
+                password = newCliente.password,
+                userName = newCliente.userName
+            };
             errorMessageDto error = await userSvc.register(credentials, new List<string> { "userNormal" });
             if (error != null)
                 return BadRequest(error);
-
+            userEntity newUser = await userManager.FindByEmailAsync(newCliente.Correo);
+            Cliente cliente = mapper.Map<Cliente>(newCliente);
+            cliente.UserId = newUser.Id;
+            context.Clientes.Add(cliente);
+            await context.SaveChangesAsync();
             return NoContent();
         }
 

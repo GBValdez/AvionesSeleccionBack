@@ -38,6 +38,7 @@ namespace project.utils.autoMapper
             CreateMap<AvionCreationDto, Avione>();
             CreateMap<Boleto, boletoDto>();
             CreateMap<Cliente, clienteDto>();
+            CreateMap<clienteCreationDto, Cliente>();
             CreateMap<Paise, paisDto>();
             CreateMap<countryCreationDto, Paise>();
             CreateMap<Vuelo, vueloDto>();

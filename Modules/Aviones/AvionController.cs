@@ -52,6 +52,15 @@ namespace AvionesBackNet.Modules.Aviones
 
         protected override async Task<errorMessageDto> validDelete(Avione entity)
         {
+            var vuelosPendientes = await context.Vuelos
+                .FromSqlInterpolated($"SELECT * FROM Vuelos v WHERE v.AvionId = {entity.Id} AND (now() < v.FechaSalida OR now() < v.FechaLlegada) AND v.deleteAt IS NULL")
+                .ToListAsync();
+            if (vuelosPendientes.Any())
+            {
+
+                return new errorMessageDto("No se puede eliminar un avión con vuelos pendientes");
+            }
+
             Tripulacione tripulacione = await context.Tripulaciones.FirstOrDefaultAsync(t => t.AvionId == entity.Id);
             if (tripulacione != null)
             {
