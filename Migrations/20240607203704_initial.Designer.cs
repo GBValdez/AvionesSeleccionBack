@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvionesBackNet.Migrations
 {
     [DbContext(typeof(AvionesContext))]
-    [Migration("20240605033226_AgregueZonaHorariaAlCatalogo")]
-    partial class AgregueZonaHorariaAlCatalogo
+    [Migration("20240607203704_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,9 +212,6 @@ namespace AvionesBackNet.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<long>("EstadoId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Posicion")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -236,8 +233,6 @@ namespace AvionesBackNet.Migrations
                     b.HasIndex("AvionId");
 
                     b.HasIndex("ClaseId");
-
-                    b.HasIndex("EstadoId");
 
                     b.HasIndex("userUpdateId");
 
@@ -263,6 +258,10 @@ namespace AvionesBackNet.Migrations
 
                     b.Property<decimal>("CapacidadPasajeros")
                         .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<long>("EstadoId")
                         .HasColumnType("bigint");
@@ -380,10 +379,8 @@ namespace AvionesBackNet.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("createAt")
@@ -400,7 +397,7 @@ namespace AvionesBackNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("userUpdateId");
 
@@ -551,12 +548,6 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("CodigoTelefonoEmergencia")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CodigoTelefonoEmergenciaNavigationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CodigoTelefonoNavigationId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Correo")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -579,6 +570,9 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("PaisId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PaiseId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -586,6 +580,10 @@ namespace AvionesBackNet.Migrations
                     b.Property<string>("TelefonoEmergencia")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("createAt")
                         .HasColumnType("datetime(6)");
@@ -601,11 +599,15 @@ namespace AvionesBackNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CodigoTelefonoEmergenciaNavigationId");
+                    b.HasIndex("CodigoTelefono");
 
-                    b.HasIndex("CodigoTelefonoNavigationId");
+                    b.HasIndex("CodigoTelefonoEmergencia");
 
                     b.HasIndex("PaisId");
+
+                    b.HasIndex("PaiseId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("userUpdateId");
 
@@ -648,13 +650,11 @@ namespace AvionesBackNet.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<long>("TripulacionId")
+                    b.Property<long?>("TripulacionId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("createAt")
@@ -679,7 +679,7 @@ namespace AvionesBackNet.Migrations
 
                     b.HasIndex("TripulacionId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("userUpdateId");
 
@@ -740,6 +740,9 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("AerolineaId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("AvionId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -759,6 +762,8 @@ namespace AvionesBackNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AerolineaId");
+
+                    b.HasIndex("AvionId");
 
                     b.HasIndex("userUpdateId");
 
@@ -1162,12 +1167,6 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AvionesBackNet.Models.Catalogo", "Estado")
-                        .WithMany()
-                        .HasForeignKey("EstadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
@@ -1175,8 +1174,6 @@ namespace AvionesBackNet.Migrations
                     b.Navigation("Avion");
 
                     b.Navigation("Clase");
-
-                    b.Navigation("Estado");
 
                     b.Navigation("userUpdate");
                 });
@@ -1251,7 +1248,9 @@ namespace AvionesBackNet.Migrations
                 {
                     b.HasOne("project.users.userEntity", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
@@ -1331,33 +1330,45 @@ namespace AvionesBackNet.Migrations
 
             modelBuilder.Entity("AvionesBackNet.Models.Cliente", b =>
                 {
-                    b.HasOne("AvionesBackNet.Models.Catalogo", "CodigoTelefonoEmergenciaNavigation")
+                    b.HasOne("AvionesBackNet.Models.Paise", "CodigoTelefonoObj")
                         .WithMany()
-                        .HasForeignKey("CodigoTelefonoEmergenciaNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CodigoTelefono")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("AvionesBackNet.Models.Catalogo", "CodigoTelefonoNavigation")
+                    b.HasOne("AvionesBackNet.Models.Paise", "CodigoTelefonoEmergenciaObj")
                         .WithMany()
-                        .HasForeignKey("CodigoTelefonoNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CodigoTelefonoEmergencia")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("AvionesBackNet.Models.Paise", "Pais")
-                        .WithMany("Clientes")
+                        .WithMany()
                         .HasForeignKey("PaisId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("AvionesBackNet.Models.Paise", null)
+                        .WithMany("Clientes")
+                        .HasForeignKey("PaiseId");
+
+                    b.HasOne("project.users.userEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
 
-                    b.Navigation("CodigoTelefonoEmergenciaNavigation");
+                    b.Navigation("CodigoTelefonoEmergenciaObj");
 
-                    b.Navigation("CodigoTelefonoNavigation");
+                    b.Navigation("CodigoTelefonoObj");
 
                     b.Navigation("Pais");
+
+                    b.Navigation("User");
 
                     b.Navigation("userUpdate");
                 });
@@ -1384,13 +1395,13 @@ namespace AvionesBackNet.Migrations
 
                     b.HasOne("AvionesBackNet.Models.Tripulacione", "Tripulacion")
                         .WithMany("Empleados")
-                        .HasForeignKey("TripulacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TripulacionId");
 
                     b.HasOne("project.users.userEntity", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
@@ -1426,11 +1437,17 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AvionesBackNet.Models.Avione", "Avion")
+                        .WithMany("Tripulaciones")
+                        .HasForeignKey("AvionId");
+
                     b.HasOne("project.users.userEntity", "userUpdate")
                         .WithMany()
                         .HasForeignKey("userUpdateId");
 
                     b.Navigation("Aerolinea");
+
+                    b.Navigation("Avion");
 
                     b.Navigation("userUpdate");
                 });
@@ -1579,6 +1596,8 @@ namespace AvionesBackNet.Migrations
             modelBuilder.Entity("AvionesBackNet.Models.Avione", b =>
                 {
                     b.Navigation("Asientos");
+
+                    b.Navigation("Tripulaciones");
 
                     b.Navigation("Vuelos");
                 });

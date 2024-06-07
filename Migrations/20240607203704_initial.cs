@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AvionesBackNet.Migrations
 {
     /// <inheritdoc />
-    public partial class xd : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,7 +66,7 @@ namespace AvionesBackNet.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -85,8 +85,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_AspNetRoles_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -177,10 +176,9 @@ namespace AvionesBackNet.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TipoTransaccion = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId1 = table.Column<string>(type: "varchar(255)", nullable: true)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -190,16 +188,16 @@ namespace AvionesBackNet.Migrations
                 {
                     table.PrimaryKey("PK_BitacoraEncabezados", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BitacoraEncabezados_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_BitacoraEncabezados_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BitacoraEncabezados_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -209,13 +207,13 @@ namespace AvionesBackNet.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
+                    code = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                    name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Descripcion = table.Column<string>(type: "longtext", nullable: true)
+                    description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -228,8 +226,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_CatalogoTipos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -247,7 +244,7 @@ namespace AvionesBackNet.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Iso4217 = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -260,8 +257,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Paises_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -330,7 +326,7 @@ namespace AvionesBackNet.Migrations
                     ValorNuevo = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     BitacoraEncabezadoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -343,8 +339,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_BitacoraCuerpos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BitacoraCuerpos_BitacoraEncabezados_BitacoraEncabezadoId",
                         column: x => x.BitacoraEncabezadoId,
@@ -360,12 +355,12 @@ namespace AvionesBackNet.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                    name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Descripcion = table.Column<string>(type: "longtext", nullable: true)
+                    description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CatalogoTipoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -378,8 +373,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Catalogos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Catalogos_CatalogoTipos_CatalogoTipoId",
                         column: x => x.CatalogoTipoId,
@@ -406,7 +400,7 @@ namespace AvionesBackNet.Migrations
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -419,63 +413,9 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Aerolineas_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Aerolineas_Paises_PaisId",
-                        column: x => x.PaisId,
-                        principalTable: "Paises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Aeropuertos",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Iata = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Oaci = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Ciudad = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Localidad = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ZonaHoraria = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Latitud = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Longitud = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Activo = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    Interno = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    PaisId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Aeropuertos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Aeropuertos_AspNetUsers_userUpdateId",
-                        column: x => x.userUpdateId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Aeropuertos_Paises_PaisId",
                         column: x => x.PaisId,
                         principalTable: "Paises",
                         principalColumn: "Id",
@@ -503,11 +443,12 @@ namespace AvionesBackNet.Migrations
                     Direccion = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CodigoTelefono = table.Column<long>(type: "bigint", nullable: false),
                     CodigoTelefonoEmergencia = table.Column<long>(type: "bigint", nullable: false),
-                    CodigoTelefonoEmergenciaNavigationId = table.Column<long>(type: "bigint", nullable: false),
-                    CodigoTelefonoNavigationId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    PaiseId = table.Column<long>(type: "bigint", nullable: true),
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -517,25 +458,92 @@ namespace AvionesBackNet.Migrations
                 {
                     table.PrimaryKey("PK_Clientes", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Clientes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Clientes_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Clientes_Catalogos_CodigoTelefonoEmergenciaNavigationId",
-                        column: x => x.CodigoTelefonoEmergenciaNavigationId,
-                        principalTable: "Catalogos",
+                        name: "FK_Clientes_Paises_CodigoTelefono",
+                        column: x => x.CodigoTelefono,
+                        principalTable: "Paises",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Clientes_Catalogos_CodigoTelefonoNavigationId",
-                        column: x => x.CodigoTelefonoNavigationId,
-                        principalTable: "Catalogos",
+                        name: "FK_Clientes_Paises_CodigoTelefonoEmergencia",
+                        column: x => x.CodigoTelefonoEmergencia,
+                        principalTable: "Paises",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Clientes_Paises_PaisId",
+                        column: x => x.PaisId,
+                        principalTable: "Paises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Clientes_Paises_PaiseId",
+                        column: x => x.PaiseId,
+                        principalTable: "Paises",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Aeropuertos",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Iata = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Oaci = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Nombre = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Ciudad = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Localidad = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Latitud = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Longitud = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Telefono = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Activo = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    Interno = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    ZonaHorariaId = table.Column<long>(type: "bigint", nullable: false),
+                    PaisId = table.Column<long>(type: "bigint", nullable: false),
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Aeropuertos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Aeropuertos_AspNetUsers_userUpdateId",
+                        column: x => x.userUpdateId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Aeropuertos_Catalogos_ZonaHorariaId",
+                        column: x => x.ZonaHorariaId,
+                        principalTable: "Catalogos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Aeropuertos_Paises_PaisId",
                         column: x => x.PaisId,
                         principalTable: "Paises",
                         principalColumn: "Id",
@@ -549,6 +557,8 @@ namespace AvionesBackNet.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Codigo = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Year = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Serie = table.Column<string>(type: "longtext", nullable: false)
@@ -562,7 +572,7 @@ namespace AvionesBackNet.Migrations
                     ModeloId = table.Column<long>(type: "bigint", nullable: false),
                     TipoAvionId = table.Column<long>(type: "bigint", nullable: false),
                     EstadoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -581,8 +591,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Aviones_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Aviones_Catalogos_EstadoId",
                         column: x => x.EstadoId,
@@ -611,77 +620,6 @@ namespace AvionesBackNet.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ModeloAvionAerolineas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ModeloAvionId = table.Column<long>(type: "bigint", nullable: false),
-                    AerolineaId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModeloAvionAerolineas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ModeloAvionAerolineas_Aerolineas_AerolineaId",
-                        column: x => x.AerolineaId,
-                        principalTable: "Aerolineas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ModeloAvionAerolineas_AspNetUsers_userUpdateId",
-                        column: x => x.userUpdateId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ModeloAvionAerolineas_Catalogos_ModeloAvionId",
-                        column: x => x.ModeloAvionId,
-                        principalTable: "Catalogos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Tripulaciones",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AerolineaId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tripulaciones", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tripulaciones_Aerolineas_AerolineaId",
-                        column: x => x.AerolineaId,
-                        principalTable: "Aerolineas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Tripulaciones_AspNetUsers_userUpdateId",
-                        column: x => x.userUpdateId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "AerolineaAeropuertos",
                 columns: table => new
                 {
@@ -690,7 +628,7 @@ namespace AvionesBackNet.Migrations
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoId = table.Column<long>(type: "bigint", nullable: false),
                     IsDestino = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -715,8 +653,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_AerolineaAeropuertos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -732,7 +669,7 @@ namespace AvionesBackNet.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClaseId = table.Column<long>(type: "bigint", nullable: false),
                     AvionId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -745,8 +682,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Asientos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Asientos_Aviones_AvionId",
                         column: x => x.AvionId,
@@ -763,6 +699,44 @@ namespace AvionesBackNet.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Tripulaciones",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Codigo = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AerolineaId = table.Column<long>(type: "bigint", nullable: false),
+                    AvionId = table.Column<long>(type: "bigint", nullable: true),
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tripulaciones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tripulaciones_Aerolineas_AerolineaId",
+                        column: x => x.AerolineaId,
+                        principalTable: "Aerolineas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tripulaciones_AspNetUsers_userUpdateId",
+                        column: x => x.userUpdateId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Tripulaciones_Aviones_AvionId",
+                        column: x => x.AvionId,
+                        principalTable: "Aviones",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Vuelos",
                 columns: table => new
                 {
@@ -775,7 +749,7 @@ namespace AvionesBackNet.Migrations
                     AvionId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoOrigenId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoDestinoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -800,8 +774,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Vuelos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Vuelos_Aviones_AvionId",
                         column: x => x.AvionId,
@@ -828,12 +801,11 @@ namespace AvionesBackNet.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
                     PuestoId = table.Column<long>(type: "bigint", nullable: false),
-                    TripulacionId = table.Column<long>(type: "bigint", nullable: false),
+                    TripulacionId = table.Column<long>(type: "bigint", nullable: true),
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId1 = table.Column<string>(type: "varchar(255)", nullable: true)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -849,16 +821,16 @@ namespace AvionesBackNet.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Empleados_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Empleados_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Empleados_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Empleados_Catalogos_PuestoId",
                         column: x => x.PuestoId,
@@ -875,8 +847,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Empleados_Tripulaciones_TripulacionId",
                         column: x => x.TripulacionId,
                         principalTable: "Tripulaciones",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -892,7 +863,7 @@ namespace AvionesBackNet.Migrations
                     VueloId = table.Column<long>(type: "bigint", nullable: false),
                     AsientoId = table.Column<long>(type: "bigint", nullable: false),
                     ClienteId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -911,8 +882,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_Boletos_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Boletos_Catalogos_EstadoBoletoId",
                         column: x => x.EstadoBoletoId,
@@ -943,7 +913,7 @@ namespace AvionesBackNet.Migrations
                     ClaseId = table.Column<long>(type: "bigint", nullable: false),
                     VueloId = table.Column<long>(type: "bigint", nullable: false),
                     Precio = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -956,8 +926,7 @@ namespace AvionesBackNet.Migrations
                         name: "FK_VueloClases_AspNetUsers_userUpdateId",
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_VueloClases_Catalogos_ClaseId",
                         column: x => x.ClaseId,
@@ -1007,6 +976,11 @@ namespace AvionesBackNet.Migrations
                 name: "IX_Aeropuertos_userUpdateId",
                 table: "Aeropuertos",
                 column: "userUpdateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Aeropuertos_ZonaHorariaId",
+                table: "Aeropuertos",
+                column: "ZonaHorariaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asientos_AvionId",
@@ -1111,9 +1085,9 @@ namespace AvionesBackNet.Migrations
                 column: "userUpdateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BitacoraEncabezados_UserId1",
+                name: "IX_BitacoraEncabezados_UserId",
                 table: "BitacoraEncabezados",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BitacoraEncabezados_userUpdateId",
@@ -1161,19 +1135,29 @@ namespace AvionesBackNet.Migrations
                 column: "userUpdateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_CodigoTelefonoEmergenciaNavigationId",
+                name: "IX_Clientes_CodigoTelefono",
                 table: "Clientes",
-                column: "CodigoTelefonoEmergenciaNavigationId");
+                column: "CodigoTelefono");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_CodigoTelefonoNavigationId",
+                name: "IX_Clientes_CodigoTelefonoEmergencia",
                 table: "Clientes",
-                column: "CodigoTelefonoNavigationId");
+                column: "CodigoTelefonoEmergencia");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_PaiseId",
+                table: "Clientes",
+                column: "PaiseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_PaisId",
                 table: "Clientes",
                 column: "PaisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_UserId",
+                table: "Clientes",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clientes_userUpdateId",
@@ -1201,28 +1185,13 @@ namespace AvionesBackNet.Migrations
                 column: "TripulacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Empleados_UserId1",
+                name: "IX_Empleados_UserId",
                 table: "Empleados",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleados_userUpdateId",
                 table: "Empleados",
-                column: "userUpdateId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModeloAvionAerolineas_AerolineaId",
-                table: "ModeloAvionAerolineas",
-                column: "AerolineaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModeloAvionAerolineas_ModeloAvionId",
-                table: "ModeloAvionAerolineas",
-                column: "ModeloAvionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModeloAvionAerolineas_userUpdateId",
-                table: "ModeloAvionAerolineas",
                 column: "userUpdateId");
 
             migrationBuilder.CreateIndex(
@@ -1234,6 +1203,11 @@ namespace AvionesBackNet.Migrations
                 name: "IX_Tripulaciones_AerolineaId",
                 table: "Tripulaciones",
                 column: "AerolineaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tripulaciones_AvionId",
+                table: "Tripulaciones",
+                column: "AvionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tripulaciones_userUpdateId",
@@ -1305,9 +1279,6 @@ namespace AvionesBackNet.Migrations
 
             migrationBuilder.DropTable(
                 name: "Empleados");
-
-            migrationBuilder.DropTable(
-                name: "ModeloAvionAerolineas");
 
             migrationBuilder.DropTable(
                 name: "VueloClases");

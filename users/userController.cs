@@ -110,6 +110,8 @@ namespace project.users
         [AllowAnonymous]
         public async Task<IActionResult> register(clienteCreationDto newCliente)
         {
+            if (await context.Clientes.AnyAsync(c => c.NoPasaporte == newCliente.NoPasaporte))
+                return BadRequest(new errorMessageDto("Ya existe un cliente con ese pasaporte"));
             userCreationDto credentials = new userCreationDto
             {
                 email = newCliente.Correo,
