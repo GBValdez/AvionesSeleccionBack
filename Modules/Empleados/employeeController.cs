@@ -72,6 +72,12 @@ namespace AvionesBackNet.Modules.Empleados
             List<employeeDto> empleadosDto = mapper.Map<List<employeeDto>>(empleados);
             return empleadosDto;
         }
+        protected override async Task<errorMessageDto> validDelete(Empleado entity)
+        {
+            if (entity.TripulacionId != null)
+                return new errorMessageDto("No se puede eliminar un empleado que pertenece a una tripulación");
+            return null;
+        }
 
     }
 }
