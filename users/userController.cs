@@ -84,6 +84,8 @@ namespace project.users
 
 
         [HttpGet("{userName}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public async Task<ActionResult<userDto>> getByUserName(string userName)
         {
             userEntity user = await userManager.FindByNameAsync(userName);

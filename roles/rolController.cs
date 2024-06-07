@@ -25,6 +25,13 @@ namespace project.roles
             this.userManager = userManager;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
+        public override Task<ActionResult<resPag<rolDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] rolQueryDto queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
+        }
+
         public override async Task<ActionResult<rolDto>> post(rolCreationDto newRegister, [FromQuery] object queryParams)
         {
             rolEntity newRol = new rolEntity

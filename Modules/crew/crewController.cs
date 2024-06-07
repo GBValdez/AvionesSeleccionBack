@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.users;
@@ -21,6 +23,13 @@ namespace AvionesBackNet.Modules.crew
         public crewController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
+        public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] object queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
+        }
         protected override Task<IQueryable<Tripulacione>> modifyGet(IQueryable<Tripulacione> query, object queryParams)
         {
             query = query.Include(db => db.Empleados).ThenInclude(db => db.Puesto);
@@ -29,6 +38,7 @@ namespace AvionesBackNet.Modules.crew
 
 
         [HttpPost("createCrew")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
         public async Task<ActionResult> createCrew(crewPersonalDto crew)
         {
             Tripulacione tripulacione = mapper.Map<Tripulacione>(crew);
@@ -44,6 +54,7 @@ namespace AvionesBackNet.Modules.crew
         }
 
         [HttpPut("updateCrew/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
         public async Task<ActionResult> updateCrew(long id, crewPersonalDto crew)
         {
             Tripulacione tripulacione = await context.Tripulaciones.FindAsync(id);
@@ -69,6 +80,10 @@ namespace AvionesBackNet.Modules.crew
 
         protected override async Task<errorMessageDto> validDelete(Tripulacione entity)
         {
+            if (entity.AvionId != null)
+            {
+                return new errorMessageDto("No se puede eliminar una tripulación que está asignada a un avión");
+            }
             List<Empleado> empleados = await context.Empleados.Where(e => e.TripulacionId == entity.Id).ToListAsync();
             foreach (Empleado empleado in empleados)
             {
@@ -113,6 +128,8 @@ namespace AvionesBackNet.Modules.crew
             return null;
         }
         [HttpGet("allAndPlane/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public async Task<ActionResult<List<crewDto>>> getAllAndCrew(
             [FromRoute] long id
         )

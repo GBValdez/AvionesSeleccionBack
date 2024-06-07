@@ -1,5 +1,7 @@
 using AutoMapper;
 using AvionesBackNet.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.utils;
@@ -13,6 +15,13 @@ namespace AvionesBackNet.Modules.Aviones
     {
         public AvionController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
+        public override Task<ActionResult<resPag<AvionDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] AvionQueryDto queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
         }
         protected override Task<IQueryable<Avione>> modifyGet(IQueryable<Avione> query, AvionQueryDto queryParams)
         {

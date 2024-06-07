@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.utils;
+using project.utils.dto;
 
 namespace AvionesBackNet.Modules.Aeropuertos
 {
@@ -16,6 +19,12 @@ namespace AvionesBackNet.Modules.Aeropuertos
     {
         public AeropuertoController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public override Task<ActionResult<resPag<AeropuertoDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] object queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
         }
 
         protected override async Task<IQueryable<Aeropuerto>> modifyGet(IQueryable<Aeropuerto> query, object queryParams)
