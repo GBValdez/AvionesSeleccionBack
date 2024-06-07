@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using project.users;
 using project.utils;
 
@@ -30,11 +31,13 @@ public partial class Cliente : CommonsModel<long>
 
     public long CodigoTelefonoEmergencia { get; set; }
     public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
+    [ForeignKey("CodigoTelefonoEmergencia")]
 
-    public virtual Catalogo CodigoTelefonoEmergenciaNavigation { get; set; } = null!;
+    public virtual Paise CodigoTelefonoEmergenciaObj { get; set; } = null!;
 
-    public virtual Catalogo CodigoTelefonoNavigation { get; set; } = null!;
-
+    [ForeignKey("CodigoTelefono")]
+    public virtual Paise CodigoTelefonoObj { get; set; } = null!;
+    [ForeignKey("PaisId")]
     public virtual Paise Pais { get; set; } = null!;
 
     [ForeignKey("UserId")]
