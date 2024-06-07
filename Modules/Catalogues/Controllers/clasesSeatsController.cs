@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.utils.Catalogues;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using project.utils;
 using project.utils.catalogues;
+using project.utils.catalogues.dto;
+using project.utils.dto;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace AvionesBackNet.Modules.Catalogues.Controllers
@@ -18,5 +23,6 @@ namespace AvionesBackNet.Modules.Catalogues.Controllers
             codCatalogue = "CAA";
 
         }
+
     }
 }

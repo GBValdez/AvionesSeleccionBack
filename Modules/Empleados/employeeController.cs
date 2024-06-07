@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.users;
@@ -23,6 +25,13 @@ namespace AvionesBackNet.Modules.Empleados
         public employeeController(AvionesContext context, IMapper mapper, userSvc userSvc) : base(context, mapper)
         {
             this.userSvc = userSvc;
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult<resPag<employeeDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] employeeQuery queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
         }
         protected override async Task<IQueryable<Empleado>> modifyGet(IQueryable<Empleado> query, employeeQuery queryParams)
         {
@@ -63,6 +72,8 @@ namespace AvionesBackNet.Modules.Empleados
         }
 
         [HttpGet("allAndCrew/{id}/{idPuesto}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public async Task<ActionResult<List<employeeDto>>> getAllAndCrew(
             [FromRoute] long id,
             [FromRoute] long idPuesto

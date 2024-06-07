@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Vuelos.dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.utils;
@@ -18,6 +20,13 @@ namespace AvionesBackNet.Modules.Vuelos
     {
         public VueloController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+        public override Task<ActionResult<resPag<vueloDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] vueloQueryDto queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
         }
         protected override async Task<IQueryable<Vuelo>> modifyGet(IQueryable<Vuelo> query, vueloQueryDto queryParams)
         {

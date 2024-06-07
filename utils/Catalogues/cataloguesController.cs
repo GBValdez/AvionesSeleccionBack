@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.utils.Catalogues;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.utils.catalogues.dto;
+using project.utils.dto;
 
 namespace project.utils.catalogues
 {
@@ -11,6 +15,12 @@ namespace project.utils.catalogues
         protected string codCatalogue { get; set; }
         public cataloguesController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
+        }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
+        public override Task<ActionResult<resPag<catalogueDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] catalogueQueryDto queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
         }
         protected override async Task modifyPost(Catalogo entity, object queryParams)
         {

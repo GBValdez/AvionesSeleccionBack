@@ -1,9 +1,12 @@
 
 using AutoMapper;
 using AvionesBackNet.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using project.utils;
+using project.utils.dto;
 
 namespace AvionesBackNet.Modules.destinos
 {
@@ -21,7 +24,15 @@ namespace AvionesBackNet.Modules.destinos
             return base.modifyGet(query, queryParams);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult<resPag<destinoDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] destinoQueryDto queryParams, [FromQuery] bool? all = false)
+        {
+            return base.get(pageSize, pageNumber, queryParams, all);
+        }
+
         [HttpPost("modifyDestino")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public async Task<ActionResult<destinoDto>> modifyDestino(destinoCreationDto dto)
         {
             AerolineaAeropuerto entity = await context.AerolineaAeropuertos.FirstOrDefaultAsync(x => x.AerolineaId == dto.AerolineaId && x.AeropuertoId == dto.AeropuertoId && x.IsDestino == dto.IsDestino);

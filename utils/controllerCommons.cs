@@ -154,6 +154,7 @@ namespace project.utils
         protected virtual void modifyGetResult(List<TEntity> list) { }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
         public virtual async Task<ActionResult<TDto>> post(TDtoCreation newRegister, [FromQuery] TQueryCreation queryParams)
         {
             errorMessageDto error = await this.validPost(newRegister, queryParams);
@@ -180,6 +181,8 @@ namespace project.utils
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public virtual async Task<ActionResult> delete(idClass id)
         {
             TEntity exits = await context.Set<TEntity>()
@@ -202,6 +205,8 @@ namespace project.utils
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+
         public virtual async Task<ActionResult> put(TDtoCreation entityCurrent, [FromRoute] idClass id, [FromQuery] TQueryCreation queryCreation)
         {
 
