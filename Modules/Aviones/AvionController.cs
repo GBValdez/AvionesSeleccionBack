@@ -23,6 +23,25 @@ namespace AvionesBackNet.Modules.Aviones
         {
             return base.get(pageSize, pageNumber, queryParams, all);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult<AvionDto>> post(AvionCreationDto newRegister, [FromQuery] object queryParams)
+        {
+            return base.post(newRegister, queryParams);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult> put(AvionCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return base.put(entityCurrent, id, queryCreation);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
+        }
+
         protected override Task<IQueryable<Avione>> modifyGet(IQueryable<Avione> query, AvionQueryDto queryParams)
         {
             query = query.Include(e => e.Modelo).Include(e => e.Marca).Include(e => e.TipoAvion).Include(e => e.Estado).Include(e => e.Aerolinea).Include(e => e.Tripulaciones);

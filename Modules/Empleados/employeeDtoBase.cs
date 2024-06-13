@@ -12,5 +12,8 @@ namespace AvionesBackNet.Modules.Empleados
         public string Correo { get; set; } = null!;
         public string Direccion { get; set; } = null!;
         public string Telefono { get; set; } = null!;
+
+        public long? AerolineaId { get; set; }
+
     }
 }

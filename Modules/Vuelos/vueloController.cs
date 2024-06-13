@@ -28,6 +28,24 @@ namespace AvionesBackNet.Modules.Vuelos
         {
             return base.get(pageSize, pageNumber, queryParams, all);
         }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult<vueloDto>> post(vueloDtoCreation newRegister, [FromQuery] object queryParams)
+        {
+            return base.post(newRegister, queryParams);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult> put(vueloDtoCreation entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return base.put(entityCurrent, id, queryCreation);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
+        }
         protected override async Task<IQueryable<Vuelo>> modifyGet(IQueryable<Vuelo> query, vueloQueryDto queryParams)
         {
             query = query

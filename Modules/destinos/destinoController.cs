@@ -18,16 +18,35 @@ namespace AvionesBackNet.Modules.destinos
         public destinoController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
         }
+
         protected override Task<IQueryable<AerolineaAeropuerto>> modifyGet(IQueryable<AerolineaAeropuerto> query, destinoQueryDto queryParams)
         {
             query = query.Include(x => x.Aeropuerto).ThenInclude(x => x.Pais);
             return base.modifyGet(query, queryParams);
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public override Task<ActionResult<resPag<destinoDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] destinoQueryDto queryParams, [FromQuery] bool? all = false)
         {
             return base.get(pageSize, pageNumber, queryParams, all);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override async Task<ActionResult<destinoDto>> post(destinoCreationDto newRegister, [FromQuery] object queryParams)
+        {
+            return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override async Task<ActionResult> put(destinoCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
         }
 
         [HttpPost("modifyDestino")]

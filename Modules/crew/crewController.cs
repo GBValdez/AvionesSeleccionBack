@@ -24,11 +24,29 @@ namespace AvionesBackNet.Modules.crew
         {
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] object queryParams, [FromQuery] bool? all = false)
         {
             return base.get(pageSize, pageNumber, queryParams, all);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override async Task<ActionResult<crewDto>> post(crewCreationDto newRegister, [FromQuery] object queryParams)
+        {
+            return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override async Task<ActionResult> put(crewCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
         }
         protected override Task<IQueryable<Tripulacione>> modifyGet(IQueryable<Tripulacione> query, object queryParams)
         {
@@ -38,7 +56,7 @@ namespace AvionesBackNet.Modules.crew
 
 
         [HttpPost("createCrew")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult> createCrew(crewPersonalDto crew)
         {
             Tripulacione tripulacione = mapper.Map<Tripulacione>(crew);
@@ -54,7 +72,7 @@ namespace AvionesBackNet.Modules.crew
         }
 
         [HttpPut("updateCrew/{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult> updateCrew(long id, crewPersonalDto crew)
         {
             Tripulacione tripulacione = await context.Tripulaciones.FindAsync(id);
@@ -128,8 +146,7 @@ namespace AvionesBackNet.Modules.crew
             return null;
         }
         [HttpGet("allAndPlane/{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult<List<crewDto>>> getAllAndCrew(
             [FromRoute] long id
         )

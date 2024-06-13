@@ -8,7 +8,7 @@ namespace AvionesBackNet.Modules.Empleados
     public class employeeQuery
     {
         public long? PuestoId { get; set; }
-        public bool? withoutTripulation { get; set; } = null;
+        public long? AerolineaId { get; set; }
 
     }
 }

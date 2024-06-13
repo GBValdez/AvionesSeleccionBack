@@ -27,6 +27,24 @@ namespace AvionesBackNet.Modules.Aeropuertos
             return base.get(pageSize, pageNumber, queryParams, all);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult<AeropuertoDto>> post(AeropuertoDtoCreation newRegister, [FromQuery] object queryParams)
+        {
+            return base.post(newRegister, queryParams);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> put(AeropuertoDtoCreation entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return base.put(entityCurrent, id, queryCreation);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
+        }
+
         protected override async Task<IQueryable<Aeropuerto>> modifyGet(IQueryable<Aeropuerto> query, object queryParams)
         {
             query = query.Include(a => a.Pais).Include(a => a.ZonaHoraria);

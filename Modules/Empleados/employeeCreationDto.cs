@@ -10,5 +10,6 @@ namespace AvionesBackNet.Modules.Empleados
         public long PaisId { get; set; }
         public long PuestoId { get; set; }
         public string? UserId { get; set; }
+
     }
 }

@@ -175,7 +175,7 @@ namespace project.users
             emailService.SendEmail(new emailSendDto
             {
                 email = email.email,
-                subject = "Recuperar contraseña BookMaster",
+                subject = "Recuperar contraseña Aeropuerto",
                 message = $"<h1>Recuperar contraseña</h1> <a href='{configuration["FrontUrl"]}/user/resetPassword/{emailEncrypt}/{encodedToken}'>Recuperar contraseña</a>"
             });
             return NoContent();
@@ -260,7 +260,16 @@ namespace project.users
             }
             claimUser.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
             claimUser.Add(new Claim(ClaimTypes.Name, user.UserName)); // Agrega el nombre de usuario como un claim
-
+            Cliente cliente = await context.Clientes.Where(c => c.UserId == user.Id && c.deleteAt == null).FirstOrDefaultAsync();
+            if (cliente != null)
+            {
+                claimUser.Add(new Claim("clienteId", cliente.Id.ToString()));
+            }
+            Empleado empleado = await context.Empleados.Where(e => e.UserId == user.Id && e.deleteAt == null).FirstOrDefaultAsync();
+            if (empleado != null)
+            {
+                claimUser.Add(new Claim("empleadoId", empleado.Id.ToString()));
+            }
 
             // Estos son los parametros que guardara el webToken
             List<Claim> claims = new List<Claim>(){
