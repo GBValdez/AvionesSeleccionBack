@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Text.Json.Serialization;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.users;
@@ -33,6 +34,7 @@ builder.Services.AddTransient<seatSvc>();
 builder.Services.AddScoped<interceptorDb>();
 builder.Services.AddScoped<emailService>();
 builder.Services.AddScoped<userSvc>();
+builder.Services.AddScoped<aerolineaSvc>();
 
 builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -57,18 +59,42 @@ builder.Services.AddCors(
     );
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-                option => option.TokenValidationParameters = new TokenValidationParameters
+                option =>
                 {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(builder.Configuration["keyJwt"])
                     ),
-                    ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero
+                    };
+                    option.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+
+                            // If the request is for our hub...
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                path.StartsWithSegments("/selectSeatHub"))
+                            {
+                                // Read the token out of the query string
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+
                 }
+
+
             );
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -117,12 +143,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("myCors");
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapHub<seatSelectionHub>("/selectSeatHub");
 });
 
-app.MapHub<seatSelectionHub>("/selectSeatHub");
 
 app.Run();

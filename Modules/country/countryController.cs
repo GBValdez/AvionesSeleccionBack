@@ -21,11 +21,22 @@ namespace AvionesBackNet.Modules.country
         {
         }
 
-
-
-        public override Task<ActionResult<resPag<paisDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] object queryParams, [FromQuery] bool? all = false)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult<paisDto>> post(countryCreationDto newRegister, [FromQuery] object queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.post(newRegister, queryParams);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> put(countryCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return base.put(entityCurrent, id, queryCreation);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
         }
     }
 }

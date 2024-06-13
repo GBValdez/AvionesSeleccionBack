@@ -29,6 +29,23 @@ namespace AvionesBackNet.Modules.airline
             return base.get(pageSize, pageNumber, queryParams, all);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult<aerolineaDto>> post(airlineCreationDto newRegister, [FromQuery] object queryParams)
+        {
+            return base.post(newRegister, queryParams);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> put(airlineCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        {
+            return base.put(entityCurrent, id, queryCreation);
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        public override Task<ActionResult> delete(long id)
+        {
+            return base.delete(id);
+        }
         protected override Task<IQueryable<Aerolinea>> modifyGet(IQueryable<Aerolinea> query, object queryParams)
         {
             query = query.Include(db => db.Pais);

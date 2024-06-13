@@ -24,8 +24,8 @@ namespace AvionesBackNet.Modules.seats
         {
             this.seatSvc = svc;
         }
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public override Task<ActionResult<resPag<asientoDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] asientoQueryDto queryParams, [FromQuery] bool? all = false)
         {
             return base.get(pageSize, pageNumber, queryParams, all);
@@ -39,7 +39,6 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpPost("saveSeats/{idPlane}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
-
         public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
         {
             Avione? plane = await context.Aviones.Include(p => p.Asientos).FirstOrDefaultAsync(p => p.Id == idPlane);
