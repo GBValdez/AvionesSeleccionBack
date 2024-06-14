@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AvionesBackNet.Modules.crew
 {
-    public class crewPersonalDto : crewCreationDto
+    public class crewPersonalDto : crewDtoBase
     {
         public long piloto { get; set; }
         public long copiloto { get; set; }
@@ -13,5 +13,7 @@ namespace AvionesBackNet.Modules.crew
         public long azafata1 { get; set; }
         public long azafata2 { get; set; }
         public long azafata3 { get; set; }
+        public long AerolineaId { get; set; }
+
     }
 }

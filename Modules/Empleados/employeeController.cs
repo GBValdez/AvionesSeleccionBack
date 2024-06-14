@@ -104,6 +104,7 @@ namespace AvionesBackNet.Modules.Empleados
 
         protected override async Task<errorMessageDto> validPut(employeeCreationDto dtoNew, Empleado entity, object queryParams)
         {
+
             if (dtoNew.PuestoId != entity.PuestoId && entity.TripulacionId != null)
                 return new errorMessageDto("No se puede cambiar el puesto de un empleado que pertenece a una tripulación");
             return null;
@@ -122,15 +123,23 @@ namespace AvionesBackNet.Modules.Empleados
 
         public async Task<ActionResult<List<employeeDto>>> getAllAndCrew(
             [FromRoute] long id,
-            [FromRoute] long idPuesto
+            [FromQuery] employeeQuery queryParams
             )
         {
-            List<Empleado> empleados = await context.Empleados.Where(e => (e.TripulacionId == null || e.TripulacionId == id) && e.deleteAt == null && e.PuestoId == idPuesto).ToListAsync();
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            List<Empleado> empleados = await context.Empleados.Where(e => (e.TripulacionId == null || e.TripulacionId == id) && e.deleteAt == null && e.PuestoId == queryParams.PuestoId && e.AerolineaId == valid.aerlonieaId).ToListAsync();
             List<employeeDto> empleadosDto = mapper.Map<List<employeeDto>>(empleados);
             return empleadosDto;
         }
         protected override async Task<errorMessageDto> validDelete(Empleado entity)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(entity.AerolineaId);
+            if (valid.error != null)
+                return valid.error;
+            if (valid.aerlonieaId != entity.AerolineaId)
+                return new errorMessageDto("No se puede eliminar un empleado de otra aerolínea");
             if (entity.TripulacionId != null)
                 return new errorMessageDto("No se puede eliminar un empleado que pertenece a una tripulación");
             return null;
