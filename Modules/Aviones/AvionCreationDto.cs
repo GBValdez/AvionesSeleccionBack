@@ -19,5 +19,7 @@ namespace AvionesBackNet.Modules.Aviones
         [Required(ErrorMessage = "El campo {0} es requerido")]
         public long TripulacionId { get; set; }
 
+        public long? AerolineaId { get; set; }
+
     }
 }
