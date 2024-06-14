@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.Vuelos.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -18,8 +19,10 @@ namespace AvionesBackNet.Modules.Vuelos
     [Route("[controller]")]
     public class VueloController : controllerCommons<Vuelo, vueloDtoCreation, vueloDto, vueloQueryDto, object, long>
     {
-        public VueloController(AvionesContext context, IMapper mapper) : base(context, mapper)
+        aerolineaSvc aerolineaSvc;
+        public VueloController(AvionesContext context, IMapper mapper, aerolineaSvc aerolineaSvc) : base(context, mapper)
         {
+            this.aerolineaSvc = aerolineaSvc;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -48,6 +51,8 @@ namespace AvionesBackNet.Modules.Vuelos
         }
         protected override async Task<IQueryable<Vuelo>> modifyGet(IQueryable<Vuelo> query, vueloQueryDto queryParams)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
+
             query = query
                 .Include(v => v.AeropuertoDestino)
                 .ThenInclude(a => a.Pais)
@@ -57,6 +62,9 @@ namespace AvionesBackNet.Modules.Vuelos
                 .ThenInclude(a => a.Modelo)
                 .Include(v => v.VueloClases)
                 .ThenInclude(vc => vc.Clase);
+
+            if (valid.aerlonieaId != null)
+                query = query.Where(e => e.Avion.AerolineaId == valid.aerlonieaId);
 
             return query;
         }

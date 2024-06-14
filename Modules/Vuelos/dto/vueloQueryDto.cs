@@ -12,6 +12,7 @@ namespace AvionesBackNet.Modules.Vuelos.dto
         public long? AeropuertoDestinoId { get; set; }
         public DateTime? FechaSalidaGreat { get; set; }
         public DateTime? FechaSalidaSmall { get; set; }
+        public long? AerolineaId { get; set; }
 
 
     }
