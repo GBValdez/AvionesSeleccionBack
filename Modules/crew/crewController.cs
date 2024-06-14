@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.airline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +19,29 @@ namespace AvionesBackNet.Modules.crew
     [ApiController]
     [Route("crew")]
 
-    public class crewController : controllerCommons<Tripulacione, crewCreationDto, crewDto, object, object, long>
+    public class crewController : controllerCommons<Tripulacione, crewPersonalDto, crewDto, crewQuerryDto, object, long>
     {
-        public crewController(AvionesContext context, IMapper mapper) : base(context, mapper)
+        private aerolineaSvc aerolineaSvc;
+
+        public crewController(AvionesContext context, IMapper mapper, aerolineaSvc aerolineaSvc) : base(context, mapper)
         {
+            this.aerolineaSvc = aerolineaSvc;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] object queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] crewQuerryDto queryParams, [FromQuery] bool? all = false)
         {
             return base.get(pageSize, pageNumber, queryParams, all);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public override async Task<ActionResult<crewDto>> post(crewCreationDto newRegister, [FromQuery] object queryParams)
+        public override async Task<ActionResult<crewDto>> post(crewPersonalDto newRegister, [FromQuery] object queryParams)
         {
             return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public override async Task<ActionResult> put(crewCreationDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
+        public override async Task<ActionResult> put(crewPersonalDto entityCurrent, [FromRoute] long id, [FromQuery] object queryCreation)
         {
             return BadRequest(new errorMessageDto("Esta api esta bloqueada"));
         }
@@ -48,10 +52,13 @@ namespace AvionesBackNet.Modules.crew
         {
             return base.delete(id);
         }
-        protected override Task<IQueryable<Tripulacione>> modifyGet(IQueryable<Tripulacione> query, object queryParams)
+        protected override async Task<IQueryable<Tripulacione>> modifyGet(IQueryable<Tripulacione> query, crewQuerryDto queryParams)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.aerlonieaId != null)
+                query = query.Where(e => e.AerolineaId == valid.aerlonieaId);
             query = query.Include(db => db.Empleados).ThenInclude(db => db.Puesto);
-            return base.modifyGet(query, queryParams);
+            return query;
         }
 
 
@@ -59,8 +66,11 @@ namespace AvionesBackNet.Modules.crew
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult> createCrew(crewPersonalDto crew)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(crew.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
             Tripulacione tripulacione = mapper.Map<Tripulacione>(crew);
-            tripulacione.AerolineaId = 1;
+            tripulacione.AerolineaId = (long)valid.aerlonieaId;
             context.Tripulaciones.Add(tripulacione);
             errorMessageDto error = await saveCrew(crew, tripulacione);
             if (error != null)
@@ -80,6 +90,7 @@ namespace AvionesBackNet.Modules.crew
             {
                 return NotFound();
             }
+            crew.AerolineaId = tripulacione.AerolineaId;
             mapper.Map(crew, tripulacione);
             List<Empleado> empleados = await context.Empleados.Where(e => e.TripulacionId == id).ToListAsync();
             foreach (Empleado empleado in empleados)
@@ -98,6 +109,12 @@ namespace AvionesBackNet.Modules.crew
 
         protected override async Task<errorMessageDto> validDelete(Tripulacione entity)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(entity.AerolineaId);
+            if (valid.error != null)
+                return valid.error;
+            if (valid.aerlonieaId != entity.AerolineaId)
+                return new errorMessageDto("No se puede eliminar una tripulación de otra aerolínea");
+
             if (entity.AvionId != null)
             {
                 return new errorMessageDto("No se puede eliminar una tripulación que está asignada a un avión");
@@ -148,10 +165,14 @@ namespace AvionesBackNet.Modules.crew
         [HttpGet("allAndPlane/{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult<List<crewDto>>> getAllAndCrew(
-            [FromRoute] long id
+            [FromRoute] long id,
+            [FromQuery] crewQuerryDto queryParams
         )
         {
-            List<Tripulacione> tripulaciones = await context.Tripulaciones.Where(e => (e.AvionId == null || e.AvionId == id) && e.deleteAt == null).ToListAsync();
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            List<Tripulacione> tripulaciones = await context.Tripulaciones.Where(e => (e.AvionId == null || e.AvionId == id) && e.deleteAt == null && e.AerolineaId == valid.aerlonieaId).ToListAsync();
             List<crewDto> crewDtoList = mapper.Map<List<crewDto>>(tripulaciones);
             return crewDtoList;
         }

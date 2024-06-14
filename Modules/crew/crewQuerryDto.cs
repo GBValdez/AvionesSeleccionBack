@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace AvionesBackNet.Modules.crew
 {
-    public class crewCreationDto : crewDtoBase
+    public class crewQuerryDto
     {
-
+        public long? AerolineaId { get; set; }
     }
 }
