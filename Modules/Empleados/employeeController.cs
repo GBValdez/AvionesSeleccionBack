@@ -63,8 +63,8 @@ namespace AvionesBackNet.Modules.Empleados
         protected override async Task<IQueryable<Empleado>> modifyGet(IQueryable<Empleado> query, employeeQuery queryParams)
         {
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
-            if (valid.aerlonieaId != null)
-                query = query.Where(e => e.AerolineaId == valid.aerlonieaId);
+            if (valid.aerolineaId != null)
+                query = query.Where(e => e.AerolineaId == valid.aerolineaId);
 
             return query.Include(e => e.Pais).Include(e => e.Puesto).Include(e => e.Tripulacion).Include(e => e.User);
         }
@@ -74,7 +74,7 @@ namespace AvionesBackNet.Modules.Empleados
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(dtoNew.AerolineaId);
             if (valid.error != null)
                 return valid.error;
-            dtoNew.AerolineaId = valid.aerlonieaId;
+            dtoNew.AerolineaId = valid.aerolineaId;
 
             userCreationDto userCreation = new userCreationDto
             {
@@ -118,7 +118,7 @@ namespace AvionesBackNet.Modules.Empleados
             return base.modifyPut(entity, dtoNew, queryParams);
         }
 
-        [HttpGet("allAndCrew/{id}/{idPuesto}")]
+        [HttpGet("allAndCrew/{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
 
         public async Task<ActionResult<List<employeeDto>>> getAllAndCrew(
@@ -129,7 +129,7 @@ namespace AvionesBackNet.Modules.Empleados
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
             if (valid.error != null)
                 return BadRequest(valid.error);
-            List<Empleado> empleados = await context.Empleados.Where(e => (e.TripulacionId == null || e.TripulacionId == id) && e.deleteAt == null && e.PuestoId == queryParams.PuestoId && e.AerolineaId == valid.aerlonieaId).ToListAsync();
+            List<Empleado> empleados = await context.Empleados.Where(e => (e.TripulacionId == null || e.TripulacionId == id) && e.deleteAt == null && e.PuestoId == queryParams.PuestoId && e.AerolineaId == valid.aerolineaId).ToListAsync();
             List<employeeDto> empleadosDto = mapper.Map<List<employeeDto>>(empleados);
             return empleadosDto;
         }
@@ -138,7 +138,7 @@ namespace AvionesBackNet.Modules.Empleados
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(entity.AerolineaId);
             if (valid.error != null)
                 return valid.error;
-            if (valid.aerlonieaId != entity.AerolineaId)
+            if (valid.aerolineaId != entity.AerolineaId)
                 return new errorMessageDto("No se puede eliminar un empleado de otra aerolínea");
             if (entity.TripulacionId != null)
                 return new errorMessageDto("No se puede eliminar un empleado que pertenece a una tripulación");

@@ -55,8 +55,8 @@ namespace AvionesBackNet.Modules.crew
         protected override async Task<IQueryable<Tripulacione>> modifyGet(IQueryable<Tripulacione> query, crewQuerryDto queryParams)
         {
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
-            if (valid.aerlonieaId != null)
-                query = query.Where(e => e.AerolineaId == valid.aerlonieaId);
+            if (valid.aerolineaId != null)
+                query = query.Where(e => e.AerolineaId == valid.aerolineaId);
             query = query.Include(db => db.Empleados).ThenInclude(db => db.Puesto);
             return query;
         }
@@ -70,7 +70,7 @@ namespace AvionesBackNet.Modules.crew
             if (valid.error != null)
                 return BadRequest(valid.error);
             Tripulacione tripulacione = mapper.Map<Tripulacione>(crew);
-            tripulacione.AerolineaId = (long)valid.aerlonieaId;
+            tripulacione.AerolineaId = (long)valid.aerolineaId;
             context.Tripulaciones.Add(tripulacione);
             errorMessageDto error = await saveCrew(crew, tripulacione);
             if (error != null)
@@ -112,7 +112,7 @@ namespace AvionesBackNet.Modules.crew
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(entity.AerolineaId);
             if (valid.error != null)
                 return valid.error;
-            if (valid.aerlonieaId != entity.AerolineaId)
+            if (valid.aerolineaId != entity.AerolineaId)
                 return new errorMessageDto("No se puede eliminar una tripulación de otra aerolínea");
 
             if (entity.AvionId != null)
@@ -172,7 +172,7 @@ namespace AvionesBackNet.Modules.crew
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
             if (valid.error != null)
                 return BadRequest(valid.error);
-            List<Tripulacione> tripulaciones = await context.Tripulaciones.Where(e => (e.AvionId == null || e.AvionId == id) && e.deleteAt == null && e.AerolineaId == valid.aerlonieaId).ToListAsync();
+            List<Tripulacione> tripulaciones = await context.Tripulaciones.Where(e => (e.AvionId == null || e.AvionId == id) && e.deleteAt == null && e.AerolineaId == valid.aerolineaId).ToListAsync();
             List<crewDto> crewDtoList = mapper.Map<List<crewDto>>(tripulaciones);
             return crewDtoList;
         }

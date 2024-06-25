@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.airline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,20 @@ namespace AvionesBackNet.Modules.destinos
 
     public class destinoController : controllerCommons<AerolineaAeropuerto, destinoCreationDto, destinoDto, destinoQueryDto, object, long>
     {
-        public destinoController(AvionesContext context, IMapper mapper) : base(context, mapper)
+        private aerolineaSvc aerolineaSvc;
+
+        public destinoController(AvionesContext context, IMapper mapper, aerolineaSvc aerolineaSvc) : base(context, mapper)
         {
+            this.aerolineaSvc = aerolineaSvc;
         }
 
-        protected override Task<IQueryable<AerolineaAeropuerto>> modifyGet(IQueryable<AerolineaAeropuerto> query, destinoQueryDto queryParams)
+        protected async override Task<IQueryable<AerolineaAeropuerto>> modifyGet(IQueryable<AerolineaAeropuerto> query, destinoQueryDto queryParams)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.aerolineaId != null)
+                query = query.Where(e => e.AerolineaId == valid.aerolineaId);
             query = query.Include(x => x.Aeropuerto).ThenInclude(x => x.Pais);
-            return base.modifyGet(query, queryParams);
+            return query;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
