@@ -8,7 +8,7 @@ namespace AvionesBackNet.Modules.airline
 {
     public class aerolineaAdminValidDto
     {
-        public long? aerlonieaId { get; set; }
+        public long? aerolineaId { get; set; }
         public errorMessageDto? error { get; set; }
     }
 }

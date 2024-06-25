@@ -53,7 +53,7 @@ namespace project.utils.autoMapper
             CreateMap<Empleado, employeeDto>();
             CreateMap<employeeCreationDto, Empleado>();
             CreateMap<Tripulacione, crewDto>();
-            CreateMap<crewCreationDto, Tripulacione>();
+            CreateMap<crewPersonalDto, Tripulacione>();
 
             CreateMap<AerolineaAeropuerto, destinoDto>();
             CreateMap<destinoCreationDto, AerolineaAeropuerto>();

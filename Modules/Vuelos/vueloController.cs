@@ -63,8 +63,8 @@ namespace AvionesBackNet.Modules.Vuelos
                 .Include(v => v.VueloClases)
                 .ThenInclude(vc => vc.Clase);
 
-            if (valid.aerlonieaId != null)
-                query = query.Where(e => e.Avion.AerolineaId == valid.aerlonieaId);
+            if (valid.aerolineaId != null)
+                query = query.Where(e => e.Avion.AerolineaId == valid.aerolineaId);
 
             return query;
         }

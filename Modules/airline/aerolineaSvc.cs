@@ -38,14 +38,14 @@ namespace AvionesBackNet.Modules.airline
 
                 if (empleado.PuestoId != 119)
                     return new aerolineaAdminValidDto { error = new errorMessageDto("El administrador de aerlinea no tiene el puesto de administrador de aerolínea") };
-                return new aerolineaAdminValidDto { aerlonieaId = empleado.AerolineaId };
+                return new aerolineaAdminValidDto { aerolineaId = empleado.AerolineaId };
             }
 
             if (rolesLoged.Contains("ADMINISTRATOR") && aerolineaId == null)
             {
                 return new aerolineaAdminValidDto { error = new errorMessageDto("El administrador debe especificar la aerolínea") };
             }
-            return new aerolineaAdminValidDto { aerlonieaId = aerolineaId };
+            return new aerolineaAdminValidDto { aerolineaId = aerolineaId };
         }
 
     }
