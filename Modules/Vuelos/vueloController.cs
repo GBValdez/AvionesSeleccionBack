@@ -106,7 +106,7 @@ namespace AvionesBackNet.Modules.Vuelos
         }
         protected override async Task<errorMessageDto> validPut(vueloDtoCreation dtoNew, Vuelo entity, object queryParams)
         {
-            if (DateTime.Now > entity.FechaSalida)
+            if (DateTime.UtcNow > entity.FechaSalida)
             {
                 return new errorMessageDto("No se puede modificar un vuelo que ya ha salido");
             }
@@ -117,6 +117,10 @@ namespace AvionesBackNet.Modules.Vuelos
             if (dtoNew.AeropuertoDestinoId == dtoNew.AeropuertoOrigenId)
             {
                 return new errorMessageDto("El aeropuerto de destino no puede ser el mismo que el de origen");
+            }
+            if (context.Boletos.Any(b => b.VueloId == entity.Id && b.deleteAt == null && b.EstadoBoletoId == 92))
+            {
+                return new errorMessageDto("No se puede modificar un vuelo con boletos vendidos");
             }
 
             Avione avione = await context.Aviones.Where(a => a.Id == dtoNew.AvionId && a.deleteAt == null).FirstOrDefaultAsync();
@@ -131,5 +135,19 @@ namespace AvionesBackNet.Modules.Vuelos
             }
             return null;
         }
+
+        protected async override Task<errorMessageDto> validDelete(Vuelo entity)
+        {
+            if (DateTime.Now > entity.FechaSalida)
+            {
+                return new errorMessageDto("No se puede eliminar un vuelo que ya ha salido");
+            }
+            if (context.Boletos.Any(b => b.VueloId == entity.Id && b.deleteAt == null && b.EstadoBoletoId == 92))
+            {
+                return new errorMessageDto("No se puede eliminar un vuelo con boletos vendidos");
+            }
+            return null;
+        }
+
     }
 }

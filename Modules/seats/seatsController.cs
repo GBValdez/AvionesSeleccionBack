@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Catalogues;
+using AvionesBackNet.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,24 +38,67 @@ namespace AvionesBackNet.Modules.seats
             return base.modifyGet(query, queryParams);
         }
 
-        [HttpPost("saveSeats/{idPlane}")]
+        [HttpGet("canEditSeats/{idPlane}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
+        public async Task<ActionResult> canEditSeats(long idPlane)
         {
-            Avione? plane = await context.Aviones.Include(p => p.Asientos).FirstOrDefaultAsync(p => p.Id == idPlane);
+            Avione? plane = await context.Aviones.FirstOrDefaultAsync(p => p.Id == idPlane && p.deleteAt == null);
             if (plane == null)
             {
                 return NotFound();
             }
+            if (await context.Vuelos.AnyAsync(f => f.AvionId == idPlane && f.deleteAt == null && f.FechaLlegada > DateTime.UtcNow))
+            {
+                return BadRequest(new errorMessageDto("No se pueden modificar los asientos de un avión con vuelos pendientes"));
+            }
+            return Ok();
+        }
 
-            // Eliminar los asientos antiguos
-            context.Asientos.RemoveRange(plane.Asientos);
+        [HttpPost("saveSeats/{idPlane}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
+        {
+            Avione? plane = await context.Aviones.FirstOrDefaultAsync(p => p.Id == idPlane && p.deleteAt == null);
+            if (plane == null)
+            {
+                return NotFound();
+            }
+            if (await context.Vuelos.AnyAsync(f => f.AvionId == idPlane && f.deleteAt == null && f.FechaLlegada > DateTime.UtcNow))
+            {
+                return BadRequest(new errorMessageDto("No se pueden modificar los asientos de un avión con vuelos pendientes"));
+            }
 
-            // Mapear y agregar los nuevos asientos
-            List<Asiento> asientos = mapper.Map<List<Asiento>>(seats.asientos);
-            plane.Asientos = asientos;
-            plane.TamAsientoPorc = seats.sizeSeat;
+            List<Asiento> seatsListDB = await context.Asientos.Where(s => s.AvionId == idPlane).ToListAsync();
 
+            if (seatsListDB.Count >= seats.asientos.Count)
+            {
+                for (int i = 0; i < seats.asientos.Count; i++)
+                {
+                    mapper.Map(seats.asientos[i], seatsListDB[i]);
+                    seatsListDB[i].AvionId = idPlane;
+                    seatsListDB[i].deleteAt = null;
+                }
+                for (int i = seats.asientos.Count; i < seatsListDB.Count; i++)
+                {
+                    if (seatsListDB[i].deleteAt == null)
+                        seatsListDB[i].deleteAt = DateTime.UtcNow;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < seatsListDB.Count; i++)
+                {
+                    mapper.Map(seats.asientos[i], seatsListDB[i]);
+                    seatsListDB[i].deleteAt = null;
+                    seatsListDB[i].AvionId = idPlane;
+                }
+                for (int i = seatsListDB.Count; i < seats.asientos.Count; i++)
+                {
+                    Asiento newSeat = mapper.Map<Asiento>(seats.asientos[i]);
+                    newSeat.AvionId = idPlane;
+                    context.Asientos.Add(newSeat);
+                }
+            }
             await context.SaveChangesAsync();
             return Ok();
         }

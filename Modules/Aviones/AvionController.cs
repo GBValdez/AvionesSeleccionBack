@@ -66,6 +66,15 @@ namespace AvionesBackNet.Modules.Aviones
 
         protected async override Task<errorMessageDto> validPut(AvionCreationDto dtoNew, Avione entity, object queryParams)
         {
+            if (entity.CapacidadPasajeros != dtoNew.CapacidadPasajeros)
+            {
+                if (await context.Vuelos.AnyAsync(v => v.AvionId == entity.Id && v.FechaLlegada > DateTime.UtcNow && v.deleteAt == null))
+                    return new errorMessageDto("No se puede cambiar la capacidad de pasajeros de un avión con vuelos pendientes");
+                if (await context.Asientos.Where(a => a.AvionId == entity.Id && a.deleteAt == null).CountAsync() > dtoNew.CapacidadPasajeros)
+                    return new errorMessageDto("No se pudo reducir la cantidad de asientos, por favor elimine manualmente los asientos sobrantes en el editor de asientos");
+            }
+
+
             dtoNew.AerolineaId = entity.AerolineaId;
             return null;
         }
