@@ -7,6 +7,6 @@ namespace AvionesBackNet.Modules.destinos
 {
     public class destinoQueryDto
     {
-        public long AerolineaId { get; set; }
+        public long? AerolineaId { get; set; } = null;
     }
 }

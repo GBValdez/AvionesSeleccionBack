@@ -38,7 +38,7 @@ namespace AvionesBackNet.Modules.seats
         }
 
         [HttpPost("saveSeats/{idPlane}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
         {
             Avione? plane = await context.Aviones.Include(p => p.Asientos).FirstOrDefaultAsync(p => p.Id == idPlane);
