@@ -23,7 +23,7 @@ namespace AvionesBackNet.Modules.destinos
             this.aerolineaSvc = aerolineaSvc;
         }
 
-        protected async override Task<IQueryable<AerolineaAeropuerto>> modifyGet(IQueryable<AerolineaAeropuerto> query, destinoQueryDto queryParams)
+        protected override async Task<IQueryable<AerolineaAeropuerto>> modifyGet(IQueryable<AerolineaAeropuerto> query, destinoQueryDto queryParams)
         {
             aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(queryParams.AerolineaId);
             if (valid.aerolineaId != null)

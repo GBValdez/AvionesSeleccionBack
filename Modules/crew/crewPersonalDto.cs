@@ -13,7 +13,7 @@ namespace AvionesBackNet.Modules.crew
         public long azafata1 { get; set; }
         public long azafata2 { get; set; }
         public long azafata3 { get; set; }
-        public long AerolineaId { get; set; }
+        public long? AerolineaId { get; set; }
 
     }
 }
