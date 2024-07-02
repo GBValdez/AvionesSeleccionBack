@@ -75,13 +75,13 @@ namespace AvionesBackNet.Modules.Vuelos
             await context.SaveChangesAsync();
 
         }
-        protected override async Task<errorMessageDto> validPost(vueloDtoCreation dtoNew, object queryParams)
-        {
-            if (DateTime.Now > dtoNew.FechaSalida)
-            {
-                return new errorMessageDto("No se puede crear un vuelo con fecha de salida anterior a la actual");
-            }
 
+        protected async Task<errorMessageDto> validBasic(vueloDtoCreation dtoNew, object queryParams)
+        {
+            if (dtoNew.FechaSalida < DateTime.Now)
+            {
+                return new errorMessageDto("La fecha de salida no puede ser anterior a la actual");
+            }
             if (dtoNew.FechaSalida > dtoNew.FechaLlegada)
             {
                 return new errorMessageDto("La fecha de salida no puede ser mayor a la fecha de llegada");
@@ -90,49 +90,41 @@ namespace AvionesBackNet.Modules.Vuelos
             {
                 return new errorMessageDto("El aeropuerto de destino no puede ser el mismo que el de origen");
             }
-
             Avione avione = await context.Aviones.Where(a => a.Id == dtoNew.AvionId && a.deleteAt == null).FirstOrDefaultAsync();
             if (avione == null)
             {
                 return new errorMessageDto("El avion no existe");
             }
+
+            bool hasSeats = await context.Asientos.AnyAsync(a => a.AvionId == dtoNew.AvionId && a.deleteAt == null);
+            if (!hasSeats)
+                return new errorMessageDto("El avion no tiene asientos");
+
             bool avionEnUso = await context.Vuelos.AnyAsync(v => v.AvionId == dtoNew.AvionId && v.FechaLlegada > dtoNew.FechaSalida && v.FechaSalida < dtoNew.FechaLlegada && v.deleteAt == null);
             if (avionEnUso)
             {
                 return new errorMessageDto("El avion ya esta en uso en ese horario");
             }
-            return null;
 
+            return null;
+        }
+        protected override async Task<errorMessageDto> validPost(vueloDtoCreation dtoNew, object queryParams)
+        {
+            errorMessageDto basic = await validBasic(dtoNew, queryParams);
+            if (basic != null)
+                return basic;
+            return null;
         }
         protected override async Task<errorMessageDto> validPut(vueloDtoCreation dtoNew, Vuelo entity, object queryParams)
         {
-            if (DateTime.UtcNow > entity.FechaSalida)
-            {
-                return new errorMessageDto("No se puede modificar un vuelo que ya ha salido");
-            }
-            if (dtoNew.FechaSalida > dtoNew.FechaLlegada)
-            {
-                return new errorMessageDto("La fecha de salida no puede ser mayor a la fecha de llegada");
-            }
-            if (dtoNew.AeropuertoDestinoId == dtoNew.AeropuertoOrigenId)
-            {
-                return new errorMessageDto("El aeropuerto de destino no puede ser el mismo que el de origen");
-            }
+            errorMessageDto basic = await validBasic(dtoNew, queryParams);
+            if (basic != null)
+                return basic;
             if (context.Boletos.Any(b => b.VueloId == entity.Id && b.deleteAt == null && b.EstadoBoletoId == 92))
             {
                 return new errorMessageDto("No se puede modificar un vuelo con boletos vendidos");
             }
 
-            Avione avione = await context.Aviones.Where(a => a.Id == dtoNew.AvionId && a.deleteAt == null).FirstOrDefaultAsync();
-            if (avione == null)
-            {
-                return new errorMessageDto("El avion no existe");
-            }
-            bool avionEnUso = await context.Vuelos.AnyAsync(v => v.AvionId == dtoNew.AvionId && v.FechaLlegada > dtoNew.FechaSalida && v.FechaSalida < dtoNew.FechaLlegada && v.Id != entity.Id && v.deleteAt == null);
-            if (avionEnUso)
-            {
-                return new errorMessageDto("El avion ya esta en uso en ese horario");
-            }
             return null;
         }
 
