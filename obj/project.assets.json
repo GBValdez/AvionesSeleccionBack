@@ -5478,8 +5478,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gbval\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "D:\\Programas\\NETDotnet\\Net8\\custom_packages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5487,22 +5486,16 @@
       "projectUniqueName": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
       "projectName": "AvionesBackNet",
       "projectPath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
-      "packagesPath": "C:\\Users\\gbval\\.nuget\\packages\\",
+      "packagesPath": "D:\\Programas\\NETDotnet\\Net8\\custom_packages",
       "outputPath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\gbval\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\gbval\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5606,7 +5599,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "D:\\Programas\\NETDotnet\\Net8\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

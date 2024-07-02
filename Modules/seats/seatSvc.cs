@@ -6,6 +6,7 @@ using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.Aviones;
 using AvionesBackNet.Modules.Catalogues;
+using AvionesBackNet.Modules.Vuelos;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,11 +51,14 @@ namespace AvionesBackNet.Modules.seats
                     item.Estado.name = "LIBRE";
                 }
             }
+
+            List<VueloClase> vueloClaseList = await context.VueloClases.Where(v => v.VueloId == flyId && v.deleteAt == null).Include(x => x.Clase).ToListAsync();
             avionWithSeatsDto avionWithSeatsDto = new avionWithSeatsDto();
             avionWithSeatsDto.asientoDtos = asientosDto;
             fly.Avion.Asientos = null;
             fly.Avion.Vuelos = null;
             avionWithSeatsDto.avion = mapper.Map<AvionDto>(fly.Avion);
+            avionWithSeatsDto.classList = mapper.Map<List<vueloClaseDto>>(vueloClaseList);
             return avionWithSeatsDto;
         }
     }
