@@ -53,7 +53,8 @@ namespace AvionesBackNet.Modules.Vuelos
         }
         public async Task LeaveGroup(string vueloId)
         {
-            List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == long.Parse(vueloId) && b.deleteAt == null && b.EstadoBoletoId == 93).ToListAsync();
+            long idClient = long.Parse(Context.User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value);
+            List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == long.Parse(vueloId) && b.deleteAt == null && b.EstadoBoletoId == 93 && b.ClienteId == idClient).ToListAsync();
             boletos.ForEach(b => b.EstadoBoletoId = 94);
             await _context.SaveChangesAsync();
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, vueloId);
@@ -92,23 +93,49 @@ namespace AvionesBackNet.Modules.Vuelos
                     CantidadMaletasPresentadas = 0
                 };
                 await _context.Boletos.AddAsync(boleto);
+                await _context.SaveChangesAsync();
             }
             else if (boleto.EstadoBoletoId != 92)
             {
-                if (boleto.EstadoBoletoId == 93)
+                bool changeState = false;
+                if (boleto.EstadoBoletoId == 93 && boleto.ClienteId == idClient)
+                {
                     boleto.EstadoBoletoId = 94;
+                    changeState = true;
+                }
                 else if (boleto.EstadoBoletoId == 94)
+                {
                     boleto.EstadoBoletoId = 93;
+                    boleto.ClienteId = idClient;
+                    changeState = true;
 
-                boleto.updateAt = DateTime.UtcNow;
-                boleto.ClienteId = idClient;
+                }
+                if (changeState)
+                {
+                    boleto.updateAt = DateTime.UtcNow;
+                    await _context.SaveChangesAsync();
+                }
+
             }
-            await _context.SaveChangesAsync();
 
             List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == vueloIdL && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
             boletos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
             await Clients.Group(vueloId).SendAsync("ReceiveSeatSelection", boletos);
 
+        }
+
+        public async Task VacateSeats(string vueloId, string asientoId)
+        {
+            long idClient = long.Parse(Context.User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value);
+            long vueloIdL = long.Parse(vueloId);
+            List<long> asientosId = asientoId.Split(',').Select(long.Parse).ToList();
+            List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == vueloIdL && asientosId.Contains(b.AsientoId) && b.deleteAt == null && b.ClienteId == idClient && b.EstadoBoletoId == 93).ToListAsync();
+            boletos.ForEach(b => b.EstadoBoletoId = 94);
+            await _context.SaveChangesAsync();
+
+            List<Boleto> boletosAll = await _context.Boletos.Where(b => b.VueloId == vueloIdL && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
+            boletos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
+            await Clients.Group(vueloId).SendAsync("ReceiveSeatSelection", boletosAll);
         }
     }
 }

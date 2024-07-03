@@ -27,7 +27,7 @@ namespace AvionesBackNet.Modules.seats
 
         public async Task<avionWithSeatsDto> getSeatsByFlyId(long flyId)
         {
-            Vuelo? fly = await context.Vuelos.Where(v => v.Id == flyId)
+            Vuelo? fly = await context.Vuelos.Where(v => v.Id == flyId && v.deleteAt == null)
             .Include(x => x.Avion)
             .FirstOrDefaultAsync();
             if (fly == null)
@@ -35,9 +35,9 @@ namespace AvionesBackNet.Modules.seats
 
                 return null;
             }
-            List<Asiento> asientos = await context.Asientos.Where(a => a.AvionId == fly.AvionId).Include(x => x.Clase).ToListAsync();
+            List<Asiento> asientos = await context.Asientos.Where(a => a.AvionId == fly.AvionId && a.deleteAt == null).Include(x => x.Clase).ToListAsync();
             List<asientoDto> asientosDto = mapper.Map<List<asientoDto>>(asientos);
-            List<Boleto> boletos = await context.Boletos.Where(b => b.VueloId == flyId).Include(a => a.EstadoBoleto).ToListAsync();
+            List<Boleto> boletos = await context.Boletos.Where(b => b.VueloId == flyId && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
 
             foreach (asientoDto item in asientosDto)
             {
@@ -47,8 +47,8 @@ namespace AvionesBackNet.Modules.seats
                 else
                 {
                     item.Estado = new catalogueDto();
-                    item.Estado.Id = 30;
-                    item.Estado.name = "LIBRE";
+                    item.Estado.Id = 94;
+                    item.Estado.name = "Libre";
                 }
             }
 
