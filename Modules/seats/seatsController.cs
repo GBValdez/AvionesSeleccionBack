@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.Aviones;
 using AvionesBackNet.Modules.Catalogues;
+using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -19,11 +21,9 @@ namespace AvionesBackNet.Modules.seats
     [Route("[controller]")]
     public class SeatsController : controllerCommons<Asiento, asientoDtoCreation, asientoDto, asientoQueryDto, object, long>
     {
-        private seatSvc seatSvc;
 
-        public SeatsController(AvionesContext context, IMapper mapper, seatSvc svc) : base(context, mapper)
+        public SeatsController(AvionesContext context, IMapper mapper) : base(context, mapper)
         {
-            this.seatSvc = svc;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -108,12 +108,34 @@ namespace AvionesBackNet.Modules.seats
 
         public async Task<ActionResult<avionWithSeatsDto>> getSeatsOfFly(long idFly)
         {
-            avionWithSeatsDto asientoDtos = await seatSvc.getSeatsByFlyId(idFly);
-            if (asientoDtos == null)
+            string idClient = User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value;
+            if (idClient == null)
             {
-                return NotFound();
+                return BadRequest(new errorMessageDto("El usuario no esta autenticado como cliente"));
             }
-            return asientoDtos;
+            long idClientL = long.Parse(idClient);
+            Vuelo? fly = await context.Vuelos.Where(v => v.Id == idFly && v.deleteAt == null)
+            .Include(x => x.Avion)
+            .FirstOrDefaultAsync();
+            if (fly == null)
+            {
+                return null;
+            }
+            List<Asiento> asientos = await context.Asientos.Where(a => a.AvionId == fly.AvionId && a.deleteAt == null).Include(x => x.Clase).ToListAsync();
+            List<asientoDto> asientosDto = mapper.Map<List<asientoDto>>(asientos);
+            List<Boleto> boletos = await context.Boletos.Where(b => b.VueloId == idFly && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
+            List<boletoDto> boletoDtos = mapper.Map<List<boletoDto>>(boletos);
+            boletoDtos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClientL) ? idClientL : -1; });
+
+            List<VueloClase> vueloClaseList = await context.VueloClases.Where(v => v.VueloId == idFly && v.deleteAt == null).Include(x => x.Clase).ToListAsync();
+            avionWithSeatsDto avionWithSeatsDto = new avionWithSeatsDto();
+            avionWithSeatsDto.asientoDtos = asientosDto;
+            fly.Avion.Asientos = null;
+            fly.Avion.Vuelos = null;
+            avionWithSeatsDto.avion = mapper.Map<AvionDto>(fly.Avion);
+            avionWithSeatsDto.classList = mapper.Map<List<vueloClaseDto>>(vueloClaseList);
+            avionWithSeatsDto.boletos = boletoDtos;
+            return avionWithSeatsDto;
         }
 
 

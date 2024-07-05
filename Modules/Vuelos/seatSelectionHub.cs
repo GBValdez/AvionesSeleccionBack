@@ -14,18 +14,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AvionesBackNet.Modules.Vuelos
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "userNormal")]
     public class seatSelectionHub : Hub
     {
         private AvionesContext _context;
         private readonly IMapper _mapper;
-        private readonly seatSvc _seatSvc;
 
-        public seatSelectionHub(AvionesContext context, IMapper mapper, seatSvc seatSvc)
+        public seatSelectionHub(AvionesContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _seatSvc = seatSvc;
         }
 
         public async Task JoinGroup(string vueloId)
@@ -118,10 +116,7 @@ namespace AvionesBackNet.Modules.Vuelos
 
             }
 
-            List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == vueloIdL && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
-            boletos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
-            await Clients.Group(vueloId).SendAsync("ReceiveSeatSelection", boletos);
-
+            await sendTickets(vueloIdL, idClient);
         }
 
         public async Task VacateSeats(string vueloId, string asientoId)
@@ -133,9 +128,41 @@ namespace AvionesBackNet.Modules.Vuelos
             boletos.ForEach(b => b.EstadoBoletoId = 94);
             await _context.SaveChangesAsync();
 
-            List<Boleto> boletosAll = await _context.Boletos.Where(b => b.VueloId == vueloIdL && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
-            boletos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
-            await Clients.Group(vueloId).SendAsync("ReceiveSeatSelection", boletosAll);
+            await sendTickets(vueloIdL, idClient);
+        }
+
+        public async Task PaySeats(string vueloId, string asientoId)
+        {
+            List<long> seatsId = asientoId.Split(',').Select(long.Parse).ToList();
+            if (seatsId.Count == 0)
+                await Clients.Caller.SendAsync("ErrorMessage", "No se han seleccionado asientos");
+            Vuelo? fly = await _context.Vuelos.FirstOrDefaultAsync(f => f.Id == long.Parse(vueloId) && f.deleteAt == null);
+            if (fly == null)
+                await Clients.Caller.SendAsync("ErrorMessage", "Vuelo no encontrado");
+
+            if (fly.FechaSalida < DateTime.UtcNow)
+                await Clients.Caller.SendAsync("ErrorMessage", "El vuelo ya ha salido");
+
+            string idClient = Context.User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value;
+            if (idClient == null)
+                await Clients.Caller.SendAsync("ErrorMessage", "El usuario no esta autenticado como cliente");
+            List<Boleto> tickets = await _context.Boletos.Where(b => b.VueloId == long.Parse(vueloId) && b.deleteAt == null && b.EstadoBoletoId == 93 && seatsId.Contains(b.AsientoId) && b.ClienteId == long.Parse(idClient)).ToListAsync();
+            if (!tickets.Count.Equals(seatsId.Count))
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Algunos de los asientos seleccionados ya han sido pagados");
+            }
+            tickets.ForEach(b => b.EstadoBoletoId = 92);
+            await _context.SaveChangesAsync();
+
+            await sendTickets(long.Parse(vueloId), long.Parse(idClient));
+        }
+
+        private async Task sendTickets(long vueloId, long idClient)
+        {
+            List<Boleto> boletosAll = await _context.Boletos.Where(b => b.VueloId == vueloId && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
+            List<boletoDto> boletoDtos = _mapper.Map<List<boletoDto>>(boletosAll);
+            boletoDtos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
+            await Clients.Group(vueloId + "").SendAsync("ReceiveSeatSelection", boletoDtos);
         }
     }
 }

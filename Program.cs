@@ -30,7 +30,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<seatSvc>();
 builder.Services.AddScoped<interceptorDb>();
 builder.Services.AddScoped<emailService>();
 builder.Services.AddScoped<userSvc>();

@@ -12,6 +12,6 @@ namespace AvionesBackNet.Modules.seats
         public AvionDto avion { get; set; }
         public List<asientoDto> asientoDtos { get; set; }
         public List<vueloClaseDto> classList { get; set; }
-
+        public List<boletoDto> boletos { get; set; }
     }
 }

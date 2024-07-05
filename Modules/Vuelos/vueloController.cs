@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.airline;
+using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -140,6 +141,7 @@ namespace AvionesBackNet.Modules.Vuelos
             }
             return null;
         }
+
 
     }
 }
