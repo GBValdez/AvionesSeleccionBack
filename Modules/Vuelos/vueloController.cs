@@ -142,6 +142,19 @@ namespace AvionesBackNet.Modules.Vuelos
             return null;
         }
 
-
+        [HttpGet("getMyFlies")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "userNormal")]
+        public async Task<ActionResult<List<vueloDto>>> getMyFlies()
+        {
+            long idClient = long.Parse(User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value);
+            List<Vuelo> vuelos = await context.Vuelos.Where(v => v.Boletos.Any(b => b.ClienteId == idClient && b.deleteAt == null) && v.deleteAt == null)
+            .Include(v => v.AeropuertoDestino)
+            .ThenInclude(v => v.Pais)
+            .Include(v => v.AeropuertoOrigen)
+            .ThenInclude(v => v.Pais)
+            .ToListAsync();
+            List<vueloDto> vuelosDto = mapper.Map<List<vueloDto>>(vuelos);
+            return vuelosDto;
+        }
     }
 }
