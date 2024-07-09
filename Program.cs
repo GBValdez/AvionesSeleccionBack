@@ -6,6 +6,7 @@ using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.users;
+using AvionesBackNet.utils.writerPdf;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

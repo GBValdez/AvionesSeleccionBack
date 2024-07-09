@@ -128,3 +128,17 @@ D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBack
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\MimeKit.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.barcodes.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.bouncy-castle-connector.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.forms.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.io.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.kernel.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.layout.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.pdfa.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.pdfua.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.sign.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.styledxmlparser.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.svg.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.commons.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\backup\Escritorio\Proyectos\avion Proyecto\Aviones Seleccion Back\AvionesBackNet\bin\Debug\net8.0\itext.bouncy-castle-adapter.dll
