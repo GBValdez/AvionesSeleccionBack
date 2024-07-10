@@ -17,11 +17,11 @@ public partial class Boleto : CommonsModel<long>
     public long AsientoId { get; set; }
 
     public long ClienteId { get; set; }
-    public virtual Asiento Asiento { get; set; } = null!;
+    public Asiento Asiento { get; set; } = null!;
 
-    public virtual Cliente Cliente { get; set; } = null!;
+    public Cliente Cliente { get; set; } = null!;
 
-    public virtual Catalogo EstadoBoleto { get; set; } = null!;
+    public Catalogo EstadoBoleto { get; set; } = null!;
 
-    public virtual Vuelo Vuelo { get; set; } = null!;
+    public Vuelo Vuelo { get; set; } = null!;
 }

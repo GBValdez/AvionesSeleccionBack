@@ -12,8 +12,8 @@ namespace AvionesBackNet.Modules.Vuelos
     public class clienteDto : clienteDtoBase
     {
 
-        public virtual paisDto CodigoTelefonoEmergenciaNavigation { get; set; } = null!;
-        public virtual paisDto CodigoTelefonoNavigation { get; set; } = null!;
-        public virtual paisDto Pais { get; set; } = null!;
+        public paisDto CodigoTelefonoEmergenciaNavigation { get; set; } = null!;
+        public paisDto CodigoTelefonoNavigation { get; set; } = null!;
+        public paisDto Pais { get; set; } = null!;
     }
 }

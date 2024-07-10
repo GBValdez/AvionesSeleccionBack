@@ -31,13 +31,15 @@ namespace AvionesBackNet.Modules.airline
                 return new aerolineaAdminValidDto { error = new errorMessageDto("Usuario no encontrado") };
             IList<string> rolesLoged = await userManager.GetRolesAsync(userLoged);
             Empleado empleado = await context.Empleados.Where(e => e.UserId == idUser && e.deleteAt == null).FirstOrDefaultAsync();
-            if (rolesLoged.Contains("ADMINISTRATOR_AIRLINE"))
+            if (rolesLoged.Contains("ADMINISTRATOR_AIRLINE") || rolesLoged.Contains("AIRLINE-TACKLE"))
             {
                 if (empleado == null)
-                    return new aerolineaAdminValidDto { error = new errorMessageDto("El administrador de aerlinea no tiene el puesto de administrador de aerolínea") };
+                    return new aerolineaAdminValidDto { error = new errorMessageDto("El usuario no tiene cuenta de empleado") };
 
-                if (empleado.PuestoId != 119)
+                if (empleado.PuestoId != 119 && rolesLoged.Contains("ADMINISTRATOR_AIRLINE"))
                     return new aerolineaAdminValidDto { error = new errorMessageDto("El administrador de aerlinea no tiene el puesto de administrador de aerolínea") };
+                if (empleado.PuestoId != 120 && rolesLoged.Contains("AIRLINE-TACKLE"))
+                    return new aerolineaAdminValidDto { error = new errorMessageDto("El usuario no tiene el puesto de 'Agente de puerta de embarque'") };
                 return new aerolineaAdminValidDto { aerolineaId = empleado.AerolineaId };
             }
 

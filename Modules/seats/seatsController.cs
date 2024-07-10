@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.Aviones;
 using AvionesBackNet.Modules.Catalogues;
+using AvionesBackNet.Modules.crew;
 using AvionesBackNet.Modules.seats.dtos;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.utils;
@@ -33,10 +35,12 @@ namespace AvionesBackNet.Modules.seats
     public class SeatsController : controllerCommons<Asiento, asientoDtoCreation, asientoDto, asientoQueryDto, object, long>
     {
         private readonly IDataProtector dataProtector;
+        private readonly aerolineaSvc AerolineaSvc;
 
-        public SeatsController(AvionesContext context, IMapper mapper, IDataProtectionProvider dataProvider, IConfiguration configuration) : base(context, mapper)
+        public SeatsController(AvionesContext context, IMapper mapper, IDataProtectionProvider dataProvider, IConfiguration configuration, aerolineaSvc AerolineaSVC) : base(context, mapper)
         {
             this.dataProtector = dataProvider.CreateProtector(configuration["keyResetPasswordKey"]);
+            AerolineaSvc = AerolineaSVC;
 
         }
 
@@ -249,14 +253,14 @@ namespace AvionesBackNet.Modules.seats
 
 
         [HttpGet("getTackleTicket/{ticket}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket(string ticket)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket(string ticket, [FromQuery] crewQuerryDto queryParams)
         {
             List<Boleto> boletos = await getTickets(ticket);
             if (boletos == null)
                 return BadRequest(new errorMessageDto("El ticket no es valido"));
             if (boletos.Count == 0)
-                return BadRequest(new errorMessageDto("No se encontraron boletos"));
+                return BadRequest(new errorMessageDto("Los boletos ya han sido abordados"));
             long idClient = boletos[0].ClienteId;
             Cliente? client = await context.Clientes.FirstOrDefaultAsync(c => c.Id == idClient && c.deleteAt == null);
             if (client == null)
@@ -267,10 +271,19 @@ namespace AvionesBackNet.Modules.seats
                 .Include(b => b.AeropuertoOrigen)
                 .ThenInclude(b => b.Pais)
                 .Include(b => b.VueloClases)
+                .ThenInclude(b => b.Clase)
                 .Include(b => b.Avion)
                 .FirstOrDefaultAsync();
+
             if (fly == null)
                 return NotFound();
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            if (valid.aerolineaId != fly.Avion.AerolineaId)
+                return BadRequest(
+                    new errorMessageDto("El boleto es invalido")
+                );
             ticketCompleteDto ticketCompleteDto = new ticketCompleteDto();
             ticketCompleteDto.cliente = mapper.Map<clienteDto>(client);
             ticketCompleteDto.vuelo = mapper.Map<vueloDto>(fly);
@@ -279,14 +292,34 @@ namespace AvionesBackNet.Modules.seats
         }
 
         [HttpPost("completeTackleTicket/{ticket}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> completeTackleTicket(string ticket)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public async Task<ActionResult> completeTackleTicket(string ticket, [FromQuery] crewQuerryDto queryParams)
         {
+
             List<Boleto> boletos = await getTickets(ticket);
             if (boletos == null)
                 return BadRequest(new errorMessageDto("El ticket no es valido"));
+
             if (boletos.Count == 0)
-                return BadRequest(new errorMessageDto("No se encontraron boletos"));
+                return BadRequest(new errorMessageDto("Los boletos ya han sido abordados"));
+            long idClient = boletos[0].ClienteId;
+            if (!(await context.Clientes.AnyAsync(b => b.Id == idClient)))
+                return BadRequest(new errorMessageDto("El cliente no existe"));
+
+            Vuelo? fly = await context.Vuelos.Where(v => v.Id == boletos[0].VueloId && v.deleteAt == null)
+                .Include(b => b.Avion)
+                .FirstOrDefaultAsync();
+            if (fly == null)
+                return NotFound();
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            if (valid.aerolineaId != fly.Avion.AerolineaId)
+                return BadRequest(
+                    new errorMessageDto("El boleto es invalido")
+                );
+
+
             foreach (Boleto item in boletos)
             {
                 item.EstadoBoletoId = 95;
@@ -303,7 +336,20 @@ namespace AvionesBackNet.Modules.seats
                 string normalTicket = Encoding.UTF8.GetString(decodedTicketUrl);
                 string decrypted = dataProtector.Unprotect(normalTicket);
                 string[] ids = decrypted.Split(",");
-                return await context.Boletos.Where(b => ids.Contains(b.Id.ToString()) && b.EstadoBoletoId == 92).ToListAsync();
+                IQueryable<Boleto> queryBoletos = context.Boletos.Where(b => ids.Contains(b.Id.ToString()))
+                    .Include(t => t.Asiento);
+                long countTicket = await queryBoletos.Where(b => b.EstadoBoletoId == 92).CountAsync();
+                if (countTicket != ids.Count() - 1)
+                {
+                    long countTicketTackle = await queryBoletos.Where(b => b.EstadoBoletoId == 95).CountAsync();
+                    if (countTicketTackle == ids.Count() - 1)
+                        return [];
+                    else
+                        return null;
+                }
+
+                return await queryBoletos.Where(b => b.EstadoBoletoId == 92)
+                    .ToListAsync();
             }
             catch (Exception e)
             {

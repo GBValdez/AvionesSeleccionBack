@@ -31,6 +31,6 @@ public partial class Aeropuerto : CommonsModel<long>
     public long ZonaHorariaId { get; set; }
 
     public long PaisId { get; set; }
-    public virtual Paise Pais { get; set; } = null!;
-    public virtual Catalogo ZonaHoraria { get; set; } = null!;
+    public Paise Pais { get; set; } = null!;
+    public Catalogo ZonaHoraria { get; set; } = null!;
 }

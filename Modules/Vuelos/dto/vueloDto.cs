@@ -13,12 +13,12 @@ namespace AvionesBackNet.Modules.Vuelos
         public string Codigo { get; set; } = null!;
         public DateTime FechaSalida { get; set; }
         public DateTime FechaLlegada { get; set; }
-        public virtual AeropuertoDto AeropuertoDestino { get; set; } = null!;
+        public AeropuertoDto AeropuertoDestino { get; set; } = null!;
 
-        public virtual AeropuertoDto AeropuertoOrigen { get; set; } = null!;
+        public AeropuertoDto AeropuertoOrigen { get; set; } = null!;
 
-        public virtual AvionDto Avion { get; set; } = null!;
-        public virtual ICollection<vueloClaseDto> VueloClases { get; set; } = new List<vueloClaseDto>();
+        public AvionDto Avion { get; set; } = null!;
+        public ICollection<vueloClaseDto> VueloClases { get; set; } = new List<vueloClaseDto>();
 
     }
 }

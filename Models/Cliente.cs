@@ -20,17 +20,17 @@ public partial class Cliente : CommonsModel<long>
     public long CodigoTelefono { get; set; }
     public long CodigoTelefonoEmergencia { get; set; }
 
-    public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
+    public ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 
     [ForeignKey("CodigoTelefonoEmergencia")]
-    public virtual Paise CodigoTelefonoEmergenciaObj { get; set; } = null!;
+    public Paise CodigoTelefonoEmergenciaObj { get; set; } = null!;
 
     [ForeignKey("CodigoTelefono")]
-    public virtual Paise CodigoTelefonoObj { get; set; } = null!;
+    public Paise CodigoTelefonoObj { get; set; } = null!;
 
     [ForeignKey("PaisId")]
-    public virtual Paise Pais { get; set; } = null!;
+    public Paise Pais { get; set; } = null!;
 
     [ForeignKey("UserId")]
-    public virtual userEntity User { get; set; } = null!;
+    public userEntity User { get; set; } = null!;
 }

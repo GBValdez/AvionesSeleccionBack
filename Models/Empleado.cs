@@ -18,10 +18,10 @@ public partial class Empleado : CommonsModel<long>
     public long? TripulacionId { get; set; } = null;
     public long AerolineaId { get; set; }
     public string UserId { get; set; }
-    public virtual Aerolinea Aerolinea { get; set; } = null!;
-    public virtual Paise Pais { get; set; } = null!;
-    public virtual Catalogo Puesto { get; set; } = null!;
-    public virtual Tripulacione? Tripulacion { get; set; } = null!;
+    public Aerolinea Aerolinea { get; set; } = null!;
+    public Paise Pais { get; set; } = null!;
+    public Catalogo Puesto { get; set; } = null!;
+    public Tripulacione? Tripulacion { get; set; } = null!;
     [ForeignKey("UserId")]
     public userEntity User { get; set; } = null!;
 }

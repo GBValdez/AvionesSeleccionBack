@@ -16,18 +16,18 @@ namespace AvionesBackNet.Modules.Aviones
     {
         public long Id { get; set; }
 
-        public virtual aerolineaDto Aerolinea { get; set; } = null!;
+        public aerolineaDto Aerolinea { get; set; } = null!;
 
-        public virtual catalogueDto Estado { get; set; } = null!;
+        public catalogueDto Estado { get; set; } = null!;
 
-        public virtual catalogueDto Marca { get; set; } = null!;
+        public catalogueDto Marca { get; set; } = null!;
 
-        public virtual catalogueDto Modelo { get; set; } = null!;
+        public catalogueDto Modelo { get; set; } = null!;
 
-        public virtual List<crewDto> Tripulaciones { get; set; } = null!;
-        public virtual catalogueDto TipoAvion { get; set; } = null!;
-        public virtual ICollection<vueloDto> Vuelos { get; set; }
-        public virtual ICollection<asientoDto> Asientos { get; set; }
+        public List<crewDto> Tripulaciones { get; set; } = null!;
+        public catalogueDto TipoAvion { get; set; } = null!;
+        public ICollection<vueloDto> Vuelos { get; set; }
+        public ICollection<asientoDto> Asientos { get; set; }
         public decimal TamAsientoPorc { get; set; }
     }
 }

@@ -18,42 +18,42 @@ public partial class AvionesContext : IdentityDbContext<userEntity, rolEntity, s
     }
 
 
-    public virtual DbSet<Aerolinea> Aerolineas { get; set; }
+    public DbSet<Aerolinea> Aerolineas { get; set; }
 
-    public virtual DbSet<AerolineaAeropuerto> AerolineaAeropuertos { get; set; }
+    public DbSet<AerolineaAeropuerto> AerolineaAeropuertos { get; set; }
 
-    public virtual DbSet<Aeropuerto> Aeropuertos { get; set; }
+    public DbSet<Aeropuerto> Aeropuertos { get; set; }
 
-    public virtual DbSet<Asiento> Asientos { get; set; }
+    public DbSet<Asiento> Asientos { get; set; }
 
-    public virtual DbSet<Avione> Aviones { get; set; }
+    public DbSet<Avione> Aviones { get; set; }
 
-    public virtual DbSet<BitacoraCuerpo> BitacoraCuerpos { get; set; }
+    public DbSet<BitacoraCuerpo> BitacoraCuerpos { get; set; }
 
-    public virtual DbSet<BitacoraEncabezado> BitacoraEncabezados { get; set; }
+    public DbSet<BitacoraEncabezado> BitacoraEncabezados { get; set; }
 
-    public virtual DbSet<Boleto> Boletos { get; set; }
+    public DbSet<Boleto> Boletos { get; set; }
 
-    public virtual DbSet<Catalogo> Catalogos { get; set; }
+    public DbSet<Catalogo> Catalogos { get; set; }
 
-    public virtual DbSet<CatalogoTipo> CatalogoTipos { get; set; }
+    public DbSet<CatalogoTipo> CatalogoTipos { get; set; }
 
-    public virtual DbSet<Cliente> Clientes { get; set; }
+    public DbSet<Cliente> Clientes { get; set; }
 
-    public virtual DbSet<Empleado> Empleados { get; set; }
-
-
-
-    public virtual DbSet<Paise> Paises { get; set; }
-
-
-    public virtual DbSet<Tripulacione> Tripulaciones { get; set; }
+    public DbSet<Empleado> Empleados { get; set; }
 
 
 
-    public virtual DbSet<Vuelo> Vuelos { get; set; }
+    public DbSet<Paise> Paises { get; set; }
 
-    public virtual DbSet<VueloClase> VueloClases { get; set; }
+
+    public DbSet<Tripulacione> Tripulaciones { get; set; }
+
+
+
+    public DbSet<Vuelo> Vuelos { get; set; }
+
+    public DbSet<VueloClase> VueloClases { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -12,5 +12,7 @@ namespace AvionesBackNet.Modules.seats
     {
         public long Id { get; set; }
         public catalogueDto Clase { get; set; } = null;
+        public long ClaseId { get; set; }
+
     }
 }

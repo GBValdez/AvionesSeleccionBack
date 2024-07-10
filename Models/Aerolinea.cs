@@ -19,11 +19,11 @@ public partial class Aerolinea : CommonsModel<long>
 
     public long PaisId { get; set; }
 
-    public virtual Paise Pais { get; set; } = null!;
+    public Paise Pais { get; set; } = null!;
 
-    public virtual ICollection<Avione> Aviones { get; set; } = new List<Avione>();
+    public ICollection<Avione> Aviones { get; set; } = new List<Avione>();
 
-    public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
+    public ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
 
-    public virtual ICollection<Tripulacione> Tripulaciones { get; set; } = new List<Tripulacione>();
+    public ICollection<Tripulacione> Tripulaciones { get; set; } = new List<Tripulacione>();
 }

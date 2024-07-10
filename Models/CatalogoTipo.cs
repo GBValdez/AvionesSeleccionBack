@@ -12,5 +12,5 @@ public partial class CatalogoTipo : CommonsModel<long>
 
     public string? description { get; set; }
 
-    public virtual ICollection<Catalogo> Catalogos { get; set; } = new List<Catalogo>();
+    public ICollection<Catalogo> Catalogos { get; set; } = new List<Catalogo>();
 }

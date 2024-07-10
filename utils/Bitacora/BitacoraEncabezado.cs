@@ -15,7 +15,7 @@ public partial class BitacoraEncabezado : CommonsModel<long>
     public string TipoTransaccion { get; set; } = null!;
 
     public string UserId { get; set; }
-    public virtual ICollection<BitacoraCuerpo> BitacoraCuerpos { get; set; } = new List<BitacoraCuerpo>();
+    public ICollection<BitacoraCuerpo> BitacoraCuerpos { get; set; } = new List<BitacoraCuerpo>();
     [ForeignKey("UserId")]
-    public virtual userEntity User { get; set; } = null!;
+    public userEntity User { get; set; } = null!;
 }

@@ -11,8 +11,8 @@ namespace AvionesBackNet.Modules.Vuelos
     {
         public decimal Precio { get; set; }
 
-        public virtual catalogueDto Clase { get; set; } = null!;
+        public catalogueDto Clase { get; set; } = null!;
 
-        public virtual vueloDto Vuelo { get; set; } = null!;
+        public vueloDto Vuelo { get; set; } = null!;
     }
 }

@@ -18,13 +18,13 @@ public partial class Vuelo : CommonsModel<long>
 
     public long AeropuertoDestinoId { get; set; }
 
-    public virtual Aeropuerto AeropuertoDestino { get; set; } = null!;
+    public Aeropuerto AeropuertoDestino { get; set; } = null!;
 
-    public virtual Aeropuerto AeropuertoOrigen { get; set; } = null!;
+    public Aeropuerto AeropuertoOrigen { get; set; } = null!;
 
-    public virtual Avione Avion { get; set; } = null!;
+    public Avione Avion { get; set; } = null!;
 
-    public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
+    public ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 
-    public virtual ICollection<VueloClase> VueloClases { get; set; } = new List<VueloClase>();
+    public ICollection<VueloClase> VueloClases { get; set; } = new List<VueloClase>();
 }

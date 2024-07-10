@@ -32,7 +32,7 @@ namespace AvionesBackNet.Modules.Aeropuertos
         public bool Activo { get; set; }
 
         public bool Interno { get; set; }
-        public virtual paisDto Pais { get; set; } = null!;
+        public paisDto Pais { get; set; } = null!;
 
     }
 }

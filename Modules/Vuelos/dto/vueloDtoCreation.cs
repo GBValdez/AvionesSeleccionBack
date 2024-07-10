@@ -13,7 +13,7 @@ namespace AvionesBackNet.Modules.Vuelos
         public long AvionId { get; set; }
         public long AeropuertoOrigenId { get; set; }
         public long AeropuertoDestinoId { get; set; }
-        public virtual ICollection<vueloClaseDtoCreation> VueloClases { get; set; } = new List<vueloClaseDtoCreation>();
+        public ICollection<vueloClaseDtoCreation> VueloClases { get; set; } = new List<vueloClaseDtoCreation>();
 
     }
 }

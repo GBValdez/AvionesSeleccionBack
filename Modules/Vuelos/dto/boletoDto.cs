@@ -14,9 +14,9 @@ namespace AvionesBackNet.Modules.Vuelos
         public int CantidadMaletasPresentadas { get; set; }
         public long AsientoId { get; set; }
         public long ClienteId { get; set; }
-        public virtual asientoDto Asiento { get; set; } = null!;
-        public virtual clienteDto Cliente { get; set; } = null!;
-        public virtual catalogueDto EstadoBoleto { get; set; } = null!;
-        public virtual vueloDto Vuelo { get; set; } = null!;
+        public asientoDto Asiento { get; set; } = null!;
+        public clienteDto Cliente { get; set; } = null!;
+        public catalogueDto EstadoBoleto { get; set; } = null!;
+        public vueloDto Vuelo { get; set; } = null!;
     }
 }

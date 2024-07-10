@@ -13,5 +13,5 @@ public partial class BitacoraCuerpo : CommonsModel<long>
     public string ValorNuevo { get; set; } = null!;
 
     public long BitacoraEncabezadoId { get; set; }
-    public virtual BitacoraEncabezado BitacoraEncabezado { get; set; } = null!;
+    public BitacoraEncabezado BitacoraEncabezado { get; set; } = null!;
 }

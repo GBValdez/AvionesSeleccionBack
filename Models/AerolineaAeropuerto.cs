@@ -12,7 +12,7 @@ public partial class AerolineaAeropuerto : CommonsModel<long>
 
     public bool IsDestino { get; set; }
 
-    public virtual Aerolinea Aerolinea { get; set; } = null!;
+    public Aerolinea Aerolinea { get; set; } = null!;
 
-    public virtual Aeropuerto Aeropuerto { get; set; } = null!;
+    public Aeropuerto Aeropuerto { get; set; } = null!;
 }

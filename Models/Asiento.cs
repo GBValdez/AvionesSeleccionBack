@@ -14,8 +14,8 @@ public partial class Asiento : CommonsModel<long>
     public long ClaseId { get; set; }
 
     public long AvionId { get; set; }
-    public virtual ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
+    public ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 
-    public virtual Catalogo Clase { get; set; } = null!;
-    public virtual Avione Avion { get; set; } = null!;
+    public Catalogo Clase { get; set; } = null!;
+    public Avione Avion { get; set; } = null!;
 }
