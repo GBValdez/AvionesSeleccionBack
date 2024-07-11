@@ -85,6 +85,8 @@ namespace AvionesBackNet.Modules.Empleados
             List<string> roles = new List<string> { "EMPLOYEE" };
             if (dtoNew.PuestoId == 119)
                 roles.Add("ADMINISTRATOR_AIRLINE");
+            if (dtoNew.PuestoId == 120)
+                roles.Add("AIRLINE-TACKLE");
 
             errorMessageDto registerResult = await userSvc.register(userCreation, roles);
             if (registerResult != null)
@@ -107,14 +109,22 @@ namespace AvionesBackNet.Modules.Empleados
 
             if (dtoNew.PuestoId != entity.PuestoId && entity.TripulacionId != null)
                 return new errorMessageDto("No se puede cambiar el puesto de un empleado que pertenece a una tripulación");
+
+            userEntity user = await context.Users.FindAsync(entity.UserId);
+            if (dtoNew.PuestoId != 119 && entity.PuestoId == 119)
+                await userManager.RemoveFromRoleAsync(user, "ADMINISTRATOR_AIRLINE");
+            if (dtoNew.PuestoId != 120 && entity.PuestoId == 120)
+                await userManager.RemoveFromRoleAsync(user, "AIRLINE-TACKLE");
+            if (dtoNew.PuestoId == 119 && entity.PuestoId != 119)
+                await userManager.AddToRoleAsync(user, "ADMINISTRATOR_AIRLINE");
+            if (dtoNew.PuestoId == 120 && entity.PuestoId != 120)
+                await userManager.AddToRoleAsync(user, "AIRLINE-TACKLE");
             return null;
         }
         protected override Task modifyPut(Empleado entity, employeeCreationDto dtoNew, object queryParams)
         {
             dtoNew.AerolineaId = entity.AerolineaId;
-            if (dtoNew.PuestoId == 119)
-                dtoNew.UserId = entity.UserId;
-
+            dtoNew.UserId = entity.UserId;
             return base.modifyPut(entity, dtoNew, queryParams);
         }
 
@@ -142,6 +152,12 @@ namespace AvionesBackNet.Modules.Empleados
                 return new errorMessageDto("No se puede eliminar un empleado de otra aerolínea");
             if (entity.TripulacionId != null)
                 return new errorMessageDto("No se puede eliminar un empleado que pertenece a una tripulación");
+            userEntity user = await context.Users.FindAsync(entity.UserId);
+            if (user != null)
+            {
+                user.deleteAt = DateTime.Now.ToUniversalTime();
+                await context.SaveChangesAsync();
+            }
             return null;
         }
 

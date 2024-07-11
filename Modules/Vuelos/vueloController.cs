@@ -60,7 +60,9 @@ namespace AvionesBackNet.Modules.Vuelos
                 .Include(v => v.AeropuertoOrigen)
                 .ThenInclude(a => a.Pais)
                 .Include(v => v.Avion)
-                .ThenInclude(a => a.Modelo)
+                    .ThenInclude(a => a.Modelo)
+                .Include(v => v.Avion)
+                    .ThenInclude(a => a.Aerolinea)
                 .Include(v => v.VueloClases)
                 .ThenInclude(vc => vc.Clase);
 

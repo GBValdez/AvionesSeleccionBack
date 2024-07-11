@@ -254,13 +254,13 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpGet("getTackleTicket/{ticket}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket(string ticket, [FromQuery] crewQuerryDto queryParams)
+        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket(string ticket, [FromQuery] long? AerolineaId)
         {
             List<Boleto> boletos = await getTickets(ticket);
             if (boletos == null)
                 return BadRequest(new errorMessageDto("El ticket no es valido"));
             if (boletos.Count == 0)
-                return BadRequest(new errorMessageDto("Los boletos ya han sido abordados"));
+                return BadRequest(new errorMessageDto("El ticket no es valido"));
             long idClient = boletos[0].ClienteId;
             Cliente? client = await context.Clientes.FirstOrDefaultAsync(c => c.Id == idClient && c.deleteAt == null);
             if (client == null)
@@ -277,12 +277,12 @@ namespace AvionesBackNet.Modules.seats
 
             if (fly == null)
                 return NotFound();
-            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(AerolineaId);
             if (valid.error != null)
                 return BadRequest(valid.error);
             if (valid.aerolineaId != fly.Avion.AerolineaId)
                 return BadRequest(
-                    new errorMessageDto("El boleto es invalido")
+                    new errorMessageDto("El ticket no es valido")
                 );
             ticketCompleteDto ticketCompleteDto = new ticketCompleteDto();
             ticketCompleteDto.cliente = mapper.Map<clienteDto>(client);
@@ -293,7 +293,7 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpPost("completeTackleTicket/{ticket}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> completeTackleTicket(string ticket, [FromQuery] crewQuerryDto queryParams)
+        public async Task<ActionResult> completeTackleTicket([FromRoute] string ticket, [FromQuery(Name = "AerolineaId")] long? AerolineaId)
         {
 
             List<Boleto> boletos = await getTickets(ticket);
@@ -311,7 +311,7 @@ namespace AvionesBackNet.Modules.seats
                 .FirstOrDefaultAsync();
             if (fly == null)
                 return NotFound();
-            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(queryParams.AerolineaId);
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(AerolineaId);
             if (valid.error != null)
                 return BadRequest(valid.error);
             if (valid.aerolineaId != fly.Avion.AerolineaId)
