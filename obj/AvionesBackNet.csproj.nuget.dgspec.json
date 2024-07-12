@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj": {}
+    "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj": {}
   },
   "projects": {
-    "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj": {
+    "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
+        "projectUniqueName": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
         "projectName": "AvionesBackNet",
-        "projectPath": "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
+        "projectPath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\AvionesBackNet.csproj",
         "packagesPath": "D:\\Programas\\NETDotnet\\Net8\\custom_packages",
-        "outputPath": "d:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\obj\\",
+        "outputPath": "D:\\backup\\Escritorio\\Proyectos\\avion Proyecto\\Aviones Seleccion Back\\AvionesBackNet\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gbval\\AppData\\Roaming\\NuGet\\NuGet.Config"

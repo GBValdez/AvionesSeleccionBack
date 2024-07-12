@@ -85,7 +85,13 @@ namespace AvionesBackNet.Modules.crew
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public async Task<ActionResult> updateCrew(long id, crewPersonalDto crew)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(crew.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
             Tripulacione tripulacione = await context.Tripulaciones.FindAsync(id);
+            if (valid.aerolineaId != tripulacione.AerolineaId)
+                return BadRequest(new errorMessageDto("No se puede modificar una tripulación de otra aerolínea"));
+
             if (tripulacione == null)
             {
                 return NotFound();

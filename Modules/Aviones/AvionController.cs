@@ -66,6 +66,12 @@ namespace AvionesBackNet.Modules.Aviones
 
         protected async override Task<errorMessageDto> validPut(AvionCreationDto dtoNew, Avione entity, object queryParams)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(dtoNew.AerolineaId);
+            if (valid.error != null)
+                return valid.error;
+            if (valid.aerolineaId != entity.AerolineaId)
+                return new errorMessageDto("No se puede modificar un avión de otra aerolínea");
+
             if (entity.CapacidadPasajeros != dtoNew.CapacidadPasajeros)
             {
                 if (await context.Vuelos.AnyAsync(v => v.AvionId == entity.Id && v.FechaLlegada > DateTime.UtcNow && v.deleteAt == null))

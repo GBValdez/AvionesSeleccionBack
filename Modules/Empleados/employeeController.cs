@@ -106,6 +106,9 @@ namespace AvionesBackNet.Modules.Empleados
 
         protected override async Task<errorMessageDto> validPut(employeeCreationDto dtoNew, Empleado entity, object queryParams)
         {
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(dtoNew.AerolineaId);
+            if (entity.AerolineaId != valid.aerolineaId)
+                return new errorMessageDto("No se puede modificar un empleado de otra aerolínea");
 
             if (dtoNew.PuestoId != entity.PuestoId && entity.TripulacionId != null)
                 return new errorMessageDto("No se puede cambiar el puesto de un empleado que pertenece a una tripulación");

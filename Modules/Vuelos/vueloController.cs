@@ -79,8 +79,9 @@ namespace AvionesBackNet.Modules.Vuelos
 
         }
 
-        protected async Task<errorMessageDto> validBasic(vueloDtoCreation dtoNew, object queryParams)
+        protected async Task<errorMessageDto> validBasic(vueloDtoCreation dtoNew, long? id)
         {
+
             if (dtoNew.FechaSalida < DateTime.Now)
             {
                 return new errorMessageDto("La fecha de salida no puede ser anterior a la actual");
@@ -103,7 +104,10 @@ namespace AvionesBackNet.Modules.Vuelos
             if (!hasSeats)
                 return new errorMessageDto("El avion no tiene asientos");
 
-            bool avionEnUso = await context.Vuelos.AnyAsync(v => v.AvionId == dtoNew.AvionId && v.FechaLlegada > dtoNew.FechaSalida && v.FechaSalida < dtoNew.FechaLlegada && v.deleteAt == null);
+            IQueryable<Vuelo> queryVuelo = context.Vuelos.Where(v => v.AvionId == dtoNew.AvionId && v.FechaLlegada > dtoNew.FechaSalida && v.FechaSalida < dtoNew.FechaLlegada && v.deleteAt == null);
+            if (id != null)
+                queryVuelo = queryVuelo.Where(v => v.Id != id);
+            bool avionEnUso = await queryVuelo.AnyAsync();
             if (avionEnUso)
             {
                 return new errorMessageDto("El avion ya esta en uso en ese horario");
@@ -113,16 +117,20 @@ namespace AvionesBackNet.Modules.Vuelos
         }
         protected override async Task<errorMessageDto> validPost(vueloDtoCreation dtoNew, object queryParams)
         {
-            errorMessageDto basic = await validBasic(dtoNew, queryParams);
+            errorMessageDto basic = await validBasic(dtoNew, null);
             if (basic != null)
                 return basic;
             return null;
         }
         protected override async Task<errorMessageDto> validPut(vueloDtoCreation dtoNew, Vuelo entity, object queryParams)
         {
-            errorMessageDto basic = await validBasic(dtoNew, queryParams);
+            errorMessageDto basic = await validBasic(dtoNew, entity.Id);
             if (basic != null)
                 return basic;
+            if (DateTime.Now > entity.FechaSalida)
+            {
+                return new errorMessageDto("No se puede modificar un vuelo que ya ha salido");
+            }
             if (context.Boletos.Any(b => b.VueloId == entity.Id && b.deleteAt == null && b.EstadoBoletoId == 92))
             {
                 return new errorMessageDto("No se puede modificar un vuelo con boletos vendidos");
@@ -149,7 +157,7 @@ namespace AvionesBackNet.Modules.Vuelos
         public async Task<ActionResult<List<vueloDto>>> getMyFlies()
         {
             long idClient = long.Parse(User.Claims.FirstOrDefault(c => c.Type == "clienteId")?.Value);
-            List<Vuelo> vuelos = await context.Vuelos.Where(v => v.Boletos.Any(b => b.ClienteId == idClient && b.deleteAt == null) && v.deleteAt == null)
+            List<Vuelo> vuelos = await context.Vuelos.Where(v => v.Boletos.Any(b => b.ClienteId == idClient && b.deleteAt == null && b.EstadoBoletoId == 92) && v.deleteAt == null)
             .Include(v => v.AeropuertoDestino)
             .ThenInclude(v => v.Pais)
             .Include(v => v.AeropuertoOrigen)

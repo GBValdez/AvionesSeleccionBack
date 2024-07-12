@@ -58,13 +58,19 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpGet("canEditSeats/{idPlane}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> canEditSeats(long idPlane)
+        public async Task<ActionResult> canEditSeats(long idPlane, [FromQuery] long? AerolineaId)
         {
             Avione? plane = await context.Aviones.FirstOrDefaultAsync(p => p.Id == idPlane && p.deleteAt == null);
             if (plane == null)
             {
                 return NotFound();
             }
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            if (valid.aerolineaId != plane.AerolineaId)
+                return BadRequest(new errorMessageDto("El avión no pertenece a la aerolinea"));
+
             if (await context.Vuelos.AnyAsync(f => f.AvionId == idPlane && f.deleteAt == null && f.FechaLlegada > DateTime.UtcNow))
             {
                 return BadRequest(new errorMessageDto("No se pueden modificar los asientos de un avión con vuelos pendientes"));
@@ -74,13 +80,18 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpPost("saveSeats/{idPlane}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats)
+        public async Task<ActionResult> saveSeats(long idPlane, seatPlaneDto seats, [FromQuery] long? AerolineaId)
         {
             Avione? plane = await context.Aviones.FirstOrDefaultAsync(p => p.Id == idPlane && p.deleteAt == null);
             if (plane == null)
             {
                 return NotFound();
             }
+            aerolineaAdminValidDto valid = await AerolineaSvc.getAirlineId(AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            if (valid.aerolineaId != plane.AerolineaId)
+                return BadRequest(new errorMessageDto("El avión no pertenece a la aerolinea"));
             if (await context.Vuelos.AnyAsync(f => f.AvionId == idPlane && f.deleteAt == null && f.FechaLlegada > DateTime.UtcNow))
             {
                 return BadRequest(new errorMessageDto("No se pueden modificar los asientos de un avión con vuelos pendientes"));
