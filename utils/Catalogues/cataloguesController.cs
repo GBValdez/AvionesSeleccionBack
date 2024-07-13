@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.utils.Catalogues;
+using AvionesBackNet.utils.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,9 @@ namespace project.utils.catalogues
         }
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
 
-        public override Task<ActionResult<resPag<catalogueDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] catalogueQueryDto queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<catalogueDto>>> get([FromQuery] pagQueryDto data, [FromQuery] catalogueQueryDto queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
         protected override async Task modifyPost(Catalogo entity, object queryParams)
         {

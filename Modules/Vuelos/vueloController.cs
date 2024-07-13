@@ -7,6 +7,8 @@ using AvionesBackNet.Models;
 using AvionesBackNet.Modules.airline;
 using AvionesBackNet.Modules.seats;
 using AvionesBackNet.Modules.Vuelos.dto;
+using AvionesBackNet.utils;
+using AvionesBackNet.utils.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,9 +30,9 @@ namespace AvionesBackNet.Modules.Vuelos
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
-        public override Task<ActionResult<resPag<vueloDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] vueloQueryDto queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<vueloDto>>> get([FromQuery] pagQueryDto data, [FromQuery] vueloQueryDto queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
@@ -166,5 +168,40 @@ namespace AvionesBackNet.Modules.Vuelos
             List<vueloDto> vuelosDto = mapper.Map<List<vueloDto>>(vuelos);
             return vuelosDto;
         }
+
+        [HttpGet("getTicketsOfFly/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
+        public async Task<ActionResult<vueloWithPassagerDto>> getTicketsOfFly([FromRoute] long id, [FromQuery] pagQueryDto data)
+        {
+            Vuelo vuelo = await context.Vuelos.Where(v => v.Id == id && v.deleteAt == null)
+            .Include(v => v.Avion)
+            .Include(v => v.VueloClases)
+                .ThenInclude(vc => vc.Clase)
+            .FirstOrDefaultAsync();
+            if (vuelo == null)
+                return NotFound();
+            aerolineaAdminValidDto valid = await aerolineaSvc.getAirlineId(vuelo.Avion.AerolineaId);
+            if (valid.error != null)
+                return BadRequest(valid.error);
+            if (valid.aerolineaId != vuelo.Avion.AerolineaId)
+                return BadRequest(new errorMessageDto("No tienes permisos para ver los boletos de este vuelo"));
+
+
+            List<long> statusCodeValid = new List<long> { 92, 95 };
+            IQueryable<Boleto> queryBoleto = context.Boletos.Where(b => b.VueloId == id && b.deleteAt == null && statusCodeValid.Contains(b.EstadoBoletoId))
+            .Include(b => b.Cliente)
+            .ThenInclude(c => c.Pais)
+            .Include(b => b.Cliente)
+            .ThenInclude(c => c.CodigoTelefonoObj)
+            .Include(b => b.EstadoBoleto);
+            errResPag<boletoDto> res = await Utils.paginate<Boleto, boletoDto>(queryBoleto, data, mapper);
+            if (res.error != null)
+                return BadRequest(res.error);
+            vueloWithPassagerDto vueloWithPassager = new vueloWithPassagerDto();
+            vueloWithPassager.Vuelo = mapper.Map<vueloDto>(vuelo);
+            vueloWithPassager.Boletos = res.resPag;
+            return vueloWithPassager;
+        }
+
     }
 }

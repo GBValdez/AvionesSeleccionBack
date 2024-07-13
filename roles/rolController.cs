@@ -1,5 +1,6 @@
 using AutoMapper;
 using AvionesBackNet.Models;
+using AvionesBackNet.utils.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -27,9 +28,9 @@ namespace project.roles
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR")]
 
-        public override Task<ActionResult<resPag<rolDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] rolQueryDto queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<rolDto>>> get([FromQuery] pagQueryDto data, [FromQuery] rolQueryDto queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
 
         public override async Task<ActionResult<rolDto>> post(rolCreationDto newRegister, [FromQuery] object queryParams)

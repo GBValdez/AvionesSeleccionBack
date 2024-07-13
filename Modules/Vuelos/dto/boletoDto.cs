@@ -10,10 +10,11 @@ namespace AvionesBackNet.Modules.Vuelos
 {
     public class boletoDto
     {
-        public int CantidadMaletasAdquiridas { get; set; }
+        public string Codigo { get; set; } = null!;
         public int CantidadMaletasPresentadas { get; set; }
         public long AsientoId { get; set; }
         public long ClienteId { get; set; }
+        public long ClaseId { get; set; }
         public asientoDto Asiento { get; set; } = null!;
         public clienteDto Cliente { get; set; } = null!;
         public catalogueDto EstadoBoleto { get; set; } = null!;

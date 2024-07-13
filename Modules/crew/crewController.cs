@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.airline;
+using AvionesBackNet.utils.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,10 +30,11 @@ namespace AvionesBackNet.Modules.crew
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] crewQuerryDto queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<crewDto>>> get([FromQuery] pagQueryDto data, [FromQuery] crewQuerryDto queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
+
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
         public override async Task<ActionResult<crewDto>> post(crewPersonalDto newRegister, [FromQuery] object queryParams)

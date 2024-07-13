@@ -12,6 +12,7 @@ using AvionesBackNet.Modules.crew;
 using AvionesBackNet.Modules.seats.dtos;
 using AvionesBackNet.Modules.Vuelos;
 using AvionesBackNet.utils;
+using AvionesBackNet.utils.dto;
 using AvionesBackNet.utils.writerPdf;
 using iText.Barcodes;
 using iText.Kernel.Geom;
@@ -45,9 +46,9 @@ namespace AvionesBackNet.Modules.seats
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public override Task<ActionResult<resPag<asientoDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] asientoQueryDto queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<asientoDto>>> get([FromQuery] pagQueryDto data, asientoQueryDto queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
 
         protected override Task<IQueryable<Asiento>> modifyGet(IQueryable<Asiento> query, asientoQueryDto queryParams)
@@ -242,7 +243,7 @@ namespace AvionesBackNet.Modules.seats
                 {
                     decimal precio = fly.VueloClases.FirstOrDefault(v => v.ClaseId == item.Asiento.ClaseId).Precio;
                     writter.text(item.Asiento.Codigo + " - " + item.Asiento.Clase.name + " - Q" + Math.Round(precio, 2));
-                    ids += item.Id + ",";
+                    ids += item.Codigo + "|";
                 }
                 string qrEncrypted = dataProtector.Protect(ids);
                 string encodedUrl = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(qrEncrypted));
@@ -304,7 +305,7 @@ namespace AvionesBackNet.Modules.seats
 
         [HttpPost("completeTackleTicket/{ticket}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> completeTackleTicket([FromRoute] string ticket, [FromQuery(Name = "AerolineaId")] long? AerolineaId)
+        public async Task<ActionResult> completeTackleTicket([FromRoute] string ticket, [FromQuery(Name = "AerolineaId")] long? AerolineaId, [FromBody] List<ticketFinishedDto> body)
         {
 
             List<Boleto> boletos = await getTickets(ticket);
@@ -334,6 +335,8 @@ namespace AvionesBackNet.Modules.seats
             foreach (Boleto item in boletos)
             {
                 item.EstadoBoletoId = 95;
+                item.updateAt = DateTime.UtcNow;
+                item.CantidadMaletasPresentadas = body.FirstOrDefault(b => b.Codigo == item.Codigo)!.CantidadDeMaletas;
             }
             await context.SaveChangesAsync();
             return Ok();
@@ -346,14 +349,14 @@ namespace AvionesBackNet.Modules.seats
                 byte[] decodedTicketUrl = WebEncoders.Base64UrlDecode(ticketEncrypted);
                 string normalTicket = Encoding.UTF8.GetString(decodedTicketUrl);
                 string decrypted = dataProtector.Unprotect(normalTicket);
-                string[] ids = decrypted.Split(",");
-                IQueryable<Boleto> queryBoletos = context.Boletos.Where(b => ids.Contains(b.Id.ToString()))
+                string[] codes = decrypted.Split("|");
+                IQueryable<Boleto> queryBoletos = context.Boletos.Where(b => codes.Contains(b.Codigo))
                     .Include(t => t.Asiento);
                 long countTicket = await queryBoletos.Where(b => b.EstadoBoletoId == 92).CountAsync();
-                if (countTicket != ids.Count() - 1)
+                if (countTicket != codes.Count() - 1)
                 {
                     long countTicketTackle = await queryBoletos.Where(b => b.EstadoBoletoId == 95).CountAsync();
-                    if (countTicketTackle == ids.Count() - 1)
+                    if (countTicketTackle == codes.Count() - 1)
                         return [];
                     else
                         return null;

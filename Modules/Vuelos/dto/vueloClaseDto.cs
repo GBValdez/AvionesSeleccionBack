@@ -14,5 +14,7 @@ namespace AvionesBackNet.Modules.Vuelos
         public catalogueDto Clase { get; set; } = null!;
 
         public vueloDto Vuelo { get; set; } = null!;
+        public int CantidadMaletasMax { get; set; }
+
     }
 }

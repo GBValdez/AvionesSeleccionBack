@@ -78,6 +78,9 @@ namespace AvionesBackNet.Modules.Vuelos
 
             if (boleto == null)
             {
+                Vuelo vuelo = await _context.Vuelos.FirstOrDefaultAsync(v => v.Id == vueloIdL && v.deleteAt == null);
+                Asiento asiento = await _context.Asientos.FirstOrDefaultAsync(a => a.Id == asientoIdL && a.deleteAt == null);
+                string code = $"{vuelo.Codigo}_{asiento.Codigo}";
 
                 boleto = new Boleto
                 {
@@ -87,8 +90,10 @@ namespace AvionesBackNet.Modules.Vuelos
                     createAt = DateTime.UtcNow,
                     ClienteId = idClient,
                     EstadoBoletoId = 93,
-                    CantidadMaletasAdquiridas = 0,
-                    CantidadMaletasPresentadas = 0
+                    CantidadMaletasPresentadas = 0,
+                    Codigo = code,
+                    ClaseId = asiento.ClaseId
+
                 };
                 await _context.Boletos.AddAsync(boleto);
                 await _context.SaveChangesAsync();
@@ -151,7 +156,14 @@ namespace AvionesBackNet.Modules.Vuelos
             {
                 await Clients.Caller.SendAsync("ErrorMessage", "Algunos de los asientos seleccionados ya han sido pagados");
             }
-            tickets.ForEach(b => b.EstadoBoletoId = 92);
+            foreach (Boleto item in tickets)
+            {
+                item.updateAt = DateTime.UtcNow;
+                item.EstadoBoletoId = 92;
+                item.Codigo = item.Codigo + "_" + item.Id;
+
+
+            }
             await _context.SaveChangesAsync();
 
             await sendTickets(long.Parse(vueloId), long.Parse(idClient));
@@ -161,7 +173,12 @@ namespace AvionesBackNet.Modules.Vuelos
         {
             List<Boleto> boletosAll = await _context.Boletos.Where(b => b.VueloId == vueloId && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
             List<boletoDto> boletoDtos = _mapper.Map<List<boletoDto>>(boletosAll);
-            boletoDtos.ForEach(b => { b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1; });
+            boletoDtos.ForEach(b =>
+            {
+                b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1;
+                b.Codigo = "";
+                b.ClaseId = -1;
+            });
             await Clients.Group(vueloId + "").SendAsync("ReceiveSeatSelection", boletoDtos);
         }
     }

@@ -7,6 +7,7 @@ using AutoMapper;
 using AvionesBackNet.Models;
 using AvionesBackNet.Modules.airline;
 using AvionesBackNet.users;
+using AvionesBackNet.utils.dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,9 +38,9 @@ namespace AvionesBackNet.Modules.Empleados
 
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public override Task<ActionResult<resPag<employeeDto>>> get([FromQuery] int pageSize, [FromQuery] int pageNumber, [FromQuery] employeeQuery queryParams, [FromQuery] bool? all = false)
+        public override Task<ActionResult<resPag<employeeDto>>> get([FromQuery] pagQueryDto data, employeeQuery queryParams)
         {
-            return base.get(pageSize, pageNumber, queryParams, all);
+            return base.get(data, queryParams);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]

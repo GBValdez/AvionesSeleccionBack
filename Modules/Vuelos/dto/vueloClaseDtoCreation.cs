@@ -9,5 +9,6 @@ namespace AvionesBackNet.Modules.Vuelos
     {
         public long ClaseId { get; set; }
         public decimal Precio { get; set; }
+        public int CantidadMaletasMax { get; set; }
     }
 }

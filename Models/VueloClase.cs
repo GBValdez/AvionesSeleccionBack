@@ -13,6 +13,8 @@ public partial class VueloClase : CommonsModel<long>
 
     public decimal Precio { get; set; }
 
+    public int CantidadMaletasMax { get; set; }
+
     public Catalogo Clase { get; set; } = null!;
 
     public Vuelo Vuelo { get; set; } = null!;

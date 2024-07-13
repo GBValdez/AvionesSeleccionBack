@@ -4,6 +4,7 @@ using AvionesBackNet.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AvionesBackNet.Migrations
 {
     [DbContext(typeof(AvionesContext))]
-    partial class AvionesContextModelSnapshot : ModelSnapshot
+    [Migration("20240712211656_addCodigoBoleto")]
+    partial class addCodigoBoleto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,11 +415,11 @@ namespace AvionesBackNet.Migrations
                     b.Property<long>("AsientoId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CantidadMaletasPresentadas")
+                    b.Property<int>("CantidadMaletasAdquiridas")
                         .HasColumnType("int");
 
-                    b.Property<long>("ClaseId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CantidadMaletasPresentadas")
+                        .HasColumnType("int");
 
                     b.Property<long>("ClienteId")
                         .HasColumnType("bigint");
@@ -446,8 +449,6 @@ namespace AvionesBackNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AsientoId");
-
-                    b.HasIndex("ClaseId");
 
                     b.HasIndex("ClienteId");
 
@@ -832,9 +833,6 @@ namespace AvionesBackNet.Migrations
                         .HasColumnType("bigint");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("CantidadMaletasMax")
-                        .HasColumnType("int");
 
                     b.Property<long>("ClaseId")
                         .HasColumnType("bigint");
@@ -1275,12 +1273,6 @@ namespace AvionesBackNet.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AvionesBackNet.Models.Catalogo", "Clase")
-                        .WithMany()
-                        .HasForeignKey("ClaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AvionesBackNet.Models.Cliente", "Cliente")
                         .WithMany("Boletos")
                         .HasForeignKey("ClienteId")
@@ -1304,8 +1296,6 @@ namespace AvionesBackNet.Migrations
                         .HasForeignKey("userUpdateId");
 
                     b.Navigation("Asiento");
-
-                    b.Navigation("Clase");
 
                     b.Navigation("Cliente");
 
