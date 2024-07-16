@@ -365,3 +365,5 @@ FodyWeavers.xsd
 # archivos con configuraciones de desarrollo y produccion
 **/appsettings.development.json
 **/appsettings.production.json
+appsettings.Development.json
+bin/Debug/net8.0/appsettings.Development.json
