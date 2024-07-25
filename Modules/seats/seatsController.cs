@@ -98,6 +98,7 @@ namespace AvionesBackNet.Modules.seats
                 return BadRequest(new errorMessageDto("No se pueden modificar los asientos de un avión con vuelos pendientes"));
             }
 
+            plane.TamAsientoPorc = seats.sizeSeat;
             List<Asiento> seatsListDB = await context.Asientos.Where(s => s.AvionId == idPlane).ToListAsync();
 
             if (seatsListDB.Count >= seats.asientos.Count)

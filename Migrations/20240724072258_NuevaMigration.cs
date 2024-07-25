@@ -1,53 +1,40 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace AvionesBackNet.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class NuevaMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SecurityStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,26 +44,20 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,21 +67,17 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,21 +88,16 @@ namespace AvionesBackNet.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderKey = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderDisplayName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    ProviderKey = table.Column<string>(type: "text", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -136,21 +108,16 @@ namespace AvionesBackNet.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Value = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    LoginProvider = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -161,28 +128,22 @@ namespace AvionesBackNet.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "BitacoraEncabezados",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Tabla = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IdRegistro = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TipoTransaccion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Tabla = table.Column<string>(type: "text", nullable: false),
+                    IdRegistro = table.Column<string>(type: "text", nullable: false),
+                    TipoTransaccion = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,26 +159,21 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "CatalogoTipos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    code = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    code = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,28 +183,22 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Paises",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneCode = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Iso3166 = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Iso4217 = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    PhoneCode = table.Column<string>(type: "text", nullable: false),
+                    Iso3166 = table.Column<string>(type: "text", nullable: false),
+                    Iso4217 = table.Column<string>(type: "text", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -258,21 +208,17 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    RoleId = table.Column<string>(type: "text", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,17 +229,14 @@ namespace AvionesBackNet.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    RoleId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -310,27 +253,22 @@ namespace AvionesBackNet.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "BitacoraCuerpos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Campo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ValorAnterior = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ValorNuevo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Campo = table.Column<string>(type: "text", nullable: false),
+                    ValorAnterior = table.Column<string>(type: "text", nullable: false),
+                    ValorNuevo = table.Column<string>(type: "text", nullable: false),
                     BitacoraEncabezadoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -346,25 +284,21 @@ namespace AvionesBackNet.Migrations
                         principalTable: "BitacoraEncabezados",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Catalogos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true),
                     CatalogoTipoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,31 +314,24 @@ namespace AvionesBackNet.Migrations
                         principalTable: "CatalogoTipos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Aerolineas",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Direccion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: false),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -420,39 +347,30 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Paises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Clientes",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    NoPasaporte = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NoPasaporte = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
                     FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    Correo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TelefonoEmergencia = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Direccion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Correo = table.Column<string>(type: "text", nullable: false),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
+                    TelefonoEmergencia = table.Column<string>(type: "text", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: false),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<string>(type: "text", nullable: false),
                     CodigoTelefono = table.Column<long>(type: "bigint", nullable: false),
                     CodigoTelefonoEmergencia = table.Column<long>(type: "bigint", nullable: false),
                     PaiseId = table.Column<long>(type: "bigint", nullable: true),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -491,42 +409,31 @@ namespace AvionesBackNet.Migrations
                         column: x => x.PaiseId,
                         principalTable: "Paises",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Aeropuertos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Iata = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Oaci = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Ciudad = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Localidad = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Latitud = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Longitud = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Activo = table.Column<bool>(type: "tinyint(1)", nullable: true),
-                    Interno = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Iata = table.Column<string>(type: "text", nullable: false),
+                    Oaci = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Ciudad = table.Column<string>(type: "text", nullable: false),
+                    Localidad = table.Column<string>(type: "text", nullable: false),
+                    Latitud = table.Column<string>(type: "text", nullable: true),
+                    Longitud = table.Column<string>(type: "text", nullable: true),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Activo = table.Column<bool>(type: "boolean", nullable: true),
+                    Interno = table.Column<bool>(type: "boolean", nullable: true),
                     ZonaHorariaId = table.Column<long>(type: "bigint", nullable: false),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -548,35 +455,30 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Paises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Aviones",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Year = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Serie = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CapacidadCarga = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    CapacidadPasajeros = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    CapacidadCombustible = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    TamAsientoPorc = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
+                    Year = table.Column<string>(type: "text", nullable: false),
+                    Serie = table.Column<string>(type: "text", nullable: false),
+                    CapacidadCarga = table.Column<decimal>(type: "numeric", nullable: false),
+                    CapacidadPasajeros = table.Column<decimal>(type: "numeric", nullable: false),
+                    CapacidadCombustible = table.Column<decimal>(type: "numeric", nullable: false),
+                    TamAsientoPorc = table.Column<decimal>(type: "numeric", nullable: false),
                     MarcaId = table.Column<long>(type: "bigint", nullable: false),
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
                     ModeloId = table.Column<long>(type: "bigint", nullable: false),
                     TipoAvionId = table.Column<long>(type: "bigint", nullable: false),
                     EstadoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -616,23 +518,21 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Catalogos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "AerolineaAeropuertos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoId = table.Column<long>(type: "bigint", nullable: false),
-                    IsDestino = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    IsDestino = table.Column<bool>(type: "boolean", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -654,26 +554,22 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Asientos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Posicion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
+                    Posicion = table.Column<string>(type: "text", nullable: false),
                     ClaseId = table.Column<long>(type: "bigint", nullable: false),
                     AvionId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -695,24 +591,21 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Catalogos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Tripulaciones",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
                     AvionId = table.Column<long>(type: "bigint", nullable: true),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -733,27 +626,24 @@ namespace AvionesBackNet.Migrations
                         column: x => x.AvionId,
                         principalTable: "Aviones",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Vuelos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FechaSalida = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    FechaLlegada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
+                    FechaSalida = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FechaLlegada = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AvionId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoOrigenId = table.Column<long>(type: "bigint", nullable: false),
                     AeropuertoDestinoId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -781,35 +671,28 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Aviones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Empleados",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
                     FechaNacimiento = table.Column<DateOnly>(type: "date", nullable: false),
-                    Correo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Direccion = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Telefono = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Correo = table.Column<string>(type: "text", nullable: false),
+                    Direccion = table.Column<string>(type: "text", nullable: false),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
                     PaisId = table.Column<long>(type: "bigint", nullable: false),
                     PuestoId = table.Column<long>(type: "bigint", nullable: false),
                     TripulacionId = table.Column<long>(type: "bigint", nullable: true),
                     AerolineaId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -848,26 +731,25 @@ namespace AvionesBackNet.Migrations
                         column: x => x.TripulacionId,
                         principalTable: "Tripulaciones",
                         principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "Boletos",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CantidadMaletasAdquiridas = table.Column<int>(type: "int", nullable: false),
-                    CantidadMaletasPresentadas = table.Column<int>(type: "int", nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Codigo = table.Column<string>(type: "text", nullable: false),
+                    CantidadMaletasPresentadas = table.Column<int>(type: "integer", nullable: false),
                     EstadoBoletoId = table.Column<long>(type: "bigint", nullable: false),
                     VueloId = table.Column<long>(type: "bigint", nullable: false),
                     AsientoId = table.Column<long>(type: "bigint", nullable: false),
                     ClienteId = table.Column<long>(type: "bigint", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    ClaseId = table.Column<long>(type: "bigint", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -883,6 +765,12 @@ namespace AvionesBackNet.Migrations
                         column: x => x.userUpdateId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Boletos_Catalogos_ClaseId",
+                        column: x => x.ClaseId,
+                        principalTable: "Catalogos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boletos_Catalogos_EstadoBoletoId",
                         column: x => x.EstadoBoletoId,
@@ -901,23 +789,22 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Vuelos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateTable(
                 name: "VueloClases",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ClaseId = table.Column<long>(type: "bigint", nullable: false),
                     VueloId = table.Column<long>(type: "bigint", nullable: false),
-                    Precio = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    userUpdateId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    deleteAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    createAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updateAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    Precio = table.Column<decimal>(type: "numeric", nullable: false),
+                    CantidadMaletasMax = table.Column<int>(type: "integer", nullable: false),
+                    userUpdateId = table.Column<string>(type: "text", nullable: true),
+                    deleteAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    createAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    updateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -939,8 +826,7 @@ namespace AvionesBackNet.Migrations
                         principalTable: "Vuelos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AerolineaAeropuertos_AerolineaId",
@@ -1098,6 +984,11 @@ namespace AvionesBackNet.Migrations
                 name: "IX_Boletos_AsientoId",
                 table: "Boletos",
                 column: "AsientoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boletos_ClaseId",
+                table: "Boletos",
+                column: "ClaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Boletos_ClienteId",

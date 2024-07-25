@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 using project.roles;
 using project.users;
 
@@ -85,7 +84,6 @@ public partial class AvionesContext : IdentityDbContext<userEntity, rolEntity, s
         base.OnModelCreating(modelBuilder);
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql(_configuration.GetConnectionString("DefaultConnection")
-        , ServerVersion.Parse(_configuration.GetConnectionString("mySqlVersion")));
+        => optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
 
 }

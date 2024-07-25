@@ -40,22 +40,17 @@ builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<AvionesContext>((serviceProvider, options) =>
 {
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), ServerVersion.Parse(
-        builder.Configuration.GetConnectionString("mySqlVersion")
-    )).AddInterceptors(
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).AddInterceptors(
         serviceProvider.GetRequiredService<interceptorDb>()
     );
 });
-
+Console.WriteLine("front " + builder.Configuration["FrontUrl"]);
 builder.Services.AddCors(
     options =>
-    {
-        options.AddPolicy(name: "myCors", builder =>
-        {
-            builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-            .AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-        });
-    }
+                options.AddPolicy("myCors",
+                    builderCors =>
+                        builderCors.WithOrigins(builder.Configuration["FrontUrl"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+                    )
     );
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(

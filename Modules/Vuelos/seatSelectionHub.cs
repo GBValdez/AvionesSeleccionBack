@@ -55,6 +55,7 @@ namespace AvionesBackNet.Modules.Vuelos
             List<Boleto> boletos = await _context.Boletos.Where(b => b.VueloId == long.Parse(vueloId) && b.deleteAt == null && b.EstadoBoletoId == 93 && b.ClienteId == idClient).ToListAsync();
             boletos.ForEach(b => b.EstadoBoletoId = 94);
             await _context.SaveChangesAsync();
+            await sendTickets(long.Parse(vueloId));
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, vueloId);
         }
 
@@ -121,7 +122,7 @@ namespace AvionesBackNet.Modules.Vuelos
 
             }
 
-            await sendTickets(vueloIdL, idClient);
+            await sendTickets(vueloIdL);
         }
 
         public async Task VacateSeats(string vueloId, string asientoId)
@@ -133,7 +134,7 @@ namespace AvionesBackNet.Modules.Vuelos
             boletos.ForEach(b => b.EstadoBoletoId = 94);
             await _context.SaveChangesAsync();
 
-            await sendTickets(vueloIdL, idClient);
+            await sendTickets(vueloIdL);
         }
 
         public async Task PaySeats(string vueloId, string asientoId)
@@ -166,16 +167,15 @@ namespace AvionesBackNet.Modules.Vuelos
             }
             await _context.SaveChangesAsync();
 
-            await sendTickets(long.Parse(vueloId), long.Parse(idClient));
+            await sendTickets(long.Parse(vueloId));
         }
 
-        private async Task sendTickets(long vueloId, long idClient)
+        private async Task sendTickets(long vueloId)
         {
             List<Boleto> boletosAll = await _context.Boletos.Where(b => b.VueloId == vueloId && b.deleteAt == null).Include(a => a.EstadoBoleto).ToListAsync();
             List<boletoDto> boletoDtos = _mapper.Map<List<boletoDto>>(boletosAll);
             boletoDtos.ForEach(b =>
             {
-                b.ClienteId = b.ClienteId.Equals(idClient) ? idClient : -1;
                 b.Codigo = "";
                 b.ClaseId = -1;
             });
