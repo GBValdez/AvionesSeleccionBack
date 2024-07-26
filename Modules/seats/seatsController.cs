@@ -247,9 +247,8 @@ namespace AvionesBackNet.Modules.seats
                     ids += item.Codigo + "|";
                 }
                 string qrEncrypted = dataProtector.Protect(ids);
-                string encodedUrl = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(qrEncrypted));
 
-                BarcodeQRCode qrCode = new BarcodeQRCode(encodedUrl);
+                BarcodeQRCode qrCode = new BarcodeQRCode(qrEncrypted);
                 Image qrCodeImage = new Image(qrCode.CreateFormXObject(pdf));
                 qrCodeImage.SetWidth(210).SetHeight(210);
                 qrCodeImage.SetHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -265,20 +264,22 @@ namespace AvionesBackNet.Modules.seats
         }
 
 
-        [HttpGet("getTackleTicket/{ticket}")]
+        [HttpPost("getTackleTicket")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket(string ticket, [FromQuery] long? AerolineaId)
+        public async Task<ActionResult<ticketCompleteDto>> getTackleTicket([FromQuery] long? AerolineaId, [FromBody] ticketDto ticket)
         {
-            List<Boleto> boletos = await getTickets(ticket);
-            if (boletos == null)
-                return BadRequest(new errorMessageDto("El ticket no es valido"));
-            if (boletos.Count == 0)
-                return BadRequest(new errorMessageDto("El ticket no es valido"));
-            long idClient = boletos[0].ClienteId;
+            errClass<List<Boleto>> boletos = await getTickets(ticket.ticket);
+            if (boletos.error != null)
+                return BadRequest(boletos.error);
+            if (boletos.data == null)
+                return NotFound();
+            if (boletos.data.Count == 0)
+                return NotFound();
+            long idClient = boletos.data[0].ClienteId;
             Cliente? client = await context.Clientes.FirstOrDefaultAsync(c => c.Id == idClient && c.deleteAt == null);
             if (client == null)
                 return NotFound();
-            Vuelo? fly = await context.Vuelos.Where(v => v.Id == boletos[0].VueloId && v.deleteAt == null)
+            Vuelo? fly = await context.Vuelos.Where(v => v.Id == boletos.data[0].VueloId && v.deleteAt == null)
                 .Include(b => b.AeropuertoDestino)
                 .ThenInclude(b => b.Pais)
                 .Include(b => b.AeropuertoOrigen)
@@ -300,26 +301,27 @@ namespace AvionesBackNet.Modules.seats
             ticketCompleteDto ticketCompleteDto = new ticketCompleteDto();
             ticketCompleteDto.cliente = mapper.Map<clienteDto>(client);
             ticketCompleteDto.vuelo = mapper.Map<vueloDto>(fly);
-            ticketCompleteDto.boletos = mapper.Map<List<boletoDto>>(boletos);
+            ticketCompleteDto.boletos = mapper.Map<List<boletoDto>>(boletos.data);
             return ticketCompleteDto;
         }
 
-        [HttpPost("completeTackleTicket/{ticket}")]
+        [HttpPost("completeTackleTicket")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "AIRLINE-TACKLE,ADMINISTRATOR,ADMINISTRATOR_AIRLINE")]
-        public async Task<ActionResult> completeTackleTicket([FromRoute] string ticket, [FromQuery(Name = "AerolineaId")] long? AerolineaId, [FromBody] List<ticketFinishedDto> body)
+        public async Task<ActionResult> completeTackleTicket([FromQuery(Name = "AerolineaId")] long? AerolineaId, [FromBody] ticketFinDto body)
         {
 
-            List<Boleto> boletos = await getTickets(ticket);
-            if (boletos == null)
-                return BadRequest(new errorMessageDto("El ticket no es valido"));
-
-            if (boletos.Count == 0)
-                return BadRequest(new errorMessageDto("Los boletos ya han sido abordados"));
-            long idClient = boletos[0].ClienteId;
+            errClass<List<Boleto>> boletos = await getTickets(body.ticket);
+            if (boletos.error != null)
+                return BadRequest(boletos.error);
+            if (boletos.data == null)
+                return NotFound();
+            if (boletos.data.Count == 0)
+                return NotFound();
+            long idClient = boletos.data[0].ClienteId;
             if (!(await context.Clientes.AnyAsync(b => b.Id == idClient)))
                 return BadRequest(new errorMessageDto("El cliente no existe"));
 
-            Vuelo? fly = await context.Vuelos.Where(v => v.Id == boletos[0].VueloId && v.deleteAt == null)
+            Vuelo? fly = await context.Vuelos.Where(v => v.Id == boletos.data[0].VueloId && v.deleteAt == null)
                 .Include(b => b.Avion)
                 .FirstOrDefaultAsync();
             if (fly == null)
@@ -333,23 +335,23 @@ namespace AvionesBackNet.Modules.seats
                 );
 
 
-            foreach (Boleto item in boletos)
+            foreach (Boleto item in boletos.data)
             {
                 item.EstadoBoletoId = 95;
                 item.updateAt = DateTime.UtcNow;
-                item.CantidadMaletasPresentadas = body.FirstOrDefault(b => b.Codigo == item.Codigo)!.CantidadDeMaletas;
+                item.CantidadMaletasPresentadas = body.ticketFinish.FirstOrDefault(b => b.Codigo == item.Codigo)!.CantidadDeMaletas;
             }
             await context.SaveChangesAsync();
             return Ok();
         }
 
-        private async Task<List<Boleto>> getTickets(string ticketEncrypted)
+        private async Task<errClass<List<Boleto>>> getTickets(string ticketEncrypted)
         {
+            errClass<List<Boleto>> err = new errClass<List<Boleto>>();
+
             try
             {
-                byte[] decodedTicketUrl = WebEncoders.Base64UrlDecode(ticketEncrypted);
-                string normalTicket = Encoding.UTF8.GetString(decodedTicketUrl);
-                string decrypted = dataProtector.Unprotect(normalTicket);
+                string decrypted = dataProtector.Unprotect(ticketEncrypted);
                 string[] codes = decrypted.Split("|");
                 IQueryable<Boleto> queryBoletos = context.Boletos.Where(b => codes.Contains(b.Codigo))
                     .Include(t => t.Asiento);
@@ -358,17 +360,24 @@ namespace AvionesBackNet.Modules.seats
                 {
                     long countTicketTackle = await queryBoletos.Where(b => b.EstadoBoletoId == 95).CountAsync();
                     if (countTicketTackle == codes.Count() - 1)
-                        return [];
+                    {
+                        err.error = new errorMessageDto("Los boletos ya han sido abordados");
+                        return err;
+                    }
                     else
-                        return null;
+                    {
+                        err.error = new errorMessageDto("El ticket es invalido");
+                        return err;
+                    }
                 }
-
-                return await queryBoletos.Where(b => b.EstadoBoletoId == 92)
+                err.data = await queryBoletos.Where(b => b.EstadoBoletoId == 92)
                     .ToListAsync();
+                return err;
             }
             catch (Exception e)
             {
-                return null;
+                err.error = new errorMessageDto("El ticket es invalido");
+                return err;
             }
         }
 

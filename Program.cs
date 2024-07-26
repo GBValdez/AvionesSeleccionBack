@@ -44,7 +44,6 @@ builder.Services.AddDbContext<AvionesContext>((serviceProvider, options) =>
         serviceProvider.GetRequiredService<interceptorDb>()
     );
 });
-Console.WriteLine("front " + builder.Configuration["FrontUrl"]);
 builder.Services.AddCors(
     options =>
                 options.AddPolicy("myCors",
