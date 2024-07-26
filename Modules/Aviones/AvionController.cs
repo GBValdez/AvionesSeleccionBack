@@ -128,7 +128,7 @@ namespace AvionesBackNet.Modules.Aviones
                 return new errorMessageDto("No se puede eliminar un empleado de otra aerolínea");
 
             var vuelosPendientes = await context.Vuelos
-                .FromSqlInterpolated($"SELECT * FROM Vuelos v WHERE v.AvionId = {entity.Id} AND (now() < v.FechaSalida OR now() < v.FechaLlegada) AND v.deleteAt IS NULL")
+                .FromSqlInterpolated($"SELECT * FROM public.\"Vuelos\" v WHERE v.\"AvionId\" = {entity.Id} AND (now() < v.\"FechaSalida\" OR now() < v.\"FechaLlegada\") AND v.\"deleteAt\" IS NULL")
                 .ToListAsync();
             if (vuelosPendientes.Any())
             {
